@@ -49,6 +49,9 @@ jobs:
       - name: Build the disk image
         run: |
           go tool game build --unattended ferruccio-dmg
+      - name: Show the build logs
+        if: failure()
+        run: tail -n 40 bin/*.log
       - name: Check the image and bundled executables
         run: |
           hdiutil verify bin/Ferruccio.dmg
