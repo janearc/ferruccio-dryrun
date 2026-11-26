@@ -1,0 +1,1 @@
+sample-stand-placement . :: go run ./session/testdata/stand_placement_reference.go

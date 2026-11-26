@@ -1,0 +1,18 @@
+{
+  "purpose": "Authored geometry compatibility record; not visual or physical acceptance",
+  "sourceCommit": "6b36e9f25c385978f714bc1619808fd225378cd6",
+  "platform": "Darwin ARM64",
+  "producer": "manufacture/ground_reference_generate_test.go:TestWriteGroundReference",
+  "cases": 8,
+  "kinds": [
+    "elt"
+  ],
+  "seeds": [
+    5,
+    11
+  ],
+  "referenceSHA256": "e376cb6830c68883787a6303ac32b0e3983905afa5e21557f17996710aba1ebf",
+  "previousReferenceSHA256": "6f8aeecd8d8df30b7754d0955a6ea118f1e1edb8f069c69d562fddcc0fdba287",
+  "independentChecks": "GroundDetail, GroundObservatoryDimensionsAndClosedMeshes, GroundObservatoryLargeHasItsAperturePanelsAndClosedMirrors, SurveyFacilityKeepsItsServiceWingAndSeparation passed before capture",
+  "visualAcceptance": "Pending small native-GPU proof; broad exterior-detail request remains open"
+}

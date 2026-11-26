@@ -1,0 +1,1 @@
+fire-woodland . :: ./bin/slayer draw doc/fire-woodland.yaml --out out/fire-woodland.png

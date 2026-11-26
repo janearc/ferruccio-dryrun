@@ -1,0 +1,1 @@
+fire-sequence-check . :: ./bin/slayer assess doc/fire-fuel-sequence.yaml

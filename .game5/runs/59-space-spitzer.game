@@ -1,0 +1,1 @@
+space-spitzer . :: ./bin/slayer draw sets/spitzer-specimen.yaml --out out/space-spitzer.png

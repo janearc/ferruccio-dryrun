@@ -1,0 +1,78 @@
+# scene/medium, by digest: see recording in recorded_test.go
+# Recorded on darwin/arm64, which fuses multiplies into adds where it can.
+# The jets are in recorded-jet-skirt.txt.
+air	bounds	a55b534f28f4ead7c9d305e8
+air	density	0c8578ebec66e1fe81d33ff1
+air	span	6e3963f6d72fcaa2f1310186
+air, no height	bounds	cbb57b132a57e9c74d10fe7a
+air, no height	density	151ff79f29e96d211576b9a2
+air, no height	span	8953cfbd21b37658946ea897
+air, thick	bounds	ef18f3d30b8b9d2b19cc9e20
+air, thick	density	1d3f1391cfd8a912bb5c374e
+air, thick	span	f1b8bd3f6cf5a4db8c883d0b
+aurora	bounds	6fb0a00bb01e605c48d9c221
+aurora	density	7155ac6befa2b13aec7cde38
+aurora	span	bc2c11d862558449fce9419e
+aurora, curtained, turned	bounds	6fb0a00bb01e605c48d9c221
+aurora, curtained, turned	density	c7c1ff070783cfba6324df0d
+aurora, curtained, turned	span	bc2c11d862558449fce9419e
+aurora, wide	bounds	ef18f3d30b8b9d2b19cc9e20
+aurora, wide	density	dde1e132530d76fa748f0b08
+aurora, wide	span	f1b8bd3f6cf5a4db8c883d0b
+clouds	bounds	d9e2b6c90d79dec97d4e820f
+clouds	density	70a688ccaab4a03e2002361e
+clouds	span	5d739dfbcada787ddc139271
+clouds, overcast	bounds	9aece061adbaf6d52655cc58
+clouds, overcast	density	09c1d4b8c5c5da7ea00b837c
+clouds, overcast	span	5205164fe0615d66288fc4f9
+clouds, sparse	bounds	d9e2b6c90d79dec97d4e820f
+clouds, sparse	density	0caf9c6f56f70033f09f6dae
+clouds, sparse	span	5d739dfbcada787ddc139271
+disc	bounds	8de0054f64c055670afcb730
+disc	density	02a2b68c14e220d7c0ef9310
+disc	span	16f5c40cd3569cb838c3f38a
+disc, one ring	bounds	8de0054f64c055670afcb730
+disc, one ring	density	ddffc8848453119502938dc2
+disc, one ring	span	16f5c40cd3569cb838c3f38a
+disc, ringed	bounds	8de0054f64c055670afcb730
+disc, ringed	density	059e2d087094ab5becad04cd
+disc, ringed	span	16f5c40cd3569cb838c3f38a
+disc, ringed by default	bounds	9c9f1558e7166aa50ec7ca9c
+disc, ringed by default	density	ff8949f89bdd435ecdab5201
+disc, ringed by default	span	c7a6f61873f433c903ea8302
+giant	bounds	d58408c3bfb7a968a7960956
+giant	density	04b1492aeeeb7e29ae045e07
+giant	span	79dbbf1c237dd05dda639bb1
+pillars	bounds	cd3cb8f3159b0448dac468eb
+pillars	density	47b22eb2a86a704847c4f21c
+pillars	tips	8471435f5a0b917eda0fa586
+pillars, filamented	bounds	0127024d1ffe132d04a9a71b
+pillars, filamented	density	8f0c7b5baa3a66dfb92aadeb
+pillars, filamented	tips	653cd694e2c646e9d9a10f20
+pillars, many	bounds	0e87428d0536e5956defd89a
+pillars, many	density	75f069cd530a951ee4665642
+pillars, many	tips	0e5aaf614711f110dc935e46
+plume	bounds	c2642cef5b8b7e48f743beb0
+plume	density	8c3c827e23471aa843573a22
+plume, squat	bounds	bb837e5c9051fbada4c92a3c
+plume, squat	density	a430c0a2bbf6f2443d9d1cd7
+puff	bounds	61baf7c63770c31c99de23c6
+puff	density	583b67424bb9db4214038785
+puff	span	f036d68bb69a06b71e79bc0f
+tail	bounds	d282430b79ab99277f15b93f
+tail	density	f338f57fa8ee1fe52b7dc6ee
+tail	span	52083eb879e3320c240b1168
+tail, bent back	bounds	89f4fbca8d8d321d45f86de3
+tail, bent back	density	2675c504ce14e615f5283c3b
+tail, bent back	span	b2ee29efa421445453d3205b
+tail, curved	bounds	6a0176048e2665a9a2405041
+tail, curved	density	31ff83351a3b641f39d530b4
+tail, curved	span	81c0d269ed5821cea976eeae
+wispy	bounds	61baf7c63770c31c99de23c6
+wispy	density	9c235125028feaf398549321
+wispy	span	f036d68bb69a06b71e79bc0f
+wispy	ticked	151c428fa3a01823c6539bfb
+wispy, unscaled	bounds	61baf7c63770c31c99de23c6
+wispy, unscaled	density	bb01ad620f8f6281bc1cd333
+wispy, unscaled	span	f036d68bb69a06b71e79bc0f
+wispy, unscaled	ticked	14610ac348f4351072f8e31b

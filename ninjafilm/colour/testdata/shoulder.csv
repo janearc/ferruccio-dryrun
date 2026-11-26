@@ -1,0 +1,12 @@
+label,knee,top,r,g,b,want_r,want_g,want_b
+the top itself is white,0.5,2.5,2.5,2.5,2.5,1,1,1
+under the knee,0.5,0,0.4,0.4,0.4,0.4,0.4,0.4
+a part past white on the knee,0.4252,0,2,0,0,1,0.27000254000508,0.27000254000508
+no knee,0,0,5,3,1,5,3,1
+a knee below none,-1,0,5,3,1,5,3,1
+a knee of one,1,0,5,3,1,5,3,1
+a knee past one,1.5,0,5,3,1,5,3,1
+a knee far past one,3,0,5,3,1,5,3,1
+light past the top,0.5,2,4,4,4,1,1,1
+light far past the top,0.5,2,1000000,1000000,1000000,1,1,1
+red far past the top,0.5,2,1000000,0.3,0.3,1,1,1

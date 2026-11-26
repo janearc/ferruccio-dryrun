@@ -1,0 +1,367 @@
+//go:build darwin
+
+package metal
+
+/*
+#include <stdlib.h>
+#include "bridge.h"
+*/
+import "C"
+
+import (
+	"encoding/binary"
+	"errors"
+	"math"
+	"runtime"
+	"slices"
+	"unsafe"
+)
+
+// ErrNoRayTracing means this device cannot build the native hierarchy.
+var ErrNoRayTracing = errors.New("metal: native ray tracing is unavailable")
+
+// Acceleration describes an acyclic hierarchy of nonindexed triangles.
+// Vertices are borrowed and must stay unchanged until Accelerate returns.
+// Each vertex begins with a little-endian float3 at the supplied byte stride.
+// Apple's WWDC2023/10128 describes the nested instance representation.
+type Acceleration struct {
+	vertices  []byte
+	stride    int
+	nodes     []accelerationNode
+	instances []Placement
+}
+
+type accelerationNode struct{ kind, first, count int }
+
+// Placement is a child structure's transform and visibility mask.
+type Placement struct {
+	child  int
+	matrix [12]float32
+	mask   uint32
+}
+
+// NewAcceleration starts a plan with nonindexed, finite triangle positions.
+func NewAcceleration(vertices []byte, stride int) (*Acceleration, error) {
+	if stride < 12 || stride > math.MaxInt32 || stride%4 != 0 || len(vertices)%stride != 0 ||
+		(len(vertices)/stride)%3 != 0 || len(vertices) > math.MaxInt32 {
+		return nil, errors.New("metal: invalid triangle vertex layout")
+	}
+	for at := 0; at < len(vertices); at += stride {
+		for axis := range 3 {
+			word := binary.LittleEndian.Uint32(vertices[at+axis*4:])
+			if !finiteFloat(math.Float32frombits(word)) {
+				return nil, errors.New("metal: nonfinite triangle position")
+			}
+		}
+	}
+	return &Acceleration{vertices: vertices, stride: stride}, nil
+}
+
+// Triangles adds a checked triangle range and returns its node index.
+func (plan *Acceleration) Triangles(first, count int) (int, error) {
+	if plan == nil || plan.stride < 12 {
+		return 0, errors.New("metal: no acceleration plan")
+	}
+	total := len(plan.vertices) / plan.stride / 3
+	if first < 0 || count < 0 || first > total || count > total-first ||
+		len(plan.nodes) == math.MaxInt32 {
+		return 0, errors.New("metal: triangle range outside the vertices")
+	}
+	index := len(plan.nodes)
+	plan.nodes = append(plan.nodes, accelerationNode{0, first, count})
+	return index, nil
+}
+
+// Placed describes a child with an invertible column-major 4 by 3 matrix.
+func Placed(child int, matrix [12]float32, mask uint32) (Placement, error) {
+	if child < 0 || !validMatrix(matrix) {
+		return Placement{}, errors.New("metal: invalid instance transform or child")
+	}
+	return Placement{child: child, matrix: matrix, mask: mask}, nil
+}
+
+// finiteFloat excludes values the native hierarchy cannot bound.
+func finiteFloat(value float32) bool {
+	return !math.IsNaN(float64(value)) && !math.IsInf(float64(value), 0)
+}
+
+// validMatrix checks finiteness and the determinant without a size threshold.
+func validMatrix(matrix [12]float32) bool {
+	var values [12]float64
+	for i, value := range matrix {
+		if !finiteFloat(value) {
+			return false
+		}
+		values[i] = float64(value)
+	}
+	m := values
+	determinant := m[0]*(m[4]*m[8]-m[7]*m[5]) -
+		m[3]*(m[1]*m[8]-m[7]*m[2]) + m[6]*(m[1]*m[5]-m[4]*m[2])
+	return determinant != 0
+}
+
+// Instances adds placements referring only to earlier nodes, ruling out cycles.
+func (plan *Acceleration) Instances(places ...Placement) (int, error) {
+	if plan == nil || plan.stride < 12 || len(plan.nodes) == math.MaxInt32 {
+		return 0, errors.New("metal: no acceleration plan or too many nodes")
+	}
+	if !instancePlacementCount(len(plan.instances), len(places)) {
+		return 0, errors.New("metal: too many instance placements")
+	}
+	for _, place := range places {
+		if place.child < 0 || place.child >= len(plan.nodes) ||
+			!validMatrix(place.matrix) {
+			return 0, errors.New("metal: instance needs an earlier child and valid transform")
+		}
+	}
+	index := len(plan.nodes)
+	plan.nodes = append(plan.nodes, accelerationNode{1, len(plan.instances), len(places)})
+	plan.instances = append(plan.instances, places...)
+	return index, nil
+}
+
+// Layout is a plan without its vertices: its stride, its triangle
+// ranges and its placements, which a kernel's built hierarchy keeps.
+// A caller that holds a built hierarchy compares the next plan's layout
+// with it, and the vertices themselves where they are held.
+type Layout struct {
+	stride    int
+	nodes     []accelerationNode
+	instances []Placement
+}
+
+// Layout is the plan's layout, copied, so it borrows no vertices.
+func (plan *Acceleration) Layout() Layout {
+	if plan == nil {
+		return Layout{}
+	}
+	return Layout{stride: plan.stride, nodes: slices.Clone(plan.nodes),
+		instances: slices.Clone(plan.instances)}
+}
+
+// Same is whether two layouts build the same hierarchy over the same
+// vertices: the same stride and ranges, and every placement's child,
+// mask and matrix the same to the bit.
+func (layout Layout) Same(other Layout) bool {
+	if layout.stride != other.stride ||
+		!slices.Equal(layout.nodes, other.nodes) ||
+		len(layout.instances) != len(other.instances) {
+		return false
+	}
+	for index, place := range layout.instances {
+		if !place.same(other.instances[index]) {
+			return false
+		}
+	}
+	return true
+}
+
+// same is whether two placements are one: a matrix is compared by its
+// bits, so a negative zero is not a zero.
+func (place Placement) same(other Placement) bool {
+	if place.child != other.child || place.mask != other.mask {
+		return false
+	}
+	for index, value := range place.matrix {
+		if math.Float32bits(value) !=
+			math.Float32bits(other.matrix[index]) {
+			return false
+		}
+	}
+	return true
+}
+
+// Accelerate builds and retains an instance root. Grid binds it after the
+// origin, at buffer index len(inputs)+2. Close releases every structure.
+// A second build is refused without changing the first; calls are serial.
+func (kernel *Kernel) Accelerate(plan *Acceleration, root int) error {
+	return kernel.accelerate(plan, root, keepFirst, nil)
+}
+
+// AccelerateOver is Accelerate that reads the plan's vertices from input
+// index of a grid stream of this kernel, in place, so the device holds
+// them once and not twice. The input is first made to hold exactly the
+// vertices, as Refresh does, and the bytes that took are given back.
+// The kernel keeps no reference to the input: a later Update of it may
+// replace its buffer, and the hierarchy is not affected.
+func (kernel *Kernel) AccelerateOver(plan *Acceleration, root int,
+	stream *GridStream, index int) (int64, error) {
+	return kernel.accelerateOver(plan, root, keepFirst, stream, index)
+}
+
+// RebuildOver is Rebuild that reads the plan's vertices from input index
+// of a grid stream, as AccelerateOver does.
+func (kernel *Kernel) RebuildOver(plan *Acceleration, root int,
+	stream *GridStream, index int) (int64, error) {
+	return kernel.accelerateOver(plan, root, replaceFirst, stream, index)
+}
+
+// overInput is the grid stream input a build reads its vertices from.
+type overInput struct {
+	stream *GridStream
+	index  int
+}
+
+// accelerateOver makes the stream's input hold the plan's vertices and
+// builds over it. A stream of another kernel, a closed one, or an input
+// that does not exist is refused before anything is sent.
+func (kernel *Kernel) accelerateOver(plan *Acceleration, root int,
+	replace bool, stream *GridStream, index int) (int64, error) {
+	if kernel.ctx == nil {
+		return 0, errors.New("metal: the kernel is closed")
+	}
+	if plan == nil || stream == nil || stream.kernel != kernel ||
+		stream.stream == nil {
+		return 0, errors.New("metal: build over an open stream of this kernel")
+	}
+	if index < 0 || index >= len(stream.lengths) {
+		return 0, errors.New("metal: no such input to build over")
+	}
+	sent, err := stream.Refresh(index, plan.vertices)
+	if err != nil {
+		return sent, err
+	}
+	return sent, kernel.accelerate(plan, root, replace,
+		&overInput{stream: stream, index: index})
+}
+
+// Rebuild builds an instance root as Accelerate does and puts it in the
+// place of the kernel's hierarchy, or gives the kernel its first. The
+// old one serves until the new one is built; a build that fails leaves
+// it. A frame whose meshes moved rebuilds its hierarchy on its kernel.
+func (kernel *Kernel) Rebuild(plan *Acceleration, root int) error {
+	return kernel.accelerate(plan, root, replaceFirst, nil)
+}
+
+// keepFirst and replaceFirst are whether a build may take the place of a
+// hierarchy the kernel has.
+const (
+	keepFirst    = false
+	replaceFirst = true
+)
+
+// accelerate checks a plan, stages it for the bridge and builds it, over
+// an input of a grid stream when it is given one.
+func (kernel *Kernel) accelerate(plan *Acceleration, root int,
+	replace bool, over *overInput) error {
+	if kernel.ctx == nil {
+		return errors.New("metal: the kernel is closed")
+	}
+	if plan == nil || root < 0 || root >= len(plan.nodes) ||
+		plan.nodes[root].kind != 1 {
+		return errors.New("metal: acceleration needs an instance root")
+	}
+	if !accelerationCounts(len(plan.nodes), len(plan.instances)) {
+		return errors.New("metal: acceleration staging exceeds the host or signed native range")
+	}
+	nodes := make([]int32, 0, len(plan.nodes)*3)
+	for _, node := range plan.nodes {
+		if !accelerationRange(node.first, node.count) {
+			return errors.New("metal: acceleration node exceeds the signed native range")
+		}
+		nodes = append(nodes, int32(node.kind), int32(node.first), int32(node.count))
+	}
+	matrices := make([]float32, len(plan.instances)*12)
+	references := make([]uint32, len(plan.instances)*2)
+	for index, place := range plan.instances {
+		copy(matrices[index*12:], place.matrix[:])
+		references[index*2], references[index*2+1] = uint32(place.child), place.mask
+	}
+	// The bridge copies positions into a Metal-owned buffer before use.
+	// The pointer-free Go bytes remain pinned for this synchronous C call;
+	// runtime.KeepAlive below also retains their owner through completion.
+	vertices := unsafe.Pointer(unsafe.SliceData(plan.vertices))
+	var why [1024]C.char
+	var unavailable C.int
+	nodeWords := (*C.int32_t)(unsafe.Pointer(unsafe.SliceData(nodes)))
+	matrixWords := (*C.float)(unsafe.Pointer(unsafe.SliceData(matrices)))
+	referenceWords := (*C.uint32_t)(unsafe.Pointer(
+		unsafe.SliceData(references)))
+	var failed C.int
+	if over != nil {
+		failed = C.slayer_metal_accelerate_over(kernel.ctx, over.stream.stream,
+			C.int(over.index), boolInt(replace), vertices,
+			C.long(len(plan.vertices)), C.int(plan.stride), nodeWords,
+			C.int(len(plan.nodes)), matrixWords, referenceWords, C.int(root),
+			&unavailable, &why[0], C.int(len(why)))
+		runtime.KeepAlive(over.stream)
+	} else if replace {
+		failed = C.slayer_metal_reaccelerate(kernel.ctx, vertices,
+			C.long(len(plan.vertices)), C.int(plan.stride), nodeWords,
+			C.int(len(plan.nodes)), matrixWords, referenceWords, C.int(root),
+			&unavailable, &why[0], C.int(len(why)))
+	} else {
+		failed = C.slayer_metal_accelerate(kernel.ctx, vertices,
+			C.long(len(plan.vertices)), C.int(plan.stride), nodeWords,
+			C.int(len(plan.nodes)), matrixWords, referenceWords, C.int(root),
+			&unavailable, &why[0], C.int(len(why)))
+	}
+	runtime.KeepAlive(plan)
+	runtime.KeepAlive(kernel)
+	if unavailable != 0 {
+		return ErrNoRayTracing
+	}
+	if failed != 0 {
+		return errors.New("metal: " + C.GoString(&why[0]))
+	}
+	return nil
+}
+
+// boolInt is a flag as the C int the bridge takes.
+func boolInt(flag bool) C.int {
+	if flag {
+		return 1
+	}
+	return 0
+}
+
+// accelerationWork is how many nodes the kernel's last hierarchy build
+// kept as it held them, refit and built: what the bridge decided from
+// the bytes it was given, read by the tests of its keeping rules.
+func (kernel *Kernel) accelerationWork() (kept, refit, built int) {
+	var keeping, refitting, building C.int
+	C.slayer_metal_acceleration_work(kernel.ctx, &keeping, &refitting,
+		&building)
+	return int(keeping), int(refitting), int(building)
+}
+
+// accelerationHeld is how many mesh structures the kernel holds between
+// hierarchy builds, a mesh's spare counted as one more: what the tests
+// of the bound on what is held read.
+func (kernel *Kernel) accelerationHeld() int {
+	return int(C.slayer_metal_acceleration_held(kernel.ctx))
+}
+
+// accelerationFault is a fault the kernel's next hierarchy build meets
+// once, set by the tests of a build that fails.
+type accelerationFault int
+
+// The faults a test may set, bridge.h's: one after every structure is
+// described, as an allocation that failed, and one after the command
+// ran, as a command that failed.
+const (
+	faultAllocation accelerationFault = C.acceleration_fault_allocation
+	faultCommand    accelerationFault = C.acceleration_fault_command
+)
+
+// failNextBuild sets the fault the kernel's next hierarchy build meets.
+func (kernel *Kernel) failNextBuild(fault accelerationFault) {
+	C.slayer_metal_acceleration_fault(kernel.ctx, C.int(fault))
+}
+
+// accelerationCounts checks the C int counts as well as Go staging products.
+func accelerationCounts(nodes, instances int) bool {
+	return nodes >= 0 && nodes <= math.MaxInt32 && nodes <= math.MaxInt/3 &&
+		instances >= 0 && instances <= math.MaxInt32 && instances <= math.MaxInt/12
+}
+
+// accelerationRange checks each word before narrowing a node to int32.
+func accelerationRange(first, count int) bool {
+	return first >= 0 && first <= math.MaxInt32 && count >= 0 && count <= math.MaxInt32
+}
+
+// instancePlacementCount checks the signed 32-bit native placement budget.
+// Both arguments are slice lengths, so they are nonnegative.
+func instancePlacementCount(held, added int) bool {
+	return added <= math.MaxInt32-held
+}

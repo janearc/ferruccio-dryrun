@@ -1,0 +1,21 @@
+{
+  "purpose": "Authored geometry compatibility record; not visual or physical acceptance",
+  "sourceCommit": "847a5a0f72a52492d942cb6b4dd99c8f27e5321f",
+  "platform": "Darwin ARM64",
+  "producer": "manufacture/ground_reference_generate_test.go:TestWriteGroundReference",
+  "cases": 32,
+  "kinds": [
+    "palomar",
+    "keck-i",
+    "keck-ii",
+    "subaru"
+  ],
+  "seeds": [
+    5,
+    11
+  ],
+  "referenceSHA256": "8c69ab87b8b2ad87e9cb497ef909c98e4cc39af79a2156db7d9e53451b20b5e7",
+  "previousReferenceSHA256": "d779733d0f0ee423403d5a5abb4cffe0965a8114c95fbbf389d2499e55799f10",
+  "independentChecks": "Curved interior clearance at every detail, primary aperture clearance, secondary cage depth, triangulation, pair equality and existing closed-mesh checks passed; exactly sixteen Keck rows changed",
+  "visualAcceptance": "Enclosed and cutaway 720x480 night proofs inspected; owner acceptance, measured enclosure and swept mechanical clearance remain open"
+}

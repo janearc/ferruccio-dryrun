@@ -1,0 +1,18 @@
+# Appearance controls shared by canopy, regional and spherical mist.
+# These are authored sampling and noise choices, not measured weather.
+numbers:
+  - name: octaves
+    value: 3
+    says: authored number of noise octaves in prescribed mist
+    kind: picked
+    by: Slayer's prescribed-mist study
+  - name: threshold-shoulder
+    value: 0.1
+    says: authored smooth shoulder around the coverage threshold
+    kind: picked
+    by: Slayer's prescribed-mist study
+  - name: samples-per-depth
+    value: 4
+    says: authored density sampling hint across the mist depth
+    kind: picked
+    by: Slayer's prescribed-mist study

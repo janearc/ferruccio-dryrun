@@ -1,0 +1,179 @@
+package main
+
+import (
+	"bytes"
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
+	"net/http"
+	"net/http/httptest"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+	"time"
+
+	"github.com/janearc/puzzlemouth/numbers"
+	"github.com/janearc/slayer/sources"
+)
+
+// sheet is the one paper verify's examples read: a text source, so no
+// page of it needs poppler.
+const sheet = "the candle burns down 6.84 millimetres an hour"
+
+// paper is a server's one paper, sent whatever is asked.
+type paper string
+
+// ServeHTTP sends the paper.
+func (body paper) ServeHTTP(answer http.ResponseWriter, _ *http.Request) {
+	answer.Write([]byte(body))
+}
+
+// held is research data already read, handed to a place.
+type held numbers.Numbers
+
+// read is the data, as a place asks for it.
+func (data held) read() (numbers.Numbers, error) {
+	return numbers.Numbers(data), nil
+}
+
+// rig is what a verify example stands on: a server and a directory,
+// taken away when it is done.
+type rig struct {
+	server *httptest.Server
+	dir    string
+}
+
+// done takes the rig away.
+func (made rig) done() {
+	made.server.Close()
+	os.RemoveAll(made.dir)
+}
+
+// verifying is a place for verify: the sheet served and pinned in the
+// list, the shelf in a fresh directory, and research data quoting the
+// sheet's text as quoted and holding value for it.
+func verifying(quoted, value string) (place, rig) {
+	made := rig{server: httptest.NewServer(paper(sheet))}
+	made.dir, _ = os.MkdirTemp("", "sources-verify")
+	sum := sha256.Sum256([]byte(sheet))
+	list := filepath.Join(made.dir, "sources.yaml")
+	checksum := hex.EncodeToString(sum[:])
+	os.WriteFile(list, []byte("sources:\n  - key: candle\n    from: "+
+		made.server.URL+"/candle.txt\n    licence: public domain\n"+
+		"    sha256: "+checksum+"\n"), openFile)
+	data, _ := numbers.Read("research.yml", []byte("numbers:\n"+
+		"  - name: burn\n    value: "+value+"\n"+
+		"    says: how fast the candle burns down\n    kind: measured\n"+
+		"    source:\n      key: candle\n      where: its one line\n"+
+		"      text: \""+quoted+"\"\n"))
+	shelf := sources.NewShelf(filepath.Join(made.dir, "shelf"),
+		made.server.Client())
+	return place{list: list, shelf: shelf, now: time.Now,
+		research: held(data).read}, made
+}
+
+// openFile is the mode the list is written with: the owner writes and
+// anyone reads.
+const openFile = 0o644
+
+// Verify holds each measured number to its source: on the shelf as
+// pinned, its text there, and saying the number. A number that holds is
+// not spoken of: verify prints nothing and leaves nought.
+func Example_verify() {
+	at, made := verifying("6.84", "6.84")
+	defer made.done()
+	var out bytes.Buffer
+	tool(at).Run([]string{"fetch"}, &out, &out)
+	out.Reset()
+	code := tool(at).Run([]string{"verify"}, &out, &out)
+	fmt.Print(out.String())
+	fmt.Println(code)
+	// Output:
+	// 0
+}
+
+// and one that does not hold is spoken of, and fails the verb: the quiet
+// is for numbers that hold, not for verify.
+func TestVerifyIsQuietOnlyWhenEveryNumberHolds(t *testing.T) {
+	if said := verified("6.84", "6.84", true); said != "" {
+		t.Errorf("a number that holds was spoken of: %q", said)
+	}
+	at, made := verifying("6.84", "6.8")
+	defer made.done()
+	var out bytes.Buffer
+	tool(at).Run([]string{"fetch"}, &out, &out)
+	out.Reset()
+	if code := tool(at).Run([]string{"verify"}, &out, &out); code == 0 ||
+		!strings.Contains(out.String(), "burn") {
+		t.Errorf("a number that does not hold left %d and said %q", code,
+			out.String())
+	}
+}
+
+// verified is what verify says of the rig's number, quoted and holding
+// value, its source fetched first or not.
+func verified(quoted, value string, fetched bool) string {
+	at, made := verifying(quoted, value)
+	defer made.done()
+	var out bytes.Buffer
+	if fetched {
+		tool(at).Run([]string{"fetch"}, &out, &out)
+	}
+	out.Reset()
+	tool(at).Run([]string{"verify"}, &out, &out)
+	return out.String()
+}
+
+func TestANumberNotOnItsPageFails(t *testing.T) {
+	said := verified("7.84", "7.84", true)
+	if !strings.Contains(said, `"7.84" is not in candle`) {
+		t.Errorf("text not on the page: %s", said)
+	}
+}
+
+func TestANumberItsTextDoesNotSayFails(t *testing.T) {
+	said := verified("6.84", "6.8", true)
+	if !strings.Contains(said, "the page says 6.84, the data holds 6.8") {
+		t.Errorf("a value the text does not say: %s", said)
+	}
+}
+
+func TestANumberWhoseSourceIsNotOnTheShelfFails(t *testing.T) {
+	said := verified("6.84", "6.84", false)
+	if !strings.Contains(said, "not on the shelf") {
+		t.Errorf("a source never fetched: %s", said)
+	}
+}
+
+func TestExcerptLocatesTheNumberWithinItsActualContext(t *testing.T) {
+	at, made := verifying("6.84", "6.84")
+	defer made.done()
+	var out bytes.Buffer
+	if code := tool(at).Run([]string{"fetch"}, &out, &out); code != 0 {
+		t.Fatal(out.String())
+	}
+	data, err := at.research()
+	if err != nil {
+		t.Fatal(err)
+	}
+	list, err := sources.Read(at.list)
+	if err != nil {
+		t.Fatal(err)
+	}
+	one := data[0]
+	one.From.Excerpt = "6.84"
+	if err := at.verified(list, one); err != nil {
+		t.Fatal(err)
+	}
+	// The same numeric value occurs on the page, but this quoted context
+	// does not. Finding it elsewhere must not validate the claim.
+	one.From.Excerpt = "needles are 6.84 cm long"
+	if err := at.verified(list, one); err == nil {
+		t.Fatal("accepted a nonexistent source excerpt")
+	}
+	one.From.Excerpt = "candle"
+	if err := at.verified(list, one); err == nil {
+		t.Fatal("accepted a numeric value outside the quoted excerpt")
+	}
+}

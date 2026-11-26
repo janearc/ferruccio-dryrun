@@ -1,0 +1,1 @@
+sample-fuel-ignition . :: go run ./session/testdata/fuel_ignition_reference.go

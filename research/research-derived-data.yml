@@ -1,0 +1,1355 @@
+# research-derived-data.yml: every number slayer takes from a published
+# source, read from that source and never typed from memory (since
+# 2026-10-18). each names its source by its key in sources.yaml,
+# where in it, the page as the file counts pages, and the text printed
+# there. sources verify holds every entry to its pinned source before a
+# build: the source on the shelf at its hash, the text on its page, and
+# the value the text says.
+
+# Puzzlemouth's measured kind means read from a published source. It includes
+# fitted model coefficients and botanical descriptions, not only experiments.
+# Verification holds bytes and quoted numeric text. Roles, powers and units
+# also need review and the independent model/metadata checks in the tests.
+numbers:
+  - name: prima-primary-diameter-metres
+    value: 1.8
+    unit: m
+    says: PRIMA telescope diameter
+    kind: measured
+    source:
+      key: prima-ipac-observatory
+      where: telescope row
+      text: "1.8"
+      excerpt: "Telescope | 1.8-m"
+  - name: spitzer-cells-per-panel
+    value: 392
+    says: solar cells on each of the two panels
+    kind: measured
+    source:
+      key: spitzer-solar-panel-assembly
+      where: first paragraph
+      text: "392"
+      excerpt: "392 solar cells"
+  - name: spitzer-cell-short-centimetres
+    value: 5.5
+    unit: cm
+    says: short dimension of each solar cell
+    kind: measured
+    source:
+      key: spitzer-solar-panel-assembly
+      where: first paragraph
+      text: "5.5"
+      excerpt: "5.5 cm"
+  - name: spitzer-cell-long-centimetres
+    value: 6.5
+    unit: cm
+    says: long dimension of each solar cell
+    kind: measured
+    source:
+      key: spitzer-solar-panel-assembly
+      where: first paragraph
+      text: "6.5"
+      excerpt: "6.5 cm"
+  - name: spitzer-active-panel-length-centimetres
+    value: 330
+    unit: cm
+    says: length of each active panel in the 2022 engineering paper
+    kind: measured
+    source:
+      key: spitzer-on-orbit-performance-2022
+      where: section 2.1, lower solar-panel section
+      page: 5
+      text: "330"
+      excerpt: "330"
+  - name: spitzer-active-panel-width-centimetres
+    value: 72
+    unit: cm
+    says: width of each active panel in the 2022 engineering paper
+    kind: measured
+    source:
+      key: spitzer-on-orbit-performance-2022
+      where: section 2.1, lower solar-panel section
+      page: 5
+      text: "72"
+      excerpt: "72 cm"
+  - name: spitzer-shield-extension-centimetres
+    value: 160
+    unit: cm
+    says: approximate upper aluminium extension in the 2022 paper
+    kind: measured
+    source:
+      key: spitzer-on-orbit-performance-2022
+      where: section 2.1, upper solar-panel section
+      page: 5
+      text: "160"
+      excerpt: "160 cm"
+  - name: owl-primary-curvature-metres
+    value: 250
+    unit: m
+    says: spherical primary radius in the selected 2005 overview
+    kind: measured
+    source:
+      key: owl-blue-book-overview
+      where: Table 2-3, radius of curvature, primary mirror
+      page: 17
+      text: "250"
+      excerpt: "250-m"
+  - name: owl-secondary-panels
+    value: 216
+    says: OWL flat secondary panel inventory in the selected 2005 baseline
+    kind: measured
+    source:
+      key: owl-blue-book-overview
+      where: Table 2-3, quantity, secondary mirror
+      page: 17
+      text: "216"
+      excerpt: "216"
+  - name: owl-primary-panels
+    value: 3048
+    says: OWL primary panel inventory in the selected 2005 baseline
+    kind: measured
+    source:
+      key: owl-blue-book-overview
+      where: Table 2-3, quantity, primary mirror
+      page: 17
+      text: "3048"
+      excerpt: "3048"
+  - name: owl-secondary-metres
+    value: 25.6
+    unit: m
+    says: nominal flat secondary diameter in the selected 2005 baseline
+    kind: measured
+    source:
+      key: owl-blue-book-overview
+      where: Table 2-2, secondary mirror diameter
+      page: 13
+      text: "25.6"
+      excerpt: "25.6m"
+  - name: owl-primary-metres
+    value: 100
+    unit: m
+    says: nominal OWL diameter in the selected 2005 baseline
+    kind: measured
+    source:
+      key: owl-blue-book-overview
+      where: Table 2-2, telescope diameter
+      page: 13
+      text: "100"
+      excerpt: "100m"
+  - name: galacsi-wide-radius-arcsec
+    value: 64
+    unit: arcsec
+    says: GALACSI wide-field laser guide-star off-axis radius
+    kind: measured
+    source:
+      key: eso-galacsi-layout
+      where: wide field mode optical layout
+      text: "64"
+      excerpt: "4 LGS 64&quot; off axis"
+  - name: griffith-objective-inches
+    value: 12
+    unit: in
+    says: nominal Zeiss refractor objective diameter in the student guide
+    kind: measured
+    source:
+      key: griffith-school-guide
+      where: east rooftop dome, Zeiss refracting telescope
+      page: 17
+      text: "12"
+      excerpt: "The 12-inch Zeiss Refracting Telescope"
+  - name: elt-primary-metres
+    value: 39
+    unit: m
+    says: nominal ELT primary diameter on ESO's facts page
+    kind: measured
+    source:
+      key: elt-facts
+      where: main mirror diameter
+      text: "39"
+      excerpt: "<p>39 metres</p>"
+  - name: elt-primary-segments
+    value: 798
+    says: installed ELT primary segments, excluding the maintenance set
+    kind: measured
+    source:
+      key: elt-facts
+      where: number of main mirror segments
+      text: "798"
+      excerpt: "<p>798</p>"
+  - name: rubin-primary-metres
+    value: 8.4
+    unit: m
+    says: physical diameter of the combined primary and tertiary glass blank
+    kind: measured
+    source:
+      key: rubin-key-numbers
+      where: telescope key numbers, primary mirror diameter
+      text: "8.4"
+      excerpt: "Primary mirror diameter: 8.4 m"
+  - name: rubin-secondary-metres
+    value: 3.4
+    unit: m
+    says: secondary mirror diameter in the observatory's mirror description
+    kind: measured
+    source:
+      key: rubin-mirrors
+      where: path from the primary to the secondary
+      text: "3.4"
+      excerpt: "3.4-meter secondary mirror"
+  - name: rubin-tertiary-metres
+    value: 5.0
+    unit: m
+    says: diameter of the inner tertiary surface in the shared glass blank
+    kind: measured
+    source:
+      key: rubin-mirrors
+      where: path from the secondary back to the inner tertiary surface
+      text: "5.0"
+      excerpt: "inner 5.0-meter surface"
+  - name: palomar-primary-inches
+    value: 200
+    unit: in
+    says: nominal Hale primary diameter, retained in its original unit
+    kind: measured
+    source:
+      key: palomar-hale
+      where: Hale telescope description, nominal 200-inch primary
+      text: "200"
+      excerpt: "200-inch mirror"
+  - name: palomar-enclosure-height-metres
+    value: 41
+    unit: m
+    says: dome height, the rounded metric dimension printed by Caltech
+    kind: measured
+    source:
+      key: palomar-hale
+      where: telescope mount and dome, 135 feet tall
+      text: "41"
+      excerpt: "(41 meters) tall"
+  - name: palomar-enclosure-diameter-metres
+    value: 42
+    unit: m
+    says: dome diameter, the rounded metric dimension printed by Caltech
+    kind: measured
+    source:
+      key: palomar-hale
+      where: telescope mount and dome, 137 feet in diameter
+      text: "42"
+      excerpt: "137 feet (42 meters) in diameter"
+  - name: keck-primary-metres
+    value: 10
+    unit: m
+    says: nominal primary diameter shared by the two Keck telescopes
+    kind: measured
+    source:
+      key: keck-telescopes
+      where: primary mirror description
+      text: "10"
+      excerpt: "10-meters in diameter"
+  - name: keck-primary-segments
+    value: 36
+    says: hexagonal primary segment count per Keck telescope
+    kind: measured
+    source:
+      key: keck-telescopes
+      where: primary mirror description
+      text: "36"
+      excerpt: "36 hexagonal segments"
+  - name: subaru-primary-effective-metres
+    value: 8.2
+    unit: m
+    says: effective primary diameter, rather than the unilluminated blank
+    kind: measured
+    source:
+      key: subaru-parameters
+      where: primary mirror, effective diameter
+      text: "8.2"
+      excerpt: "Effective diameter: 8.2 m"
+  - name: subaru-enclosure-height-metres
+    value: 43
+    unit: m
+    says: height of the cylindrical rotating enclosure
+    kind: measured
+    source:
+      key: subaru-parameters
+      where: enclosure parameters, height
+      text: "43"
+      excerpt: "Height: 43 m"
+  - name: subaru-enclosure-base-metres
+    value: 40
+    unit: m
+    says: base diameter of the cylindrical rotating enclosure
+    kind: measured
+    source:
+      key: subaru-parameters
+      where: enclosure parameters, base diameter
+      text: "40"
+      excerpt: "Diameter at base: 40 m"
+  - name: sodium-d2-air-angstrom
+    value: 5889.950
+    unit: angstrom
+    says: Na I D2 air wavelength in the handbook table; divide by ten for nm
+    kind: measured
+    source:
+      key: nist-handbook-sodium-lines
+      where: Air Wavelength (angstrom), Na I row 5889.950, reference R56
+      text: "5889.950"
+      excerpt: "<td>&nbsp;5889.950</td><td>Na I</td>"
+  - name: sodium-d1-air-angstrom
+    value: 5895.924
+    unit: angstrom
+    says: Na I D1 air wavelength in the handbook table; divide by ten for nm
+    kind: measured
+    source:
+      key: nist-handbook-sodium-lines
+      where: Air Wavelength (angstrom), Na I row 5895.924, reference R56
+      text: "5895.924"
+      excerpt: "<td>&nbsp;5895.924</td><td>Na I</td>"
+  # Section 2 defines diffusivity in m^2/s. The extra K^-3 in section
+  # 7.1 conflicts with equation (1) and is not applied here.
+  - name: fuel-diffusion-mantissa
+    value: 2.136
+    unit: mantissa
+    says: printed mantissa of the section 7.1 diffusion coefficient, with its power applied by the model
+    kind: measured
+    source:
+      key: mandel-2008-surface-fire
+      where: section 7.1, final calibrated coefficients; proxy for grass, not redwood fuel
+      page: 24
+      text: "2.1360"
+  - name: fuel-heating-mantissa
+    value: 1.8793
+    unit: mantissa
+    says: printed mantissa of the section 7.1 heating coefficient, with its power applied by the model
+    kind: measured
+    source:
+      key: mandel-2008-surface-fire
+      where: section 7.1, final calibrated coefficients; proxy for grass, not redwood fuel
+      page: 24
+      text: "1.8793"
+  # The final section 7.1 list gives B with 10^2. Its opening paragraph
+  # prints 10^4; the model uses the final calibrated list. The mantissa
+  # alone cannot distinguish these two occurrences.
+  - name: fuel-activation-mantissa
+    value: 5.5849
+    unit: mantissa
+    says: printed mantissa of the section 7.1 activation coefficient, with its power applied by the model
+    kind: measured
+    source:
+      key: mandel-2008-surface-fire
+      where: section 7.1, final calibrated coefficients; proxy for grass, not redwood fuel
+      page: 24
+      text: "5.5849"
+  - name: fuel-cooling-mantissa
+    value: 4.8372
+    unit: mantissa
+    says: printed mantissa of the section 7.1 cooling coefficient, with its power applied by the model
+    kind: measured
+    source:
+      key: mandel-2008-surface-fire
+      where: section 7.1, final calibrated coefficients; proxy for grass, not redwood fuel
+      page: 24
+      text: "4.8372"
+  - name: fuel-consumption-mantissa
+    value: 1.625
+    unit: mantissa
+    says: printed mantissa of the section 7.1 consumption coefficient, with its power applied by the model
+    kind: measured
+    source:
+      key: mandel-2008-surface-fire
+      where: section 7.1, final calibrated coefficients; proxy for grass, not redwood fuel
+      page: 24
+      text: "1.6250"
+  # OSU's descriptive leaf-length ranges, read 2026-11-03. These are
+  # botanical descriptions, not sampled distributions or tree calibration.
+  - name: redwood-needle-minimum
+    value: 1
+    unit: cm
+    says: lower end of OSU's 1-2 cm flat needle length range
+    kind: measured
+    source:
+      key: osu-coast-redwood-foliage
+      where: first description paragraph, leaves, "1-2 cm long"
+      text: "1"
+      excerpt: "1-2 cm long"
+
+  - name: redwood-needle-maximum
+    value: 2
+    unit: cm
+    says: upper end of OSU's 1-2 cm flat needle length range
+    kind: measured
+    source:
+      key: osu-coast-redwood-foliage
+      where: first description paragraph, leaves, "1-2 cm long"
+      text: "2"
+      excerpt: "1-2 cm long"
+
+  - name: sequoia-scale-minimum
+    value: 3
+    unit: mm
+    says: lower end of OSU's 3-6 mm length range on leaders
+    kind: measured
+    source:
+      key: osu-giant-sequoia-foliage
+      where: first description paragraph, leaves, "3-6 mm long on leaders"
+      text: "3"
+      excerpt: "3-6 mm long on leaders"
+
+  - name: sequoia-scale-maximum
+    value: 6
+    unit: mm
+    says: upper end of OSU's 3-6 mm length range on leaders
+    kind: measured
+    source:
+      key: osu-giant-sequoia-foliage
+      where: first description paragraph, leaves, "3-6 mm long on leaders"
+      text: "6"
+      excerpt: "3-6 mm long on leaders"
+
+  # mccaffrey, "purely buoyant diffusion flames: some experimental
+  # results", nbsir 79-1910, table 1, "summary of center line data":
+  # the weighted averages over his five fires, 14.4 to 57.5 kw. read
+  # 2026-10-18 from the page and from the arithmetic of its columns.
+
+  - name: continuous-speed
+    value: 6.84
+    unit: m^1/2 s^-1
+    says: the gas speed up the middle of the continuous flame, over the root of the height, v/z^1/2
+    kind: measured
+    source:
+      key: nbsir-79-1910
+      where: table 1 (printed page 27), flame, v/z^1/2, weighted average
+      page: 35
+      text: "6.84"
+
+  - name: tongue-speed
+    value: 1.93
+    unit: m s^-1 kW^-1/5
+    says: the gas speed up the middle of the intermittent flame, over the heat to the fifth, v/Q^1/5
+    kind: measured
+    source:
+      key: nbsir-79-1910
+      where: table 1 (printed page 27), intermittent, v/Q^1/5, weighted average
+      page: 35
+      text: "1.93"
+
+  - name: plume-speed
+    value: 1.12
+    unit: m^4/3 s^-1 kW^-1/3
+    says: the gas speed up the middle of the plume, times the height to the third over the heat to the third, vz^1/3/Q^1/3
+    kind: measured
+    source:
+      key: nbsir-79-1910
+      where: table 1 (printed page 27), plume, vz^1/3/Q^1/3, weighted average
+      page: 35
+      text: "1.12"
+
+  - name: tongues-from
+    value: 0.0793
+    unit: m kW^-2/5
+    says: where the intermittent flame begins, as a height over the heat to the two fifths, z/Q^2/5
+    kind: measured
+    source:
+      key: nbsir-79-1910
+      where: table 1 (printed page 27), intersections, flame-intermittent, weighted
+      page: 35
+      text: ".0793"
+
+  - name: plume-from
+    value: 0.198
+    unit: m kW^-2/5
+    says: where the plume begins, as a height over the heat to the two fifths, z/Q^2/5
+    kind: measured
+    source:
+      key: nbsir-79-1910
+      where: table 1 (printed page 27), intersections, intermittent-plume, weighted
+      page: 35
+      text: ".198"
+
+  - name: spitzer-primary-diameter-centimetres
+    value: 85
+    unit: cm
+    says: primary mirror diameter in the Spitzer telescope description
+    kind: measured
+    source:
+      key: spitzer-telescope
+      where: opening telescope description, primary mirror diameter
+      text: "85"
+      excerpt: "85 centimeters"
+  - name: hubble-primary-diameter-metres
+    value: 2.4
+    unit: m
+    says: primary mirror diameter in NASA's Hubble optics description
+    kind: measured
+    source:
+      key: hubble-optics
+      where: opening optics description, primary mirror diameter
+      text: "2.4"
+      excerpt: "2.4-meter"
+  - name: webb-primary-diameter-metres
+    value: 6.6
+    unit: m
+    says: nominal diameter as listed in NASA's Mirror Quick Facts
+    kind: measured
+    source:
+      key: webb-telescope-overview
+      where: Mirror Quick Facts, diameter of primary mirror
+      text: "6.6"
+      excerpt: "6.6 meters"
+  - name: webb-primary-segments
+    value: 18
+    says: primary segment count, with an empty centre
+    kind: measured
+    source:
+      key: webb-telescope-overview
+      where: primary mirror comparison table, shape and structure
+      text: "18"
+      excerpt: "18 segments"
+  - name: webb-shield-layers
+    value: 5
+    says: deployed sunshield membrane count
+    kind: measured
+    source:
+      key: webb-sunshield
+      where: deployment image caption, deployed sunshield
+      text: "5"
+      excerpt: "5-layer sunshield"
+  - name: webb-shield-length-metres
+    value: 21.197
+    unit: m
+    says: longer deployed sunshield dimension in NASA's actual dimensions
+    kind: measured
+    source:
+      key: webb-sunshield
+      where: actual dimensions, longer side
+      text: "21.197"
+      excerpt: "21.197 m x 14.162 m"
+  - name: webb-shield-width-metres
+    value: 14.162
+    unit: m
+    says: shorter deployed sunshield dimension in NASA's actual dimensions
+    kind: measured
+    source:
+      key: webb-sunshield
+      where: actual dimensions, shorter side
+      text: "14.162"
+      excerpt: "21.197 m x 14.162 m"
+  - name: webb-secondary-vertex-millimetres
+    value: 7169.0
+    unit: mm
+    says: how far the secondary stands in front of the primary's vertex, along V1
+    kind: measured
+    source:
+      key: mcelwain-2023-webb-telescope
+      where: table 2, the Secondary's row, V1
+      page: 6
+      text: "7169.0"
+      excerpt: "-1.6598    7169.0"
+  - name: webb-secondary-diameter-millimetres
+    value: 738
+    unit: mm
+    says: the secondary's size
+    kind: measured
+    source:
+      key: mcelwain-2023-webb-telescope
+      where: table 2, the Secondary's row, size, the last number of the row that begins Secondary 1778.9 convex
+      page: 6
+      text: "738"
+      excerpt: "0         738"
+
+  # Summit instrument roles, checked against pinned institutional references.
+  - name: cfht-primary-metres
+    value: 3.58
+    says: usable CFHT primary diameter
+    kind: measured
+    source:
+      key: cfht-observatory-manual
+      where: General features
+      text: '3.58'
+      excerpt: usable diameter of 3.58 m
+    unit: m
+  - name: gemini-primary-metres
+    value: 8.1
+    says: Gemini primary diameter
+    kind: measured
+    source:
+      key: gemini-north-handout
+      where: Primary mirrors
+      text: '8.1'
+      excerpt: 'Diameter: 8.1 meters'
+      page: 2
+    unit: m
+  - name: gemini-enclosure-height-metres
+    value: 46
+    says: Gemini enclosure height from ground
+    kind: measured
+    source:
+      key: gemini-north-handout
+      where: Domes
+      text: '46'
+      excerpt: 'Height: 46 meters'
+      page: 2
+    unit: m
+  - name: irtf-aperture-metres
+    value: 3.0
+    says: nominal IRTF observing aperture, not mirror blank diameter
+    kind: measured
+    source:
+      key: uh-maunakea-telescopes
+      where: NASA Infrared Telescope Facility
+      text: '3.0'
+      excerpt: IRTF is a 3.0 meter telescope
+    unit: m
+  - name: uh88-nominal-metres
+    value: 2.2
+    says: nominal UH 2.2-metre telescope class
+    kind: measured
+    source:
+      key: uh-maunakea-telescopes
+      where: UH 88
+      text: '2.2'
+      excerpt: University of Hawaii 2.2-meter telescope
+    unit: m
+  - name: ukirt-primary-metres
+    value: 3.8
+    says: UKIRT primary mirror diameter
+    kind: measured
+    source:
+      key: ukirt-telescope
+      where: About UKIRT
+      text: '3.8'
+      excerpt: 3.8 meter primary mirror
+    unit: m
+  - name: jcmt-primary-metres
+    value: 15
+    says: JCMT submillimetre dish diameter
+    kind: measured
+    source:
+      key: jcmt-telescope
+      where: The JCMT
+      text: '15'
+      excerpt: 15-metre (50-foot) dish
+    unit: m
+  - name: sma-primary-metres
+    value: 6
+    says: individual SMA antenna diameter
+    kind: measured
+    source:
+      key: sma-telescope
+      where: Interferometer description
+      text: '6'
+      excerpt: each 6 meters in diameter
+    unit: m
+  - name: sma-antennas
+    value: 8
+    says: SMA interferometer element count in the technical table
+    kind: measured
+    source:
+      key: sma-technical
+      where: Table 1, interferometer elements
+      text: '8'
+      excerpt: Interferometer elements     8 6-meter
+      page: 6
+  - name: sma-primary-focal-ratio
+    value: 0.4
+    says: dimensionless primary focal length divided by diameter
+    kind: measured
+    source:
+      key: sma-technical
+      where: Table 1, interferometer elements
+      text: '0.4'
+      excerpt: f/0.4 paraboloids
+      page: 6
+  - name: vlba-primary-metres
+    value: 25
+    says: nominal VLBA station dish diameter
+    kind: measured
+    source:
+      key: vlba-telescope
+      where: Station description
+      text: '25'
+      excerpt: 25- meter) diameter dish antenna
+    unit: m
+  - name: panstarrs-aperture-metres
+    value: 1.8
+    says: nominal aperture per Pan-STARRS telescope
+    kind: measured
+    source:
+      key: panstarrs-telescopes
+      where: Project introduction
+      text: '1.8'
+      excerpt: two 1.8m telescopes
+    unit: m
+  - name: faulkes-primary-metres
+    value: 2
+    says: nominal Faulkes telescope aperture class
+    kind: measured
+    source:
+      key: faulkes-telescopes
+      where: Two-metre telescope family
+      text: '2'
+      excerpt: 2-meter
+    unit: m
+  - name: dkist-clear-metres
+    value: 4
+    says: DKIST clear aperture, not the larger physical mirror blank
+    kind: measured
+    source:
+      key: dkist-telescope
+      where: The telescope
+      text: '4'
+      excerpt: 'Clear aperture: 4 m'
+    unit: m
+  - name: atlas-aperture-metres
+    value: 0.5
+    says: ATLAS Wright-Schmidt aperture
+    kind: measured
+    source:
+      key: atlas-specifications
+      where: Telescope aperture row
+      text: '0.5'
+      excerpt: 0.5m
+    unit: m
+  - name: tlrs4-aperture-metres
+    value: 0.28
+    says: TLRS-4 receiving and transmitting telescope aperture
+    kind: measured
+    source:
+      key: tlrs4-station-log
+      where: Section 4.01, receiving telescope
+      text: '0.28'
+      excerpt: 'Aperture              [m]: 0.28'
+    unit: m
+  - name: solarc-aperture-metres
+    value: 0.5
+    says: SOLARC off-axis coronagraphic telescope aperture
+    kind: measured
+    source:
+      key: ifa-haleakala-facilities
+      where: Zodiacal Light Observatory
+      text: '0.5'
+      excerpt: 0.5 meter, off-axis
+    unit: m
+  - name: aeos-primary-metres
+    value: 3.67
+    says: published AEOS telescope diameter in the upgrade account
+    kind: measured
+    source:
+      key: aeos-upgrade
+      where: AEOS upgrade description
+      text: '3.67'
+      excerpt: 3.67 meters
+    unit: m
+  - name: mssc-reflector-nominal-metres
+    value: 1.6
+    says: nominal MSSC reflector aperture class in the historical inventory
+    kind: measured
+    source:
+      key: ifa-maui-history
+      where: 1965 observatory construction
+      text: '1.6'
+      excerpt: 60-inch (1.6 meter) reflector
+    unit: m
+  - name: mssc-twin-aperture-metres
+    value: 1.2
+    says: nominal aperture of each twin MSSC infrared telescope
+    kind: measured
+    source:
+      key: ifa-maui-history
+      where: 1965 observatory construction
+      text: '1.2'
+      excerpt: 48-inch (1.2 meter) infrared telescopes
+    unit: m
+  - name: geodss-class-metres
+    value: 1
+    says: nominal GEODSS metre-class telescope, not the 102-cm physical specification
+      elsewhere in the study
+    kind: measured
+    source:
+      key: haleakala-environmental-study-2009
+      where: Table 1-2, historical 1982 facility entry
+      text: '1'
+      excerpt: GEODSS, with three 1-meter telescopes
+      page: 115
+    unit: m
+  # magnetars, read 2026-11-12 for the real one beside zappy. a field or
+  # an energy printed with its power of ten is held as its printed
+  # mantissa, the unit naming the power, which the scene applies. what
+  # is computed from these (shells, distances, ratios) is in scene/named.
+  - name: magnetar-radius-low-km
+    value: 10
+    unit: km
+    says: lower end of the neutron-star radius the review takes; the spin-inferred fields assume this end
+    kind: measured
+    source:
+      key: kaspi-beloborodov-2017-magnetars
+      where: section 5.2, surface temperature, "a neutron star of radius R = 10 - 13 km"
+      page: 23
+      text: "10"
+      excerpt: "R ≈ 10 − 13 km"
+  - name: magnetar-radius-high-km
+    value: 13
+    unit: km
+    says: upper end of the neutron-star radius the review takes
+    kind: measured
+    source:
+      key: kaspi-beloborodov-2017-magnetars
+      where: section 5.2, surface temperature, "a neutron star of radius R = 10 - 13 km"
+      page: 23
+      text: "13"
+      excerpt: "R ≈ 10 − 13 km"
+  - name: magnetar-crust-km
+    value: 1
+    unit: km
+    says: thickness of the solid crust over the liquid core, a model's figure, not an observation
+    kind: measured
+    source:
+      key: kaspi-beloborodov-2017-magnetars
+      where: section 5.1, internal dynamics
+      page: 21
+      text: "1"
+      excerpt: "1 km-thick solid crust"
+  - name: sgr1806-period-seconds
+    value: 7.55
+    unit: s
+    says: spin period of SGR 1806-20, from the McGill catalogue
+    kind: measured
+    source:
+      key: kaspi-beloborodov-2017-magnetars
+      where: Table 1, SGR 1806-20 row, P
+      page: 6
+      text: "7.55"
+      excerpt: "SGR 1806−20           7.55    20     0.24      45       8.7"
+  - name: sgr1806-field-1e14-gauss
+    value: 20
+    unit: 1e14 G
+    says: spin-inferred surface dipole field of SGR 1806-20, from the McGill catalogue; inferred, not seen
+    kind: measured
+    source:
+      key: kaspi-beloborodov-2017-magnetars
+      where: Table 1, SGR 1806-20 row, B
+      page: 6
+      text: "20"
+      excerpt: "SGR 1806−20           7.55    20     0.24      45       8.7"
+  - name: sgr1806-distance-kpc
+    value: 8.7
+    unit: kpc
+    says: distance to SGR 1806-20 as the catalogue takes it; the 2005 flare papers used 15 kpc
+    kind: measured
+    source:
+      key: kaspi-beloborodov-2017-magnetars
+      where: Table 1, SGR 1806-20 row, D
+      page: 6
+      text: "8.7"
+      excerpt: "SGR 1806−20           7.55    20     0.24      45       8.7"
+  - name: magnetar-period-shortest-seconds
+    value: 2.07
+    unit: s
+    says: shortest spin period among the review's magnetars, 1E 1547.0-5408, leaving out the two rotation-powered pulsars it lists in brackets
+    kind: measured
+    source:
+      key: kaspi-beloborodov-2017-magnetars
+      where: Table 1, 1E 1547.0-5408 row, P
+      page: 6
+      text: "2.07"
+      excerpt: "1E 1547.0-5408        2.07"
+  - name: magnetar-period-longest-seconds
+    value: 11.79
+    unit: s
+    says: longest spin period among the review's magnetars, 1E 1841-045
+    kind: measured
+    source:
+      key: kaspi-beloborodov-2017-magnetars
+      where: Table 1, 1E 1841-045 row, P
+      page: 6
+      text: "11.79"
+      excerpt: "1E 1841–045           11.79"
+  - name: quantum-critical-field-1e13-gauss
+    value: 4.4
+    unit: 1e13 G
+    says: the field above which the vacuum's own polarisation changes how light travels
+    kind: measured
+    source:
+      key: kaspi-beloborodov-2017-magnetars
+      where: section 5.2.4, B_Q
+      page: 25
+      text: "4.4"
+      excerpt: "≈ 4.4 × 1013 G"
+  - name: spin-down-field-coefficient-1e19
+    value: 3.2
+    unit: 1e19 G per root (s)
+    says: the catalogue's surface dipole field from period and its slowing, B = 3.2e19 (P Pdot)^0.5 G, vacuum dipole, I = 1e45 g cm^2
+    kind: measured
+    source:
+      key: olausen-kaspi-2014-catalog
+      where: section 2, definition of B
+      page: 2
+      text: "3.2"
+      excerpt: "B = 3.2 × 1019"
+  - name: sgr1806-spike-seconds
+    value: 0.2
+    unit: s
+    says: how long the initial spike of the 2004 giant flare lasted
+    kind: measured
+    source:
+      key: hurley-2005-sgr1806-flare
+      where: abstract
+      page: 1
+      text: "0.2"
+      excerpt: "first 0.2 s"
+  - name: sgr1806-spike-rise-ms
+    value: 1
+    unit: ms
+    says: the spike's rise time, an upper bound
+    kind: measured
+    source:
+      key: hurley-2005-sgr1806-flare
+      where: the initial spike, rise and fall times
+      page: 3
+      text: "1"
+      excerpt: "τrise≤1 ms"
+  - name: sgr1806-spike-decay-ms
+    value: 65
+    unit: ms
+    says: the spike's decay time
+    kind: measured
+    source:
+      key: hurley-2005-sgr1806-flare
+      where: the initial spike, rise and fall times
+      page: 3
+      text: "65"
+      excerpt: "τdecay≈65 ms"
+  - name: sgr1806-tail-period-seconds
+    value: 7.56
+    unit: s
+    says: the period the flare's tail pulsed at, the star's spin
+    kind: measured
+    source:
+      key: hurley-2005-sgr1806-flare
+      where: the pulsating tail
+      page: 3
+      text: "7.56"
+      excerpt: "period of 7.56 s"
+  - name: sgr1806-tail-seconds
+    value: 380
+    unit: s
+    says: how long RHESSI saw the pulsating tail
+    kind: measured
+    source:
+      key: hurley-2005-sgr1806-flare
+      where: the pulsating tail
+      page: 3
+      text: "380"
+      excerpt: "for 380 s."
+  - name: sgr1806-spike-fluence-erg-cm2
+    value: 1.36
+    unit: erg cm^-2
+    says: the spike's energy per square centimetre at the Earth, photons above 30 keV, Wind
+    kind: measured
+    source:
+      key: hurley-2005-sgr1806-flare
+      where: the initial spike, fluence
+      page: 3
+      text: "1.36"
+      excerpt: "(1.36±0.35) erg cm−2"
+  - name: sgr1806-spike-energy-1e46-erg-at-15kpc
+    value: 3.7
+    unit: 1e46 erg
+    says: the spike's energy if it shone the same every way, at the 15 kpc the paper took
+    kind: measured
+    source:
+      key: hurley-2005-sgr1806-flare
+      where: the initial spike, energy
+      page: 3
+      text: "3.7"
+      excerpt: "Espike=(3.7±0.9)×1046d152 erg"
+  - name: hurley-flare-distance-kpc
+    value: 15
+    unit: kpc
+    says: the distance the 2005 flare energies are scaled to
+    kind: measured
+    source:
+      key: hurley-2005-sgr1806-flare
+      where: the precursor, definition of d15
+      page: 3
+      text: "15"
+      excerpt: "d15 = (d / 15 kpc)"
+  - name: sgr1806-spike-energy-palmer-1e46-erg-at-15kpc
+    value: 2
+    unit: 1e46 erg
+    says: the spike's energy as Swift's team measured it, at 15 kpc; the second of two measurements
+    kind: measured
+    source:
+      key: palmer-2005-sgr1806-flare
+      where: main text, energy release in the spike
+      page: 4
+      text: "2"
+      excerpt: "2 × 1046 d215 erg"
+  - name: sgr1806-spike-fluence-palmer-erg-cm2
+    value: 0.80
+    unit: erg cm^-2
+    says: the spike's fluence as Swift's team measured it, 45 keV to 10 MeV
+    kind: measured
+    source:
+      key: palmer-2005-sgr1806-flare
+      where: main text, spike spectrum
+      page: 3
+      text: "0.80"
+      excerpt: "0.80(5) erg cm−2"
+  - name: sgr1806-ionosphere-lowest-km
+    value: 20
+    unit: km
+    says: how low in the Earth's daytime air the flare's ionisation reached, from radio signals and a model
+    kind: measured
+    source:
+      key: inan-2007-sgr1806-ionosphere
+      where: paragraph 4
+      page: 1
+      text: "20"
+      excerpt: "20 km altitude for >1 hour"
+  - name: atomic-field-1e9-gauss
+    value: 2.351
+    unit: 1e9 G
+    says: the field at which an electron's magnetic energy matches an atom's own binding; far above it atoms become thin cylinders
+    kind: measured
+    source:
+      key: lai-2001-strong-fields
+      where: equation 1.3, B_0
+      page: 2
+      text: "2.351"
+      excerpt: "= 2.351 × 109 G"
+  - name: fridge-magnet-gauss
+    value: 10
+    unit: G
+    says: a fridge magnet's field
+    kind: measured
+    source:
+      key: maglab-mini-to-mighty
+      where: opening section, units
+      text: "10"
+      excerpt: "Your fridge magnet is a modest 10 gauss"
+  - name: earth-field-gauss
+    value: 0.5
+    unit: G
+    says: the Earth's magnetic field, about
+    kind: measured
+    source:
+      key: maglab-mini-to-mighty
+      where: opening section, units
+      text: ".5"
+      excerpt: "The Earth's magnetic field is about .5 gauss"
+  - name: strongest-steady-field-tesla
+    value: 45
+    unit: T
+    says: the strongest steady field made in a laboratory, the MagLab's hybrid magnet
+    kind: measured
+    source:
+      key: maglab-mini-to-mighty
+      where: the hybrid magnet's picture
+      text: "45"
+      excerpt: "The MagLab's world-record 45 tesla hybrid magnet."
+  - name: earth-mean-radius-km
+    value: 6371
+    unit: km
+    says: the Earth's volumetric mean radius
+    kind: measured
+    source:
+      key: nasa-earth-factsheet
+      where: bulk parameters
+      text: "6371.000"
+      excerpt: "Volumetric mean radius (km)     6371.000"
+  - name: solar-irradiance-w-m2
+    value: 1361
+    unit: W m^-2
+    says: the Sun's light arriving at the Earth's distance
+    kind: measured
+    source:
+      key: nasa-earth-factsheet
+      where: bulk parameters
+      text: "1361.0"
+      excerpt: "Solar irradiance (W/m<sup>2</sup>)         1361.0"
+  - name: moon-semimajor-1e6-km
+    value: 0.3844
+    unit: 1e6 km
+    says: the Moon's mean distance from the Earth, its orbit's semimajor axis
+    kind: measured
+    source:
+      key: nasa-moon-fact-sheet
+      where: orbital parameters, semimajor axis
+      text: "0.3844"
+      excerpt: "<td align=\"center\">0.3844</td>"
+  - name: sun-luminosity-1e24-watts
+    value: 382.8
+    unit: 1e24 W
+    says: the Sun's luminosity
+    kind: measured
+    source:
+      key: nasa-sun-factsheet
+      where: bulk parameters, luminosity
+      text: "382.8"
+      excerpt: "<td align=\"center\">382.8</td>"
+
+  # quasars, blazars and the photon ring: the quasar slice, 2026-11-12.
+  # masses of the largest holes differ between papers; each is kept with
+  # its paper, and the shorts say the range.
+  - name: photon-subring-dimming-schwarzschild-percent
+    value: 4
+    unit: percent
+    says: each photon subring of a still hole carries e to the minus pi, about
+      four percent, of the one outside it, and is that much thinner
+    kind: measured
+    source:
+      key: johnson-2020-photon-ring
+      where: section 2, the subring flux ratio, for Schwarzschild
+      page: 4
+      text: '4'
+      excerpt: e−π ≈ 4%
+  - name: m87-ring-diameter-microarcsec
+    value: 42
+    unit: microarcsecond
+    says: the diameter of the bright ring the EHT imaged round M87's hole
+    kind: measured
+    source:
+      key: eht-2019-m87-paper-one
+      where: abstract
+      page: 1
+      text: '42'
+      excerpt: diameter of 42
+  - name: m87-hole-mass-billion-suns
+    value: 6.5
+    unit: billion solar masses
+    says: M87's hole's mass from the EHT image, plus or minus 0.7
+    kind: measured
+    source:
+      key: eht-2019-m87-paper-one
+      where: abstract
+      page: 1
+      text: '6.5'
+      excerpt: (6.5
+  - name: sgra-ring-diameter-microarcsec
+    value: 51.8
+    unit: microarcsecond
+    says: the diameter of the bright ring the EHT imaged round our galaxy's
+      central hole, plus or minus 2.3
+    kind: measured
+    source:
+      key: eht-2022-sgra-paper-one
+      where: abstract
+      page: 1
+      text: '51.8'
+      excerpt: 51.8 ± 2.3 µas
+  - name: ton618-hole-mass-log-suns-shemmer
+    value: 10.82
+    unit: log10 solar masses
+    says: TON 618's hole's mass from the width of its H-beta line, about 66
+      billion suns; its measurement uncertainty is within a factor of two,
+      the paper says
+    kind: measured
+    source:
+      key: shemmer-2004-nir-quasars
+      where: Table 2, TON 618, log MBH
+      page: 6
+      text: '10.82'
+      excerpt: 14905           10.82
+  - name: ton618-hole-mass-log-suns-ge
+    value: 10.61
+    unit: log10 solar masses
+    says: TON 618's hole's mass as Ge and others list it from an H-beta fit,
+      about 41 billion suns
+    kind: measured
+    source:
+      key: ge-2019-civ-blueshift
+      where: Table 2, TON618, MBH
+      page: 13
+      text: '10.610'
+      excerpt: 47.310       10.610
+  - name: ton618-redshift
+    value: 2.219
+    says: TON 618's redshift as Shemmer and others' observing log gives it
+    kind: measured
+    source:
+      key: shemmer-2004-nir-quasars
+      where: Table 1, TON 618, z
+      page: 2
+      text: '2.219'
+      excerpt: +31 28 38     2.219
+  - name: porphyrion-jets-projected-megaparsecs
+    value: 6.43
+    unit: Mpc
+    says: the length on the sky of the longest pair of black hole jets yet
+      found, Porphyrion's, plus or minus 0.05; about seven in full
+    kind: measured
+    source:
+      key: oei-2024-porphyrion
+      where: main text, the outflow's projected length
+      page: 2
+      text: '6.43'
+      excerpt: lp = 6.43 ± 0.05 Mpc
+  - name: neptune-semimajor-axis-au
+    value: 30.06896348
+    unit: au
+    says: the semimajor axis of Neptune's orbit
+    kind: measured
+    source:
+      key: nasa-neptune-fact-sheet
+      where: orbital parameters, semimajor axis (AU)
+      text: '30.06896348'
+      excerpt: Semimajor axis (AU)                 30.06896348
+  - name: eye-foveola-degrees
+    value: 1
+    unit: degree
+    says: the diameter of the foveola, the sharpest middle of the eye's view,
+      which is what foveal vision usually means
+    kind: measured
+    source:
+      key: strasburger-2011-peripheral-vision
+      where: section 2, the fovea and the periphery
+      text: '1'
+      excerpt: having a diameter of 1 deg of arc
+  - name: eye-whole-field-horizontal-degrees
+    value: 214
+    unit: degree
+    says: the whole horizontal width of what two eyes take in, round about;
+      only its middle is sharp
+    kind: measured
+    source:
+      key: strasburger-2011-peripheral-vision
+      where: section 2, the extent of the visual field
+      text: '214'
+      excerpt: up to around 214° horizontal diameter
+  - name: sun-gm-nominal-mantissa
+    value: 1.3271244
+    unit: 1e20 m3 s-2
+    says: the sun's mass times the gravitational constant, the nominal value
+      IAU 2015 Resolution B3 sets; times ten to the twenty
+    kind: measured
+    source:
+      key: iau-2015-b3-nominal
+      where: the worked example of the nominal solar mass parameter
+      page: 12
+      text: '1.3271244'
+      excerpt: 1.3271244 × 1020 m3 s−2
+  - name: sun-radius-nominal-mantissa
+    value: 6.957
+    unit: 1e8 m
+    says: the sun's nominal radius, IAU 2015 Resolution B3; times ten to the
+      eight metres
+    kind: measured
+    source:
+      key: iau-2015-b3-nominal
+      where: Table 1, solar conversion constants
+      page: 5
+      text: '6.957'
+      excerpt: = 6.957 × 108 m
+  - name: earth-equatorial-radius-nominal-mantissa
+    value: 6.3781
+    unit: 1e6 m
+    says: the earth's nominal equatorial radius, IAU 2015 Resolution B3; times
+      ten to the six metres
+    kind: measured
+    source:
+      key: iau-2015-b3-nominal
+      where: Table 1, planetary conversion constants
+      page: 5
+      text: '6.3781'
+      excerpt: = 6.3781 × 106 m
+  - name: voyager-hga-diameter-metres
+    value: 3.7
+    unit: m
+    says: high-gain antenna diameter of either twin
+    kind: measured
+    source:
+      key: voyager-faq
+      where: FAQ, How big is Voyager? How much does it weigh?, high-gain antenna
+      text: '3.7'
+      excerpt: The high gain antenna is 3.7 meters across (diameter).
+  - name: voyager-magnetometer-boom-metres
+    value: 13
+    unit: m
+    says: deployed magnetometer boom length
+    kind: measured
+    source:
+      key: voyager-faq
+      where: FAQ, How big is Voyager? How much does it weigh?, magnetometer boom
+      text: '13'
+      excerpt: The magnetometer boom is 13 meters long
+  - name: voyager-radio-antennas-metres
+    value: 10
+    unit: m
+    says: length of each shared PRA/PWS antenna
+    kind: measured
+    source:
+      key: voyager-faq
+      where: FAQ, How big is Voyager? How much does it weigh?, PRA/PWS antennas
+      text: '10'
+      excerpt: The two Planetary Radio Astronomy and Plasma Wave antenna are 10 meters long.
+  - name: voyager-rtg-boom-metres
+    value: 3.7
+    unit: m
+    says: deployed radioisotope generator boom length
+    kind: measured
+    source:
+      key: voyager-faq
+      where: FAQ, How big is Voyager? How much does it weigh?, RTG boom
+      text: '3.7'
+      excerpt: The Radioisotope Thermoelectric Generator boom is 3.7 meters long
+  - name: voyager-science-boom-metres
+    value: 3
+    unit: m
+    says: deployed science instrument boom length
+    kind: measured
+    source:
+      key: voyager-faq
+      where: FAQ, How big is Voyager? How much does it weigh?, science instrument boom
+      text: '3'
+      excerpt: The science instrument boom (near top of picture) is 3 meters long.
+  - name: voyager-bus-diameter-metres
+    value: 1.8
+    unit: m
+    says: approximate bus housing electronics diameter
+    kind: measured
+    source:
+      key: voyager-faq
+      where: FAQ, How big is Voyager? How much does it weigh?, bus housing
+      text: '1.8'
+      excerpt: The Bus Housing Electronics is about 1.8 meters in diameter.
+  - name: voyager-height-metres
+    value: 3.8
+    unit: m
+    says: reflector-structure top to triangular bus feet bottom
+    kind: measured
+    source:
+      key: voyager-faq
+      where: FAQ, How big is Voyager? How much does it weigh?, spacecraft height
+      text: '3.8'
+      excerpt: The spacecraft height — from the top of the reflector structure in the middle of the high gain antenna to the bottom of the triangular feet below the bus housing electronics — is about 3.8 meters.
+  - name: roman-primary-diameter-metres
+    value: 2.4
+    unit: m
+    says: primary mirror diameter for the Roman telescope's optical assembly
+    kind: measured
+    source:
+      key: roman-observatory-technical
+      where: Telescope Parameters, Primary Mirror size
+      text: '2.4'
+      excerpt: "Primary Mirror size: 2.4 meters"
+  - name: roman-deployed-length-metres
+    value: 12.7
+    unit: m
+    says: NASA's stated lower-bound overall length for the deployed observatory
+    kind: measured
+    source:
+      key: roman-observatory-faq
+      where: Quick Facts, size
+      text: '12.7'
+      excerpt: over 42 feet (12.7 meters) long
+  - name: roman-deployed-width-metres
+    value: 4.4
+    unit: m
+    says: NASA's stated lower-bound overall width for the deployed observatory
+    kind: measured
+    source:
+      key: roman-observatory-faq
+      where: Quick Facts, size
+      text: '4.4'
+      excerpt: more than 14 feet (4.4 meters) wide

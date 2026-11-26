@@ -1,0 +1,75 @@
+# Model choices, not botanical measurements. Algorithm and botanical
+# provenance: doc/model/vegetation/conifer-foliage.md. Read through Puzzlemouth numbers.
+# Original choices: 2026-11-03; spruce extension: 2026-11-08.
+numbers:
+  - name: shoot-orders
+    value: 2
+    says: two recursive lateral orders below each existing branchlet axis
+    kind: picked
+    by: Slayer's recursive-foliage study, 2026-11-03
+  - name: shoot-first-laterals
+    value: 16
+    says: lateral buds on a prototype's first axis
+    kind: picked
+    by: Slayer's recursive-foliage study, 2026-11-03
+  - name: shoot-second-laterals
+    value: 8
+    says: lateral buds on its next branching order
+    kind: picked
+    by: Slayer's recursive-foliage study, 2026-11-03
+  - name: shoot-internode-contraction
+    value: 0.95
+    says: successive internodes contract, using the role of r1 in ABOP figure 2.6
+    kind: picked
+    by: Slayer's recursive-foliage study, 2026-11-03
+  - name: shoot-lateral-contraction
+    value: 0.6
+    says: child length relative to remaining parent length, adapting ABOP r2
+    kind: picked
+    by: Slayer's recursive-foliage study, 2026-11-03
+  - name: shoot-lateral-angle
+    value: 50
+    unit: deg
+    says: lateral axis angle from its continuing parent
+    kind: picked
+    by: Slayer's recursive-foliage study, 2026-11-03
+  - name: shoot-angle-variation
+    value: 6
+    unit: deg
+    says: bounded seed variation of the lateral angle
+    kind: picked
+    by: Slayer's recursive-foliage study, 2026-11-03
+  - name: shoot-radius-power
+    value: 1.5
+    says: exponent in Weber and Penn section 4.4's child-radius equation
+    kind: picked
+    by: Slayer's recursive-foliage study, 2026-11-03
+  - name: shoot-base-radius
+    value: 0.0012
+    unit: m
+    says: authored woody radius of a full-size foliage shoot prototype
+    kind: picked
+    by: Slayer's recursive-foliage study, 2026-11-03
+  - name: shoot-tip-radius
+    value: 0.15
+    says: tip radius as a fraction of the axis base radius
+    kind: picked
+    by: Slayer's recursive-foliage study, 2026-11-03
+  - name: shoot-cell-length
+    value: 0.4
+    unit: m
+    says: maximum prototype cell along the existing branchlet skeleton
+    kind: picked
+    by: Slayer's recursive-foliage study, 2026-11-03
+  - name: shoot-minimum-cell
+    value: 0.025
+    unit: m
+    says: smallest prototype length; cells are binned without scaling needles
+    kind: picked
+    by: Slayer's recursive-foliage study, 2026-11-03
+  - name: shoot-roll
+    value: 60
+    unit: deg
+    says: authored maximum roll either way between neighboring flat sprays
+    kind: picked
+    by: Slayer's recursive-foliage study, 2026-11-03

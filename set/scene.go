@@ -1,0 +1,244 @@
+package set
+
+import (
+	"math"
+
+	"github.com/janearc/slayer/airlight"
+	yaml "gopkg.in/yaml.v3"
+)
+
+// kinds is every kind of asset a set file may ask for.
+var kinds = []string{"house"}
+
+// scene reads the scene: its name, its light, where and when it is,
+// its cameras, and the set.
+func (reading reader) scene(_, value *yaml.Node) error {
+	reading.spaceCoordinates = reading.second && valueOf(value, "setting") == settingSpace
+	made := reading.set
+	steps := reading.with(map[string]step{
+		"renderer": reading.word(&made.renderer,
+			"gpu", "cpu", "gpu-native-shadows", "gpu-native"),
+		"volume-lighting":     reading.word(&made.volumeLighting, "direct", "cached"),
+		"vibes":               reading.flag("vibes"),
+		"fastlight":           reading.flag("fastlight"),
+		"volume-illumination": reading.volumeIllumination,
+		"complexity":          reading.complexity(&made.complexity),
+		"seed": func(key, value *yaml.Node) error {
+			err := reading.whole(&made.seed, 0, mostSeed)(key, value)
+			made.hasSeed = err == nil
+			return err
+		},
+		"recipes":         reading.recipes,
+		"ecosystems":      reading.ecosystems,
+		"fire-fronts":     reading.fireFronts,
+		"fuel-beds":       reading.fuelBeds,
+		"weather":         reading.weather,
+		"lasers":          reading.lasers,
+		"plumes":          reading.plumes,
+		"laser-pointings": reading.laserPointings,
+		"atmosphere":      reading.atmosphere,
+		"name":            reading.text(&made.name),
+		"light":           reading.word(&made.light, "ambient", "moon", "sun", "none"),
+		"air":             reading.word(&made.air, airlight.Names()...),
+		"groundless-air":  reading.groundlessAir,
+		"terrain":         reading.terrain,
+		"film":            reading.film,
+		"moon":            reading.moon,
+		"sun":             reading.sun,
+		"planet":          reading.planet,
+		"fantasy":         reading.fantasy,
+		"hud":             reading.hud,
+		"world":           reading.world,
+		"location": reading.block(map[string]step{
+			"lat": reading.number(&made.latitude, -90, 90),
+			"lon": reading.number(&made.longitude, -180, 180)}),
+		"timeofday":  reading.clock,
+		"date":       reading.dateStep,
+		"utc-offset": reading.quantity(&made.offset, "h", leastOffsetHours, mostOffsetHours),
+		"cameras":    reading.cameras,
+		"set": reading.block(map[string]step{
+			"bounded_box": reading.block(map[string]step{
+				"size_x": reading.number(&made.bounds[0], 0, math.Inf(1)),
+				"size_y": reading.number(&made.bounds[1], 0, math.Inf(1)),
+				"size_z": reading.number(&made.bounds[2], 0,
+					math.Inf(1))}),
+			"assets": reading.assets,
+			"things": reading.things,
+			"stands": reading.stands,
+			"texts":  reading.texts}),
+	}, reading.spaceScene())
+	if err := reading.keys(value, steps, nil); err != nil {
+		return err
+	}
+	if err := reading.sunned(value); err != nil {
+		return err
+	}
+	return reading.aired(value)
+}
+
+// aired refuses an air named under a light other than the sun, except the
+// explicitly referenced groundless Earth atmosphere's separate Moonlight
+// path. It refuses an air with a planet in the sky, whose light the computed
+// sky does not hold.
+func (reading reader) aired(value *yaml.Node) error {
+	made := reading.set
+	world, _ := made.Planet()
+	_, _, _, inSky := world.InSky()
+	_, groundless := made.GroundlessAir()
+	if groundless {
+		if made.air != "earth" {
+			return reading.refuse(value, "groundless-air requires air: earth; the explicit Earth mean-radius origin, reference altitude and earth-standard-land approximation cannot be applied to %q", made.air)
+		}
+		if _, hasTerrain := made.Ground(); hasTerrain {
+			return reading.refuse(value, "groundless-air is only for scenes without terrain")
+		}
+		if made.InSpace() || made.planet != nil {
+			return reading.refuse(value, "groundless-air cannot be combined with a space setting or planet")
+		}
+		if said, hasWorld := made.World(); hasWorld {
+			if said.Unit() != 1 {
+				return reading.refuse(value, "groundless-air requires world.unit 1 so the ocean and scene coordinates are metres; got %g", said.Unit())
+			}
+			if _, hasSky := said.Sky(); hasSky {
+				return reading.refuse(value, "groundless-air cannot be combined with a world sky; the Earth air supplies the sky")
+			}
+			if len(said.Lamps()) > 0 || len(said.Spots()) > 0 ||
+				len(said.Suns()) > 0 || len(said.Floods()) > 0 {
+				return reading.refuse(value, "groundless-air cannot be combined with world lamps, spots, suns or floods; scene light must come from the named Earth air")
+			}
+		}
+	}
+	switch {
+	case made.air == "":
+		return nil
+	case groundless && made.light == "moon":
+		if made.moon == nil {
+			return reading.refuse(value, "groundless Earth moonlight needs moon: with an azimuth and altitude")
+		}
+		// The groundless stage has an explicit mean-radius reference
+		// altitude. Its existing moonlight path builds the full lunar
+		// source and Moonlight sky at that altitude; it does not ask
+		// airlight to treat the Moon as a solar spectrum.
+		return nil
+	case made.light != "sun":
+		return reading.refuse(value, "air: %s is lit by the sun through "+
+			"it, so it takes light: sun, not %q", made.air, made.light)
+	case inSky:
+		return reading.refuse(value, "air: %s with a planet in the sky: "+
+			"the computed sky does not yet hold a planet's light, and "+
+			"the planet's sky would stand in the air's; take out the "+
+			"planet or the air", made.air)
+	}
+	return nil
+}
+
+// cameras reads each camera, by its name. A camera stands off an asset
+// and points to one, or stands at a place and looks at a place, never
+// some of each.
+func (reading reader) cameras(_, value *yaml.Node) error {
+	return reading.each(value, func(name, block *yaml.Node) error {
+		shot := camera{name: name.Value, eye: "human"}
+		var at, lookAt [3]float64
+		steps := reading.with(reading.cameraKeys(&shot, &at, &lookAt),
+			reading.spaceCamera(&shot))
+		err := reading.keys(block, steps, nil)
+		if err == nil {
+			err = reading.placed(block, &shot, at, lookAt)
+		}
+		reading.set.cameras = append(reading.set.cameras, shot)
+		return err
+	})
+}
+
+// cameraKeys is the steps that read a camera of schema version 1 into
+// shot: its title, its eye, where it points and where it stands.
+func (reading reader) cameraKeys(shot *camera, at,
+	lookAt *[3]float64) map[string]step {
+	return map[string]step{
+		"title":         reading.text(&shot.title),
+		"eye":           reading.only("human"),
+		"initial-media": reading.initialMediaNames(&shot.initialMediaNames),
+		"orientation": reading.block(map[string]step{
+			"point_to": reading.text(&shot.pointTo),
+			"alpha":    reading.number(&shot.alpha, -90, 90),
+			"look_at": reading.three(lookAt, -farthest,
+				farthest)}),
+		"location": reading.locationKeys(shot, at),
+		"wide":     reading.number(&shot.wide, narrowestLens, widestLens),
+	}
+}
+
+// locationKeys is the step that reads where a camera stands: off an
+// asset, or at a place, or in schema version 2 by a thing's place.
+func (reading reader) locationKeys(shot *camera, at *[3]float64) step {
+	off := reading.block(map[string]step{
+		"object": reading.text(&shot.from),
+		"standoff_x": reading.number(&shot.standoff[0],
+			math.Inf(-1), math.Inf(1)),
+		"standoff_y": reading.number(&shot.standoff[1],
+			math.Inf(-1), math.Inf(1)),
+		"standoff_z": reading.number(&shot.standoff[2],
+			math.Inf(-1), math.Inf(1))})
+	places := map[string]step{
+		"loc_relative": off,
+		"at":           reading.three(at, -farthest, farthest),
+	}
+	steps := reading.with(places, reading.spaceLocation(shot))
+	return reading.block(steps)
+}
+
+// placed takes a camera's place and the place it looks at, when it says
+// them, and refuses one that says only one of them, or says either
+// beside an asset it stands off or points to.
+func (reading reader) placed(block *yaml.Node, shot *camera, at,
+	lookAt [3]float64) error {
+	orientation := valueNode(block, "orientation")
+	location := valueNode(block, "location")
+	stands, looks := says(location, "at"), says(orientation, "look_at")
+	offAsset := says(location, "loc_relative") ||
+		says(orientation, "point_to") || says(orientation, "alpha")
+	if says(location, "relative") && (stands || says(location, "loc_relative")) {
+		return reading.refuse(block, "camera %s stands at a place set by "+
+			"a thing, or at a place, or off an asset, not some of each",
+			shot.name)
+	}
+	switch {
+	case !stands && !looks:
+		return nil
+	case stands != looks || offAsset:
+		return reading.refuse(block, "camera %s stands at a place and "+
+			"looks at one, both, or stands off an asset and points to "+
+			"one, not some of each", shot.name)
+	}
+	shot.at, shot.lookAt = &at, &lookAt
+	return nil
+}
+
+// assets reads each asset, by its kind. Only a house's name is read
+// yet; how a house is made is kept as unrendered.
+func (reading reader) assets(_, value *yaml.Node) error {
+	return reading.each(value, func(kind, block *yaml.Node) error {
+		if err := reading.only(kinds...)(kind, kind); err != nil {
+			return err
+		}
+		thing := asset{kind: kind.Value}
+		err := reading.keys(block, map[string]step{
+			"name": reading.text(&thing.name),
+		}, []string{"autogen", "autogen_parameters"})
+		reading.set.assets = append(reading.set.assets, thing)
+		return err
+	})
+}
+
+// clock reads a time of day, hhmm on a local clock, as minutes after
+// midnight.
+func (reading reader) clock(name, value *yaml.Node) error {
+	var hhmm int
+	if value.Decode(&hhmm) != nil || hhmm < 0 || hhmm/100 > 23 ||
+		hhmm%100 > 59 {
+		return reading.refuse(value, "%s takes a time as hhmm, 0000 to "+
+			"2359, not %q", name.Value, value.Value)
+	}
+	reading.set.clock = hhmm/100*60 + hhmm%100
+	return nil
+}

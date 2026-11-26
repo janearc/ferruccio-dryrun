@@ -1,0 +1,130 @@
+package terrain
+
+import (
+	"compress/zlib"
+	"fmt"
+	"io"
+	"math"
+
+	"golang.org/x/image/tiff/lzw"
+)
+
+// tile reads directly from the file section, without keeping compressed bytes.
+// The decoded payload is checked before allocation and read incrementally.
+func (raster *Raster) tile(index int) ([]float32, error) {
+	if samples, found := raster.cache.get(index); found {
+		return samples, nil
+	}
+	room := raster.budget.TileBytes
+	if raster.predictor == 3 {
+		row, err := allocation(uint64(raster.tileW), sampleBytes, room)
+		if err != nil {
+			return nil, err
+		}
+		room -= int64(row)
+	}
+	rows := raster.tileH
+	// TIFF strips are not padded to RowsPerStrip at the image's last strip.
+	// Tiled images retain their complete padded tile payloads. See the installed
+	// libtiff TIFFReadEncodedStrip manual and TIFFTAG_ROWSPERSTRIP in tiff.h.
+	if raster.stripped {
+		rows = min(rows, raster.height-index*raster.tileH)
+	}
+	count, err := allocation(uint64(raster.tileW), uint64(rows),
+		room/sampleBytes)
+	if err != nil {
+		return nil, fmt.Errorf("terrain: tile %d: %w", index, err)
+	}
+	section, err := raster.section(raster.offsets[index], raster.counts[index])
+	if err != nil {
+		return nil, err
+	}
+	input, closer, err := raster.inflated(section)
+	if err != nil {
+		return nil, fmt.Errorf("terrain: tile %d: %w", index, err)
+	}
+	defer closer.Close()
+	buffered := newSampleReader(input)
+	samples, err := raster.decode(buffered, count)
+	if err != nil {
+		return nil, fmt.Errorf("terrain: tile %d: %w", index, err)
+	}
+	if raster.compression != uncompressed {
+		if err := compressedEnd(buffered); err != nil {
+			return nil, fmt.Errorf("terrain: tile %d: %w", index, err)
+		}
+	}
+	raster.cache.put(index, samples)
+
+	return samples, nil
+}
+
+// inflated is a tile's bytes as the compression leaves them to be read, and
+// what closes the reader: the section itself where there is none, or its
+// lzw or zlib stream.
+func (raster *Raster) inflated(section io.Reader) (io.Reader, io.Closer,
+	error) {
+	switch raster.compression {
+	case lzwed:
+		compressed := lzw.NewReader(section, lzw.MSB, byteBits)
+		return compressed, compressed, nil
+	case deflated, oldDeflated:
+		compressed, err := zlib.NewReader(section)
+		if err != nil {
+			return nil, nil, err
+		}
+		return compressed, compressed, nil
+	}
+	return section, io.NopCloser(nil), nil
+}
+
+// decodeSigned reads signed 16-bit samples, whole numbers in the file's byte
+// order, into the float32 the rest of the reader uses. Every such number is
+// exact in a float32, so no height is rounded.
+func (raster *Raster) decodeSigned(input io.Reader, count int) ([]float32, error) {
+	samples := make([]float32, count)
+	var word [signedBytes]byte
+	for index := range samples {
+		if _, err := io.ReadFull(input, word[:]); err != nil {
+			return nil, err
+		}
+		signed := int16(raster.order.Uint16(word[:]))
+		samples[index] = float32(signed)
+	}
+	return samples, nil
+}
+
+// decode reads one encoded sample at a time through a fixed-size reader
+// buffer. It never drains unbounded extra output from a corrupt compressed
+// stream.
+func (raster *Raster) decode(input io.Reader, count int) ([]float32, error) {
+	if raster.signed16 {
+		return raster.decodeSigned(input, count)
+	}
+	if raster.predictor == 3 {
+		return raster.decodeFloating(input, count)
+	}
+	samples := make([]float32, count)
+	var word [sampleBytes]byte
+	for index := range samples {
+		if _, err := io.ReadFull(input, word[:]); err != nil {
+			return nil, err
+		}
+		samples[index] = math.Float32frombits(raster.order.Uint32(word[:]))
+	}
+	return samples, nil
+}
+
+// compressedEnd checks the end code without draining unbounded extra output.
+// TIFF's declared tile grid already includes the padded edge samples.
+func compressedEnd(input io.Reader) error {
+	var extra [1]byte
+	count, err := io.ReadFull(input, extra[:])
+	if count != 0 {
+		return fmt.Errorf("decoded output exceeds the declared tile grid")
+	}
+	if err != io.EOF {
+		return fmt.Errorf("missing compressed tile end: %w", err)
+	}
+	return nil
+}

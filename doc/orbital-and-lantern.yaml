@@ -1,0 +1,87 @@
+# the orbital and the lantern: a pair of culture orbitals, two great
+# bands at right angles, round the lantern, a star inside a Dyson swarm
+# whose panels let its light out in shafts, all inside a glowing nebula.
+# Seen from far outside.
+#
+# This file writes the scene as data, against set/ecosystem-v2.schema.json,
+# so it is a set like the others and can be rendered at 4K and cut to the
+# music. Where a number is computed, the comment says how.
+#
+# Lengths are in kilometres.
+#
+"$schema": https://github.com/janearc/slayer/schemas/ecosystem-v2.json
+scene:
+  name: the orbital and the lantern
+  renderer: gpu-native
+  seed: 37
+  setting: space
+  set:
+    things:
+      the lantern:
+        # package lantern: a star inside a swarm of inward-facing panels
+        # on tilted orbits; light leaves in shafts. The baseline
+        # intercepts about 87% of the light
+        kind: lantern
+        seed: 1
+        place: {at: origin}
+        # the baseline: panels near six stellar radii, in bands 0.4
+        # radii wide
+        panels: baseline
+        # the swarm's rings turn
+        turning: true
+      the outer orbital:
+        kind: culture-orbital
+        seed: 2
+        around: the lantern
+        # radius 1,840,000 km, the radius for one g at a 24 hour turn,
+        # T = 2 pi root(R/g)
+        radius: {value: 1840000, unit: km}
+        # 32,000 km wide, walls a thousand high
+        width: {value: 32000, unit: km}
+        walls: {value: 1000, unit: km}
+        # each leans 45 degrees from the lantern's axis, one each side,
+        # so the two stand at right angles; sense 1 and -1, so they turn
+        # opposite ways
+        lean: {value: 45, unit: deg}
+        sense: 1
+        # sodium amber to warm white, black bodies
+        lights: {kelvin: {from: 1900, to: 3200}}
+      the inner orbital:
+        kind: culture-orbital
+        seed: 3
+        around: the lantern
+        # four fifths of the outer's radius
+        radius: {value: 1472000, unit: km}
+        width: {value: 32000, unit: km}
+        walls: {value: 1000, unit: km}
+        lean: {value: -45, unit: deg}
+        sense: -1
+        lights: {kelvin: {from: 1900, to: 3200}}
+      the nebula:
+        kind: nebula
+        seed: 4
+        around: the lantern
+        # thickness 4.5e-5; no neon or argon, so the glow is hydrogen
+        # red; glow 0.2
+        thickness: 4.5e-5
+        neon: 0
+        argon: 0
+        glow: 0.2
+  film:
+    width: 3840
+    height: 2160
+    rays: 4
+    fps: 24
+  cameras:
+    far:
+      # from far outside, 25 degrees above the plane, the hoops standing
+      # upright, lit by the lantern, at 3,600,000 km
+      title: "the orbitals from far outside, lit by the lantern"
+      location:
+        relative:
+          object: the lantern
+          distance: {value: 3600000, unit: km}
+          above_plane: {value: 25, unit: deg}
+      orientation: {point_to: the lantern}
+      # held while the bands turn, for as long as the edit gives it
+      duration: {value: song, unit: s}

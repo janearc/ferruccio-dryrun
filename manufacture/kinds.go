@@ -1,0 +1,677 @@
+package manufacture
+
+import (
+	"cmp"
+	"errors"
+	"fmt"
+	"maps"
+	"math"
+	"sort"
+	"strings"
+
+	"github.com/janearc/celestial/measure"
+	"github.com/janearc/slayer/manufacture/plants/conifers"
+	"github.com/janearc/slayer/manufacture/plants/ferns"
+	"github.com/janearc/slayer/maths"
+	"github.com/janearc/slayer/maths/strategies"
+	"github.com/janearc/slayer/scene/texture"
+	"github.com/janearc/slayer/scene/thing"
+)
+
+// the kinds: what the manufactory makes, each a row of numbers. a
+// caller names a kind and gives a seed, and the seed picks every
+// number the row leaves open, from the range the row allows.
+//
+// the numbers in these rows are fiction, decided 2026-10-06 when the
+// question was which published tables to use: they are made up to sound
+// right, by the author unless a row says whose, and none is measured.
+//
+// three are from memory and not looked up: the can's size, the sizes at which a
+// stone changes its name, and (with the lights) hydrogen's line.
+//
+// a row's ranges are the one place a bare number is a length, an
+// angle, a heat or a power: a span says in its row's own words which,
+// and what a seed picks from it is a measure quantity from then on.
+
+// span is a range a seed picks from: bare numbers in the unit the
+// row that holds it says.
+type span struct{ least, most float64 }
+
+// pick is the number a share of the way from the least to the most.
+func (of span) pick(share float64) float64 {
+	return of.least + (of.most-of.least)*share
+}
+
+// metres, degrees, kelvin and watts are a pick as the quantity its
+// row means.
+func (of span) metres(share float64) measure.Length {
+	return measure.Metres(of.pick(share))
+}
+
+// degrees is a pick as an angle.
+func (of span) degrees(share float64) measure.Angle {
+	return measure.Degrees(of.pick(share))
+}
+
+// kelvin is a pick as a temperature.
+func (of span) kelvin(share float64) measure.Temperature {
+	return measure.Kelvin(of.pick(share))
+}
+
+// watts is a pick as a power.
+func (of span) watts(share float64) measure.Power {
+	return measure.Watts(of.pick(share))
+}
+
+// count is pick for whole numbers: each from the least to the most is
+// as likely as the next.
+func (of span) count(share float64) int {
+	return maths.CountBetween(of.least, of.most, share)
+}
+
+// the places a row's picks are drawn from in its seed. the thing
+// itself grows from a sprout of the seed, so its own draws are none of
+// these.
+const (
+	picking = iota
+	growing
+	stoning
+	sticking
+	flaring
+	housing
+)
+
+// object is what a plan asks of anything a set holds, made or not: how big
+// it is, and whether a sensor sees it, without making it. A laser is an
+// object that makes no good; a kind of thing is a maker.
+type object interface {
+	// extent is the box that holds everything made would make from from,
+	// in the thing's own frame. It may be too large, never too small. A
+	// maker that cannot say it from its recipe's numbers says it by
+	// greedyExtent, which makes the thing once.
+	extent(from seed) (maths.Box, error)
+	// seen is how by sees what made would make from from, standing at at:
+	// whether any pixel's ray can meet it, and how many pixels across it
+	// spans. Most makers answer it by seenFrom.
+	seen(from seed, at maths.Subspace, by strategies.Eye) (strategies.Seen, error)
+}
+
+// maker is the concrete recipe. A kind supplies object behaviour around it;
+// recipes declare a bound or an explicitly greedy planning strategy.
+type maker interface {
+	made(from seed) (good, error)
+}
+
+// Laser is an object, and makes no good.
+var _ object = Laser{}
+
+// kind is a row of the table: a name, and how one is made.
+//
+// found only by kindNamed.
+type kind struct {
+	name string
+	how  maker
+}
+
+var _ object = kind{}
+
+func (row kind) extent(from seed) (maths.Box, error) { return extentOf(row, from) }
+func (row kind) seen(from seed, at maths.Subspace, by strategies.Eye) (strategies.Seen, error) {
+	return seenOf(row, from, at, by)
+}
+
+var errKind = errors.New("manufacture: no such kind")
+
+// table is every kind there is, by name.
+func table() map[string]maker {
+	rows := map[string]maker{"log": logRow(), "can": canRow(), "campfire": fireRow(),
+		"bonfire": pyreRow(), "spotlight": spotRow(), "maser": maserRow(),
+		"home": homeRow()}
+	rows["guide-star-launcher"] = guideLauncher{}
+	rows["hatz-gargoyle"] = hatzGargoyleKind{}
+	rows["soho"] = soho{}
+	rows["cassini"] = cassiniHuygens{}
+	rows["huygens"] = cassiniHuygens{probe: true}
+	rows["cassini-huygens"] = cassiniHuygens{attached: true}
+	rows["new-horizons"] = newHorizons{}
+	rows["new-horizons-vtad"] = newHorizonsVTAD{}
+	rows["human-scale-2m"] = scaleHuman{}
+	rows["yurt"] = yurtRow{}
+	rows["winnebago"] = winnebagoRow{}
+	rows["bivouac"] = bivouacRow{}
+	rows[ClusterKind] = scavengedRow{}
+	rows["terrace-groningen"] = terraceRow{culture: "groningen"}
+	rows["terrace-portofino"] = terraceRow{culture: "portofino"}
+	rows["terrace-midwest"] = terraceRow{culture: "midwest"}
+	rows["terrace-san-francisco"] = terraceRow{culture: "san-francisco"}
+	rows["condominium"] = condominiumRow{}
+	rows[VillageHouseKind] = villageHouseRow{}
+	rows[VillageKind] = villageRow{}
+	rows[SuperblockKind] = superblockRow{}
+	rows[LashedStreetKind] = lashedStreetRow{}
+	rows[pierKind] = pierRow{}
+	rows["tower"] = towerRow{}
+	rows["bridge"] = bridgeRow{}
+	rows[streetKind] = streetRow{}
+	rows["mariner-10"] = mariner10{}
+	rows["jimo"] = jimo{}
+	rows["optical-observatory"] = optical{Optical{
+		Diameter: measure.Metres(24), Aperture: measure.Metres(8),
+		Opening: measure.Degrees(35), Azimuth: measure.Degrees(180),
+		Altitude: measure.Degrees(55), Segmented: true,
+	}}
+	for name, row := range stoneRows() {
+		rows[name] = row
+	}
+	for name, row := range signRows() {
+		rows[name] = row
+	}
+	for name, row := range plateRows() {
+		rows[name] = row
+	}
+	maps.Copy(rows, spacecraftRows())
+	maps.Copy(rows, voyagerRows())
+	maps.Copy(rows, personalRows())
+	maps.Copy(rows, yardRows())
+	maps.Copy(rows, owlRows())
+	maps.Copy(rows, summitRows())
+	maps.Copy(rows, stageRows())
+	maps.Copy(rows, truckRows())
+	maps.Copy(rows, saucerRows())
+	maps.Copy(rows, stackRows())
+	maps.Copy(rows, lunarRows())
+	maps.Copy(rows, veneraRows())
+	maps.Copy(rows, j58Rows())
+	maps.Copy(rows, alfaRows())
+	maps.Copy(rows, boatRows())
+	maps.Copy(rows, bubblesRows())
+	maps.Copy(rows, macroRows())
+	maps.Copy(rows, cityRows())
+	maps.Copy(rows, gargoyleRows())
+	maps.Copy(rows, retailRows())
+	rows["city-clustered-10000"] = clusteredCityMaker{DefaultClusteredCity()}
+	rows["city-clustered-green-10000"] = clusteredCityMaker{greenClusteredCity(false)}
+	rows["city-clustered-night-10000"] = clusteredCityMaker{greenClusteredCity(true)}
+	rows["griffith"] = civicObservatory{}
+	rows["space-observatory"] = rows["spitzer"]
+	maps.Copy(rows, groundRows())
+	return rows
+}
+
+// kindNames is the name of every kind, in alphabetical order.
+func kindNames() []string {
+	var names []string
+	for name := range table() {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	return names
+}
+
+// kindNamed is the kind of a name, or a refusal that lists the kinds
+// there are.
+func kindNamed(name string) (kind, error) {
+	how, known := table()[name]
+	if !known {
+		return kind{}, fmt.Errorf("%w as %q; there are %s", errKind,
+			name, strings.Join(kindNames(), ", "))
+	}
+	return kind{name: name, how: how}, nil
+}
+
+// makeOf is one of a kind, from a seed, or why there can be none. it
+// is the one door: there is no door a kind.
+func makeOf(row kind, from seed) (good, error) {
+	if row.how == nil {
+		return good{}, errKind
+	}
+	if !from.made() {
+		return good{}, errGood
+	}
+	return row.how.made(from)
+}
+
+// plain is a look of one plain colour.
+func plain(name string, red, green, blue float64) *thing.Material {
+	return &thing.Material{Name: name,
+		Colour: maths.RGB(red, green, blue)}
+}
+
+// stone is the row of a stone: how long its longest axis may be, in
+// metres, its middle axis as a share of that and its shortest as a
+// share of the middle, how worn it may be, how far it may lean from
+// lying flat, in degrees, how much of its thickness is sunk in the ground,
+// as a share, how much of its face dust covers, as a share, how finely it
+// is cut, and whether it breaks as a plate of a layered rock does.
+type stone struct {
+	long, middle, short, worn, lean, sunk, dust span
+	around                                      int
+	dressed                                     looks
+	platy                                       bool
+}
+
+// the draws a stone's lean, its sinking and its dust are picked from, in
+// the picking part of its seed
+const (
+	leaning = 4 // defined: the draw after its three axes and its wear
+	sinking = 5 // defined: the draw after its lean
+	dusting = 6 // defined: the draw after its sinking
+)
+
+// the dust that lies on a plate
+const (
+	// dustShare is how much of the plate's own light the dust gives back.
+	// picked: the soil's, which the set picks at the same share of the
+	// plates' read reflectance, darker, as the lander's panoramas show it.
+	dustShare = 0.45 // picked: see above
+	// dustPatch is about how wide a patch of dust is, in metres. picked:
+	// a few centimetres, as the dust lies in the panoramas.
+	dustPatch = 0.04 // picked: see above
+)
+
+// dark basalt's share of the light it gives back, red, green and blue: the
+// ground the venus landers stood on, dark and nearly grey. read from the
+// venus surface reflectance abstract, ntrs 19870013979: page 166, figure 1,
+// albedo by band from the photometers of two landers; page 165, the text.
+const (
+	// darkRed: read, page 166, figure 1, about 6 per cent at 0.65 to 0.7 um.
+	darkRed = 0.06 // read: page 166
+	// darkGreen: read, page 166, figure 1, about 5 per cent at 0.55 to 0.6 um.
+	darkGreen = 0.05 // read: page 166
+	// darkBlue: picked. no band reaches below 0.5 um; page 165 says the
+	// later panoramas show rock and soil grey to within a tenth, so the blue
+	// is held within a tenth of the green.
+	darkBlue = 0.046 // picked: see above
+)
+
+// plateRows is the plates of a layered rock broken where it lies: a slab
+// and a chip, each far wider than it is thick, freshly broken, some
+// leaning, in dark basalt. their shapes are picked by looking at the
+// photographs a venus lander took of the ground it stood on.
+func plateRows() map[string]stone {
+	dark := looks{body: plain("dark basalt", darkRed, darkGreen, darkBlue)}
+	slab := stone{
+		long:    span{0.15, 0.9},  // picked: a hand to an arm long
+		middle:  span{0.5, 0.9},   // picked: plates, not rods
+		short:   span{0.04, 0.14}, // picked: centimetres to a decimetre thick
+		worn:    span{0, 0.25},    // picked: broken where it lies
+		lean:    span{0, 10},      // picked: most lie flat, some tilted
+		sunk:    span{0.4, 0.85},  // picked: bedded in the soil, near flush
+		dust:    span{0, 0},       // picked: none for now; the patches drew as even spots, not drifted soil (2026-11-15)
+		around:  24,               // picked: fine enough to be seen near
+		dressed: dark,
+		platy:   true,
+	}
+	chip := slab
+	chip.long = span{0.01, 0.12} // picked: grit to a palm across
+	chip.short = span{0.2, 0.5}  // picked: thicker for its size
+	chip.worn = span{0.1, 0.5}   // picked: a little rounded
+	chip.sunk = span{0, 0.4}     // picked: lying on the soil or in it
+	chip.dust = span{0, 0}       // picked: none, as on the slabs
+	chip.around = 6              // picked: as a pebble is cut
+	return map[string]stone{"slab": slab, "chip": chip}
+}
+
+// stoneRows is the three stones, named by size. the sizes at which the
+// name changes are the geologists', from memory: 4, 64 and 256 mm. the
+// smaller a stone the further it has usually travelled, so the more
+// worn it is allowed to be.
+func stoneRows() map[string]stone {
+	granite := looks{body: plain("granite", 0.42, 0.41, 0.4)}
+	shape := stone{middle: span{0.6, 0.95}, short: span{0.5, 0.9},
+		dressed: granite}
+	pebble, cobble, boulder := shape, shape, shape
+	pebble.long, pebble.worn, pebble.around = span{0.004, 0.064},
+		span{0.6, 1}, 6
+	cobble.long, cobble.worn, cobble.around = span{0.064, 0.256},
+		span{0.3, 0.9}, 12
+	boulder.long, boulder.worn, boulder.around = span{0.256, 2},
+		span{0, 0.5}, 12
+	return map[string]stone{"pebble": pebble, "cobble": cobble,
+		"boulder": boulder}
+}
+
+// made is a stone of this row from a seed, leaned about its longest axis
+// where its row lets it lean, so one long edge sinks into the ground and
+// the other lifts, and sunk by a share of its thickness where its row
+// sinks it.
+func (row stone) made(from seed) (good, error) {
+	long := row.long.metres(from.draw(picking, 0, 0))
+	middle := long.Times(row.middle.pick(from.draw(picking, 1, 0)))
+	short := middle.Times(row.short.pick(from.draw(picking, 2, 0)))
+	shape, err := newLump(long, middle, short,
+		row.worn.pick(from.draw(picking, 3, 0)),
+		from.sprout(growing, 0))
+	if err != nil {
+		return good{}, err
+	}
+	if row.platy {
+		shape = shape.asPlate()
+	}
+	made, err := shaped(shape, row.around, row.dressing(from))
+	if err != nil || row.lean.most == 0 && row.sunk.most == 0 {
+		return made, err
+	}
+	lean := row.lean.degrees(from.draw(picking, leaning, 0))
+	depth := inScene(short) * row.sunk.pick(from.draw(picking, sinking, 0))
+	return made.placed(maths.Subspace{Origin: maths.V(0, -depth, 0),
+		Orientation: maths.About(maths.XAxis, lean.InRadians())})
+}
+
+// dressing is a stone's looks: its row's, or where its row dusts it, its
+// row's rock with dust lying on it in patches, as much as the seed draws,
+// the patches the seed's own.
+func (row stone) dressing(from seed) looks {
+	if row.dust.most == 0 {
+		return row.dressed
+	}
+	rock := *row.dressed[body]
+	rock.Texture = texture.Dusted{Rock: rock.Colour,
+		Dust:  rock.Colour.Scale(dustShare),
+		Share: row.dust.pick(from.draw(picking, dusting, 0)),
+		Patch: dustPatch, Seed: from.number}
+	return looks{body: &rock}
+}
+
+// shaped is a thing of one form, cut so many round, in its looks.
+func shaped(shape form, around int, dressed looks) (good, error) {
+	fine, err := cutInto(around)
+	if err != nil {
+		return good{}, err
+	}
+	// a cut that was made and a form a door made is a thing newGood
+	// takes: its error is for a form or a cut that is nothing
+	made, err := newGood(shape, fine)
+	if err != nil {
+		return good{}, err
+	}
+	return made.in(dressed), nil
+}
+
+// conifer is the row of a whorled tree: how tall, in metres, its
+// trunk's radius as a share of its height, how far apart its whorls
+// are, in metres, how many branches its lowest whorl has, how its
+// branches hang, and the whorled architecture it grows by.
+type conifer struct {
+	conifers.Tree
+	dressed     looks
+	shootConfig *shootConfig
+}
+
+const (
+	// branchGrowth is how a grown tree's branches lengthen with its
+	// height: so many times taller, its branches that many times to
+	// this power as long. 2026-11-10: "they need to be much
+	// longer. probably scale branch length as much as you scale the
+	// tree height"; one.
+	branchGrowth = 1
+	// whorlFill is how a grown tree's whorls fill in: so many times
+	// taller, so many times to this power the branches in each, so the
+	// longer branches' tips stand no further apart than the root of it.
+	// Its whorls already come as many times more often up its height.
+	// picked, mine, 2026-11-10, with "increase frequency as well?
+	// probably not directly?".
+	whorlFill = 0.5
+	// grownGirth is a grown tree's branch's radius as a share of its own
+	// length: its foot 2.2 hundredths of its length across.
+	// 2026-11-10: "the branches should be a little bit thicker". picked
+	// by eye, not measured.
+	grownGirth = 0.011
+	// grownPieces is how many pieces a grown tree's limb is in, and
+	// grownWander the most it turns at a joint, in radians: limbs that
+	// flow and twist slightly, where three pieces kinked twice
+	// (2026-11-10: "they should be non-straight, but they should flow and
+	// twist just slightly"). picked by eye, mine.
+	grownPieces = 8
+	grownWander = 0.06
+)
+
+// taller is the row with its height so many times over: the same seed
+// picks the same share of the taller span, so the same tree, taller,
+// with as many more whorls as fit, on a trunk as much thicker.
+//
+// its branches are not as much thicker (2026-11-10: "their
+// branches must not increase in proportion to their trunks"): each is
+// as thick as its own length asks, grownGirth of it. They are longer by
+// the times to branchGrowth's power, more to a whorl by whorlFill's, and
+// flow in grownPieces pieces rather than kink in three.
+func (row conifer) taller(times float64) conifer {
+	row.Tall = [2]float64{row.Tall[0] * times, row.Tall[1] * times}
+	row.Hangs.Reach *= math.Pow(times, branchGrowth-1)
+	row.Hangs.Own = grownGirth
+	fill := math.Pow(times, whorlFill)
+	row.Lowest = [2]float64{row.Lowest[0] * fill, row.Lowest[1] * fill}
+	row.Grows = row.Grows.Flowing(grownPieces, grownWander)
+	return row
+}
+
+const (
+	// sideSpacing is how far apart a branched tree's side branches stand
+	// along a limb, in metres, and sideReach how long the longest is, as
+	// a share of the whole limb. picked by eye, mine, 2026-11-10.
+	sideSpacing = 0.35
+	sideReach   = 1.0 / 3
+)
+
+// branched is the row with side branches on its limbs: each piece of its
+// longest limb carries as many as fit at sideSpacing, and every limb as
+// many; each side branch in foliage of its own, so a bough is a fan of
+// sprays, not a line of them. A row that has branchlets already keeps
+// their shape and takes the spacing.
+func (row conifer) branched() conifer {
+	pieces := float64(row.Grows.Branch.Pieces)
+	longest := row.Hangs.Reach * (row.Tall[0] + row.Tall[1]) / 2
+	each := math.Max(2, longest/pieces/sideSpacing)
+	sides := branchlets{
+		Per:   [2]float64{0.8 * each, 1.2 * each},
+		Shoot: limbing{Pieces: 2, Droop: 0.15},
+		Set:   spruceSides(),
+		Wear:  round{Joints: lengths(0.10, 0.18, 0.08), Sides: 5},
+	}
+	// a side branch is sized against the piece it stands on, so a share
+	// of the whole limb is that share times the pieces, as the redwood's
+	// branchlets are
+	sides.Set.Reach = sideReach * pieces
+	if row.Grows.Shoots != nil {
+		sides.Shoot = row.Grows.Shoots.Shoot
+		sides.Set = row.Grows.Shoots.Set
+		sides.Wear = row.Grows.Shoots.Wear
+	}
+	row.Grows.Shoots = &sides
+	return row
+}
+
+// spruceSides is how a branched spruce sets its side branches along a
+// limb: each half a turn from the last, so they stand in two rows,
+// leaning 55 degrees out from the limb, shorter toward each piece's
+// tip; branched sets their reach. set by eye, mine, 2026-11-10; none is
+// measured.
+func spruceSides() habit {
+	return habit{
+		Turn:  measure.Radians(fullTurn / 2),
+		Start: 0.05, Top: 0.95,
+		Thinning: 0, Fewest: 1,
+		Stray: 0.1,
+		Low:   measure.Degrees(55), Lift: measure.Degrees(10),
+		Sway:  measure.Degrees(10),
+		Reach: 1, Shortening: 0.3, Uneven: 0.25,
+		Girth: 0.4, Least: 0.002,
+	}
+}
+
+// made is a whorled tree from a seed: as many whorls as fit up its
+// height, at quick.
+func (row conifer) made(from seed) (good, error) {
+	made, err := row.scaffold(from)
+	if err != nil || row.FoliageStyle == 0 {
+		return made, err
+	}
+	return recursiveFoliageWith(made, from, row.FoliageStyle, "quick", row.shootConfig)
+}
+
+// scaffold retains the seeded major limbs while foliage is constructed
+// separately. Legacy spruce recipes still use its original sleeves.
+func (row conifer) scaffold(from seed) (good, error) {
+	tall := (span{row.Tall[0], row.Tall[1]}).metres(from.draw(picking, 0, 0))
+	girth := tall.Times((span{row.Slender[0], row.Slender[1]}).pick(from.draw(picking, 1, 0)))
+	between := (span{row.Between[0], row.Between[1]}).metres(from.draw(picking, 2, 0))
+	whorls := int(math.Round(tall.Over(between)))
+	sprays := 0
+	if row.Grows.Shoots != nil {
+		sprays = maths.CountBetween(row.Grows.Shoots.Per[0], row.Grows.Shoots.Per[1], from.draw(picking, 4, 0))
+	}
+	grown, err := row.Grows.Grown(whorls,
+		(span{row.Lowest[0], row.Lowest[1]}).count(from.draw(picking, 3, 0)), sprays, row.Hangs, int(body), int(leaf))
+	if err != nil {
+		return good{}, err
+	}
+	made, err := grownIn(grown, tall, girth, maths.Subspace{}, from, row.dressed)
+	if err == nil && row.Flare > 0 {
+		h, r := tall.InMetres(), girth.InMetres()
+		made.parts[0].shape = turnedProfile{[][2]float64{
+			{0, 0}, {r * row.Flare, 0}, {r, h * 0.08}, {r * 0.65, h * 0.4}, {0, h}}}
+	}
+	return made, err
+}
+
+// grownIn is a growth grown to a size, standing or lying in a space,
+// in its looks.
+func grownIn(grown growth, length, girth measure.Length,
+	in maths.Subspace, from seed, dressed looks) (good, error) {
+	made, err := grow(grown, size{Length: length, Girth: girth},
+		from.sprout(growing, 0))
+	if err != nil {
+		return good{}, err
+	}
+	placed, err := made.placed(in)
+	return placed.in(dressed), err
+}
+
+// fern is the row of a fern: how long a frond is and how thick its
+// stalk at the foot, in metres, and how many fronds and how many
+// leaflets a frond.
+type fern struct {
+	long, stalk, fronds, leaflets span
+	dressed                       looks
+	anatomy                       ferns.Anatomy
+}
+
+// made is a fern from a seed.
+func (row fern) made(from seed) (good, error) {
+	grown, err := ferns.Growth(row.fronds.count(from.draw(picking, 2, 0)),
+		row.leaflets.count(from.draw(picking, 3, 0)), int(body), int(leaf), row.anatomy)
+	if err != nil {
+		return good{}, err
+	}
+	return grownIn(grown, row.long.metres(from.draw(picking, 0, 0)),
+		row.stalk.metres(from.draw(picking, 1, 0)), maths.Subspace{},
+		from, row.dressed)
+}
+
+// lying is the space of a thing laid on its side on the ground: its
+// length along x, its middle over the space's start, lifted by its
+// radius so it rests on the ground and is not half sunk in it, and
+// rolled about its length by a share of a turn.
+func lying(length, girth measure.Length, roll float64) maths.Subspace {
+	quarter := fullTurn / 4
+	down := maths.About(maths.ZAxis, -quarter)
+	foot := maths.V(-inScene(length)/2, inScene(girth), 0)
+	return maths.Subspace{Origin: foot,
+		Orientation: down.Then(maths.About(maths.YAxis, fullTurn*roll))}
+}
+
+// can is the row of a soda can: how tall, how far across, and the
+// share of them left standing.
+type can struct {
+	tall, across measure.Length
+	upright      float64
+	around       int
+	dressed      looks
+}
+
+// canRow is the can: the can makers' 211 by 413, which is 2 11/16
+// inches across and 4 13/16 tall, from memory.
+func canRow() can {
+	const inch = 0.0254
+	tin := &thing.Material{Name: "aluminium", Colour: maths.Grey(0.8),
+		Gloss: 0.6}
+	return can{tall: measure.Metres((4 + 13.0/16) * inch),
+		across:  measure.Metres((2 + 11.0/16) * inch),
+		upright: 0.3, around: 16, dressed: looks{body: tin}}
+}
+
+// made is a can from a seed. every can is the same can; the seed says
+// whether somebody stood it up or it rolled, and how far.
+func (row can) made(from seed) (good, error) {
+	radius := row.across.Times(midway)
+	shape, err := newTube(row.tall, radius, radius)
+	if err != nil {
+		return good{}, err
+	}
+	made, err := shaped(shape, row.around, row.dressed)
+	if err != nil || from.draw(picking, 0, 0) < row.upright {
+		return made, err
+	}
+	return made.placed(lying(row.tall, radius,
+		from.draw(picking, 1, 0)))
+}
+
+// log is the row of a fallen log: how long, in metres, its radius as
+// a share of its length, how many broken stubs of branches it still
+// has, how much of its radius it keeps to its top, and how finely the
+// trunk and the stubs are cut.
+type log struct {
+	long, thick, stubs span
+	taper              float64
+	around, stubAround int
+	dressed            looks
+}
+
+// logRow is the log.
+func logRow() log {
+	return log{long: span{1.5, 4}, thick: span{0.04, 0.07},
+		stubs: span{2, 5}, taper: 0.8, around: 10, stubAround: 5,
+		dressed: looks{body: plain("bark", 0.24, 0.16, 0.1)}}
+}
+
+// stubHabit is how a log's broken branches stand along it: one at a
+// time, turned by the golden angle as they grew, short, and near
+// square to the trunk.
+func stubHabit() habit {
+	return habit{
+		Turn:  measure.Radians(math.Pi * (3 - math.Sqrt(5))),
+		Start: 0.15, Top: 0.85,
+		Thinning: 0, Fewest: 1,
+		Stray: 0.1,
+		Low:   measure.Degrees(80), Lift: measure.Degrees(0),
+		Sway:  measure.Degrees(15),
+		Reach: 0.05, Shortening: 0, Uneven: 0.4,
+		Girth: 0.5, Least: 0.008,
+	}
+}
+
+// made is a log from a seed: a trunk narrowing a little toward its
+// top, carrying its stubs, laid on the ground.
+func (row log) made(from seed) (good, error) {
+	long := row.long.metres(from.draw(picking, 0, 0))
+	girth := long.Times(row.thick.pick(from.draw(picking, 1, 0)))
+	trunk, err := sleeved([]joint{{OfGirth: 1}, {OfGirth: row.taper}},
+		row.around, body)
+	if err != nil {
+		return good{}, err
+	}
+	stub, err := sleeved([]joint{{OfGirth: 1}, {}}, row.stubAround,
+		body)
+	if err != nil {
+		return good{}, err
+	}
+	along, whorlsError := newWhorls(row.stubs.count(from.draw(picking, 2, 0)), 1,
+		stubHabit())
+	grown, growthError := stemCarrying(1, 0, []sleeve{trunk}, along, 1, 0,
+		[]sleeve{stub})
+	if err := cmp.Or(whorlsError, growthError); err != nil {
+		return good{}, err
+	}
+	return grownIn(grown, long, girth,
+		lying(long, girth, from.draw(picking, 3, 0)), from, row.dressed)
+}

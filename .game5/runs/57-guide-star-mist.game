@@ -1,0 +1,1 @@
+guide-star-mist . :: ./bin/slayer draw doc/guide-star-mist.yaml --out out/guide-star-mist.png

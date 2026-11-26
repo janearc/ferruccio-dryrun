@@ -1,0 +1,1499 @@
+# sources.yaml: the published work slayer cites, as a claim.
+#
+# each source says what it is, where it is published, what it may be
+# used under, and the sha256 of its bytes. cmd/sources fetches them onto
+# a shelf in your own scratch, outside any repository, and holds them to
+# that hash:
+#
+#     SLAYER_SHELF=$HOME/slayer/sources game run sources-fetch
+#
+# a source with no sha256 yet is fetched and its hash said; pin it here
+# by hand. a source that must never be fetched again keeps its key and
+# says why, in never. used, never released: the bytes are not shipped.
+
+sources:
+  - key: perez-vega-2024-bridge-reflections
+    title: "Polarised light pollution on river water surfaces caused by artificial light at night from illuminated bridges and surroundings"
+    by: "Catherine Pérez Vega, Franz Hölker, Karolina M. Zielinska-Dabkowska, Andreas Jechow"
+    year: 2024
+    doi: 10.4081/jlimnol.2024.2173
+    from: https://www.jlimnol.it/jlimnol/article/download/2173/2031/18362
+    licence: "CC BY-NC 4.0; local research reference, no redistribution."
+    sha256: cffc16c8a966dfd8d4320e19c344dfcae5a4c92a3bcc8a6e812f2d112d1d6498
+    bytes: 7943775
+    fetched: 2026-11-24
+  - key: lynch-2011-glitter-and-glints
+    title: "Glitter and glints on water"
+    by: "David K. Lynch, David S. P. Dearborn, James A. Lock"
+    year: 2011
+    doi: 10.1364/AO.50.000F39
+    from: https://csuohio.elsevierpure.com/ws/portalfiles/portal/39955766/Glitter%20and%20Glints%20on%20Water.pdf
+    licence: "Author's institutional copy; local study, no redistribution."
+    sha256: 62269c46d29b07f06dcfb773396a48858ee15d0fd56cb6685f469ce4666c182d
+    bytes: 2130887
+    fetched: 2026-11-24
+  - key: bruneton-2010-ocean-lighting
+    title: "Real-time realistic ocean lighting using seamless transitions from geometry to BRDF"
+    by: "Eric Bruneton, Fabrice Neyret, Nicolas Holzschuch"
+    year: 2010
+    doi: 10.1111/j.1467-8659.2009.01618.x
+    from: https://inria.hal.science/inria-00443630v3/document
+    licence: "Authors' institutional copy; local study, no redistribution."
+    sha256: cd254a24ea4d5c67fe9c061decafbe679566c1ed6e6a794cddec916d1a9b2c05
+    bytes: 17338956
+    fetched: 2026-11-24
+  - key: yan-2014-normal-map-glints
+    title: "Rendering glints on high-resolution normal-mapped specular surfaces"
+    by: "Ling-Qi Yan, Miloš Hašan, Wenzel Jakob, Jason Lawrence, Steve Marschner, Ravi Ramamoorthi"
+    year: 2014
+    doi: 10.1145/2601097.2601155
+    from: https://d38rqfq1h7iukm.cloudfront.net/media/papers/Yan2014Rendering.pdf
+    licence: "Authors' publication copy; local study, no redistribution."
+    sha256: 4488b416b83e520fb4d62525bb053a6939ffa2d078820a31db8748e9b32a4095
+    bytes: 15038328
+    fetched: 2026-11-24
+  - key: cox-munk-1954-sea-roughness
+    title: "Measurement of the roughness of the sea surface from photographs of the sun's glitter"
+    by: "Charles Cox, Walter Munk"
+    year: 1954
+    doi: 10.1364/JOSA.44.000838
+    from: https://userpages.umbc.edu/~martins/PHYS650/Cox%20and%20Munk%20Glint%20paper.pdf
+    licence: "Institutional teaching copy; local study, no redistribution."
+    sha256: d0c916266bb3ee46cbe8264c37ba099ac3cbeb8ec1e0e7d85243bce5d1b097b7
+    bytes: 1986916
+    fetched: 2026-11-24
+  - key: quan-fry-1995-seawater-index
+    title: "Empirical equation for the index of refraction of seawater"
+    by: "Xiaohong Quan, Edward S. Fry"
+    year: 1995
+    doi: 10.1364/AO.34.003477
+    from: https://misclab.umeoce.maine.edu/ftp/users/emmanuel/sediment/Tommy/ch_2_ref/QuanandFry1995.pdf
+    licence: "Institutional research copy; local study, no redistribution."
+    sha256: 974b155a6cccbeb694998a8ccc1a05938f8698ecada7af32dfb2f6f86d5efaaa
+    bytes: 108430
+    fetched: 2026-11-24
+  - key: podee-2021-water-reflection-antialiasing
+    title: "Temporal and spatial anti-aliasing for rendering reflections on water waves"
+    by: "Namo Podee, Nelson Max, Kei Iwasaki, Yoshinori Dobashi"
+    year: 2021
+    doi: 10.1007/s41095-021-0204-1
+    from: https://link.springer.com/content/pdf/10.1007/s41095-021-0204-1.pdf
+    licence: "Publisher open-access copy; local study, no redistribution."
+    sha256: 9042d20dcc1e552a818129ab9e63d0f71afa8280397b6e683a57a037a9564c31
+    bytes: 4307403
+    fetched: 2026-11-24
+  - key: veach-guibas-1995-combining-sampling
+    title: "Optimally combining sampling techniques for Monte Carlo rendering"
+    by: "Eric Veach, Leonidas J. Guibas"
+    year: 1995
+    doi: 10.1145/218380.218498
+    from: https://cseweb.ucsd.edu/~viscomp/classes/cse168/sp21/readings/veach.pdf
+    licence: "University teaching copy; local study, no redistribution."
+    sha256: 2967f53c748225a274141bd06ad7275a7719b5fbf6c9b2349bfe785d2c2198d6
+    bytes: 509784
+    fetched: 2026-11-24
+  - key: prima-ipac-observatory
+    title: PRIMA Observatory
+    by: Caltech/IPAC PRIMA
+    from: https://prima.ipac.caltech.edu/page/observatory
+    licence: "Short factual excerpt from the mission page, for local source verification."
+    sha256: 7149da292062f6518410d7c1af8e2a29e19b933269f419c6b83c12bcafc51324
+    bytes: 208
+    fetched: 2026-11-17
+  - key: jimo-overview-2012
+    title: "An Overview of the Jupiter Icy Moons Orbiter: Mission, Environments, and Materials Challenges"
+    by: "Dave Edwards, NASA Marshall Space Flight Center"
+    year: 2012
+    from: https://ntrs.nasa.gov/api/citations/20120016895/downloads/20120016895.pdf
+    licence: "NASA technical reference; local study, no source redistribution."
+    sha256: 320147cdbd0e11f943e13afc5a36076b1bc9023985e3b5eed69e59718be3161d
+    bytes: 499257
+    fetched: 2026-11-15
+  - key: new-horizons-final-eis-2005
+    title: "Final Environmental Impact Statement for the New Horizons Mission, Volume 1"
+    by: "NASA"
+    year: 2005
+    from: https://www.nasa.gov/wp-content/uploads/2018/04/nh-feis_vol1_0.pdf
+    licence: "NASA institutional reference; local study, no source redistribution."
+    sha256: d9f1b8a1f444bc7b5188a52b763cbd50c839a0c25f4e8240f10e8aecb1240d93
+    bytes: 2386614
+    fetched: 2026-11-15
+  - key: spitzer-solar-panel-assembly
+    title: "The Solar Panel Assembly"
+    by: "Spitzer Science Center, Caltech/IPAC"
+    from: https://www.spitzer.caltech.edu/mission/the-solar-panel-assembly
+    licence: "Institutional mission reference; local use, no source redistribution."
+    sha256: b9d1a08595227b45cb379717fb730ef5555e03b5c571359a5740d006ffdcbb37
+    bytes: 18719
+    fetched: 2026-11-15
+  - key: spitzer-on-orbit-performance-2022
+    title: "On-orbit performance of the Spitzer Space Telescope: science meets engineering"
+    by: "M. W. Werner et al."
+    year: 2022
+    doi: 10.1117/1.JATIS.8.1.014002
+    from: https://ntrs.nasa.gov/api/citations/20230003459/downloads/Roellig_On-orbit%20performance%20of%20the%20Spitzer%20Space%20Telescope-%20science%20meets%20engineering.pdf
+    licence: "CC BY 4.0; credit Werner et al., JATIS 8(1), 014002 (2022)."
+    sha256: 3cabce90de013bf3925c041152de4a2f966c54706323fc9b4ea44e3d6030d6b8
+    bytes: 1994036
+    fetched: 2026-11-15
+  - key: gaia-dr3-bright-presentation
+    title: "Gaia DR3 bright-star sample for specimen presentations"
+    by: "ESA Gaia, DPAC; ARI Gaia archive service"
+    year: 2022
+    from: https://gaia.ari.uni-heidelberg.de/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT%20TOP%2012000%20source_id%2Cra%2Cdec%2Cphot_g_mean_mag%20FROM%20gaiadr3.gaia_source%20WHERE%20phot_g_mean_mag%20%3C%207
+    licence: "Public Gaia catalogue data; acknowledge ESA Gaia, DPAC and ARI. Local rendering reference."
+    sha256: 20abbcb2b2b4cb43db62a3d4bf2ab6a617452b9bd16a53a3e6d6a70439d5d4da
+    bytes: 799709
+    fetched: 2026-11-15
+  - key: tully-2014-laniakea
+    title: "The Laniakea supercluster of galaxies"
+    by: "R. Brent Tully, Helene Courtois, Yehuda Hoffman and Daniel Pomarede, Nature 513, 71-73"
+    year: 2014
+    from: https://arxiv.org/pdf/1409.0880v1.pdf
+    doi: 10.1038/nature13674
+    licence: "author-posted arXiv preprint; local reference only, no redistribution"
+    sha256: d3782799fe85031d1850ccafcd83ecba711efd8b5750a8a2322de970cb51af0c
+    bytes: 10022344
+    fetched: 2026-11-14
+  - key: jendersie-deon-2023
+    title: "An Approximate Mie Scattering Function for Fog and Cloud Rendering"
+    by: "Johannes Jendersie and Eugene d'Eon, NVIDIA"
+    year: 2023
+    from: https://research.nvidia.com/labs/rtr/approximate-mie/publications/approximate-mie.pdf
+    licence: "author-hosted reference; local use only, no redistribution"
+    sha256: 1eebd25802c0377712e1742c88c5c7b79589aa461a8b486f878e0c33ebd08f49
+    bytes: 940522
+    fetched: 2026-11-12
+  - key: eso-4lgsf
+    sha256: 800c7fe42031e94b0b75ce3a974d0f0def40986c889cfab952995ef8445dd30b
+    bytes: 79047
+    fetched: 2026-11-12
+    title: Four Laser Guide Star Facility (4LGSF)
+    by: European Southern Observatory
+    from: https://www.eso.org/public/teles-instr/paranal-observatory/vlt/vlt-instr/4lgsf/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: eso-galacsi-layout
+    sha256: e042529d784d28159a5b2b4d9f87990534787bee567ae07f5d3fb59454e85296
+    bytes: 48632
+    fetched: 2026-11-08
+    title: GALACSI optical layout and laser guide-star asterism
+    by: European Southern Observatory
+    from: https://cdn3.eso.org/sci/facilities/develop/ao/sys/galacsi.html
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: ifa-haleakala-facilities
+    sha256: 2078be913c832f2eafd67c49726cad7b659b6e86bc687d2b5b330f157d0f69c0
+    bytes: 226214
+    fetched: 2026-11-08
+    title: Haleakala observatory facilities
+    by: University of Hawaii Institute for Astronomy
+    from: https://about.ifa.hawaii.edu/facility/haleakala-observatories/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: ifa-observatory-index
+    sha256: f76571a10a16e7b84aa4e3bc7325197e1a8c8514f9ff8099c3bfbb63b3012ca4
+    bytes: 241366
+    fetched: 2026-11-08
+    title: Institute for Astronomy facility index
+    by: University of Hawaii Institute for Astronomy
+    from: https://www.ifa.hawaii.edu/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: rubin-summit-facility
+    sha256: 20e437ed0cd3f431ad4717a8103afea48a7b9304474b6728596c8ae94ebb5ab2
+    bytes: 299439
+    fetched: 2026-11-08
+    title: Observatory summit facility and service building
+    by: Vera C. Rubin Observatory
+    from: https://rubinobservatory.org/explore/how-rubin-works/technology/summit-facility
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: palomar-hale
+    sha256: b3d9c2b332d285c87c158dac7bc112b170b26289a35f2655adbb01e13c3b8d7e
+    bytes: 92468
+    fetched: 2026-11-07
+    title: Hale Telescope
+    by: Caltech, Palomar Observatory
+    from: https://sites.astro.caltech.edu/palomar/about/telescopes/hale.html
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: keck-telescopes
+    sha256: 9b8add3ddf2fae75c1fcded25f40a5dc3ac22cbf9779b8fb7236566bb8d96a30
+    bytes: 145876
+    fetched: 2026-11-07
+    title: The Telescopes
+    by: W. M. Keck Observatory
+    from: https://keckobservatory.org/our-story/telescopes/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: subaru-parameters
+    sha256: 4b3bca6471eee5cadb245e9750c1ed71b62383656209fb43bf8f28bebb875d84
+    bytes: 24268
+    fetched: 2026-11-07
+    title: Telescope Parameters
+    by: National Astronomical Observatory of Japan
+    from: https://subarutelescope.org/Telescope/Parameters/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: rubin-key-numbers
+    sha256: 8376a2090066bb3baf0f8c37db0fbe08ecf812420d2246d2b9a765c61b91796a
+    bytes: 256267
+    fetched: 2026-11-07
+    title: Rubin Key Numbers
+    by: Vera C. Rubin Observatory
+    from: https://rubinobservatory.org/for-scientists/rubin-101/key-numbers
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: rubin-mirrors
+    sha256: 02c4c8e41dbef6f4c25336e282824c6c6641d6643ac5cb9533978156a74c7e5d
+    bytes: 300824
+    fetched: 2026-11-07
+    title: Rubin Mirrors
+    by: Vera C. Rubin Observatory
+    from: https://rubinobservatory.org/explore/how-rubin-works/technology/mirrors
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: elt-m1-technical
+    sha256: eac93e074967bf171a80c6db7d181afeb5a788222b173e1d5961713041b4e226
+    bytes: 78991
+    fetched: 2026-11-08
+    title: ELT M1 mirror technical concept
+    by: European Southern Observatory
+    from: https://elt.eso.org/mirror/M1/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: elt-facts
+    sha256: 6713533de304da1f79f55bff62aa9ec0f66567278843c168e35c515939919332
+    bytes: 69982
+    fetched: 2026-11-07
+    title: ELT Facts
+    by: European Southern Observatory
+    from: https://elt.eso.org/about/facts/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: owl-blue-book-overview
+    title: "OWL Blue Book, chapter 2: Overview"
+    by: European Southern Observatory
+    from: https://www.eso.org/sci/facilities/eelt/owl/Blue_Book/2_Overview.pdf
+    sha256: f65c0a3e6eb238f4006282bd213cbf838fb6486ca3e87420be08477c7c622552
+    bytes: 1384878
+    fetched: 2026-11-08
+    licence: "historical institutional reference; local use only, no source redistribution"
+  - key: owl-blue-book-enclosure
+    title: "OWL Blue Book, chapter 11: Enclosure and infrastructures"
+    by: European Southern Observatory
+    from: https://www.eso.org/sci/facilities/eelt/owl/Blue_Book/11_Enclosure_and_infrastructures.pdf
+    sha256: 86d683c6b21b6a54ebeb75b04d747add5e696cda51f25d1f028414117b1f094b
+    bytes: 2435785
+    fetched: 2026-11-08
+    licence: "historical institutional reference; local use only, no source redistribution"
+  - key: owl-design-2004
+    title: OWL Design
+    by: European Southern Observatory
+    from: https://www.eso.org/sci/facilities/eelt/owl/OWL_design.html
+    licence: "historical institutional reference; local use only, no redistribution"
+  - key: griffith-visitor-map
+    sha256: 718601b7763f4ae81ce128d7183ff254634d0688f1cf981cd3f6c5324758b0a4
+    bytes: 374430
+    fetched: 2026-11-08
+    title: Griffith Observatory visitor map, main and lower levels
+    by: Griffith Observatory
+    from: https://griffithobservatory.org/wp-content/uploads/2021/03/GOMap_03112021.pdf
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: griffith-school-guide
+    sha256: 2d41290adbef066cbd1dbff9800d1f2cd2d5373bc5576861f32fce9d761692dc
+    bytes: 3973737
+    fetched: 2026-11-07
+    title: Griffith Observatory Student Guide, Module 1
+    by: Griffith Observatory
+    from: https://griffithobservatory.org/wp-content/uploads/2023/02/Module1_Student_Guide.pdf
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: mandel-2008-surface-fire
+    title: "A wildland fire model with data assimilation"
+    by: "Mandel, Bennethum, Beezley, Coen, Douglas, Kim, Vodacek"
+    year: 2008
+    doi: 10.1016/j.matcom.2008.03.015
+    from: https://arxiv.org/pdf/0709.0086.pdf
+    licence: "author-posted preprint; local reference only, no redistribution"
+    sha256: 9411a2a77b96ade7183c5418a6f23832971f03301f1476972727348b395f3615
+    bytes: 787589
+    fetched: 2026-11-04
+  # Recursive structure and species foliage; local references only.
+
+  - key: abop-tree-models-ch2
+    title: "The Algorithmic Beauty of Plants, chapter 2: Modeling of trees"
+    by: "Prusinkiewicz and Lindenmayer"
+    year: 1990
+    from: https://algorithmicbotany.org/papers/abop/abop-ch2.pdf
+    licence: "copyright authors and publisher; author-hosted reference, no redistribution"
+    sha256: ea3055f7ac7bf50cd637024d01a85251bcc267e030d00213d988c194f60c63bf
+    bytes: 4178846
+    fetched: 2026-11-03
+
+  - key: weber-penn-1995
+    title: "Creation and Rendering of Realistic Trees"
+    by: "Jason Weber and Joseph Penn"
+    year: 1995
+    doi: 10.1145/218380.218427
+    from: https://courses.cs.duke.edu/cps124/fall01/resources/p119-weber.pdf
+    licence: "copyright ACM; university-hosted reference, no redistribution"
+    sha256: db92b467d29c13c04015cf9640a9b46337c25730667571b9f58059b4ee95fb5a
+    bytes: 2214573
+    fetched: 2026-11-03
+
+  - key: osu-coast-redwood-foliage
+    title: "Sequoia sempervirens: Landscape Plants"
+    by: "Oregon State University, Department of Horticulture"
+    from: https://landscapeplants.oregonstate.edu/plants/sequoia-sempervirens
+    licence: "copyright Oregon State University; local reference, no redistribution"
+    sha256: 0a014724b44fe3ce60bf04f1639fb78e4a59f2ef269665ce20fd33601c364f53
+    bytes: 40817
+    fetched: 2026-11-03
+
+  - key: osu-giant-sequoia-foliage
+    title: "Sequoiadendron giganteum: Landscape Plants"
+    by: "Oregon State University, Department of Horticulture"
+    from: https://landscapeplants.oregonstate.edu/plants/sequoiadendron-giganteum
+    licence: "copyright Oregon State University; local reference, no redistribution"
+    sha256: 7d257522b12fd72748c4aa534215233ae0b6cd11c69343c43e7af036499ad1de
+    bytes: 40353
+    fetched: 2026-11-03
+
+  # coast redwood atmosphere: qualitative references, no runtime values
+
+  - key: ca-parks-redwood-transpiration
+    title: "Survivors Through Time"
+    by: "California State Parks"
+    from: "https://www.parks.ca.gov/?page_id=24728"
+    licence: "reference only; reuse terms not reviewed; source bytes stay on the local shelf"
+    sha256: 2f56c0c1b8905fcf144970d08c06a3617284c2bc73171126a0d9478366d08988
+    bytes: 53334
+    fetched: 2026-11-02
+
+  - key: nps-redwood-fog
+    title: "About the Trees"
+    by: "National Park Service, Redwood National and State Parks"
+    from: https://www.nps.gov/redw/learn/nature/about-the-trees.htm
+    licence: "reference only; reuse terms not reviewed; source bytes stay on the local shelf"
+    sha256: af58db1a6830284e9e6026287a3d62879b62a8920f333dbc98116e30757e5f95
+    bytes: 41187
+    fetched: 2026-11-02
+
+  - key: petreshen-2025-redwood-fog
+    title: "Fog presence and ecosystem responses in a managed coast redwood forest"
+    by: "Petreshen, Dymond, Keppeler, Allen, Wagenbrenner"
+    year: 2025
+    from: https://research.fs.usda.gov/download/treesearch/69118.pdf
+    doi: 10.1016/j.agrformet.2025.110525
+    licence: "Elsevier B.V., 2025; all rights reserved, including text and data mining and AI training; local reference only, no redistribution"
+    sha256: 0610fd4ab226107f45e7f2f6edd737217d76f1206d6526f293c066b1506bcf03
+    bytes: 12262560
+    fetched: 2026-11-02
+
+  # fire: burning trees, the flame, the plume
+
+  - key: nist-tn-2362
+    title: "The Burning Character of 3 m to 7 m Douglas-Fir Trees with Varying Moisture Content"
+    by: "Di Cristina Torres, Johnsson, Mueller, Bundy, Chakalis, Fernandez, Chernovsky, Davis, Hamins"
+    year: 2026
+    from: https://nvlpubs.nist.gov/nistpubs/TechnicalNotes/NIST.TN.2362.pdf
+    doi: 10.6028/NIST.TN.2362
+    licence: "public domain: a work of the us government (nist)"
+    sha256: 28326c8db03ed440449fdfb583e6425a8cc2e8f9d21cb0360eaf70b2f7eb77be
+    bytes: 12972630
+    fetched: 2026-10-16
+
+  - key: nist-tn-2327r1
+    title: "The Burning Characteristics of 3 m to 6 m Dry Douglas-Fir Trees"
+    by: "Johnsson and others"
+    year: 2025
+    from: https://nvlpubs.nist.gov/nistpubs/TechnicalNotes/NIST.TN.2327r1.pdf
+    doi: 10.6028/NIST.TN.2327r1
+    licence: "public domain: a work of the us government (nist)"
+    sha256: d16270b8bf45c780fd780007e549b9cf85bf02af613f8bb21bf9e17f46033024
+    bytes: 4623078
+    fetched: 2026-10-16
+
+  - key: nist-tn-2314
+    title: "Global Burning Properties of Little Bluestem, Excelsior and Douglas Fir"
+    by: "Sung, Mueller, Bundy, Fernandez, Hamins"
+    year: 2025
+    from: https://nvlpubs.nist.gov/nistpubs/TechnicalNotes/NIST.TN.2314.pdf
+    doi: 10.6028/NIST.TN.2314
+    licence: "public domain: a work of the us government (nist)"
+    sha256: 9b0fd17715b0419a578e8b0ce05aa7872b414699ce510791acd659683f72f080
+    bytes: 10358188
+    fetched: 2026-10-16
+
+  - key: nist-tn-1984
+    title: "The Influence of Walls, Corners and Enclosures on Fire Plumes"
+    by: "McGrattan, Selepak, Hnetkovsky"
+    year: 2018
+    from: https://nvlpubs.nist.gov/nistpubs/TechnicalNotes/NIST.TN.1984.pdf
+    doi: 10.6028/NIST.TN.1984
+    licence: "public domain: a work of the us government (nist)"
+    sha256: 2f05ab5f227724814c59052d1ff0e5ebacdaabc9ac6863f04cd9a8c7b8dcd015
+    bytes: 2657820
+    fetched: 2026-10-16
+
+  - key: nbsir-79-1910
+    title: "Purely Buoyant Diffusion Flames: Some Experimental Results"
+    by: "McCaffrey"
+    year: 1979
+    from: https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nbsir79-1910.pdf
+    doi: 10.6028/NBS.IR.79-1910
+    licence: "public domain: a work of the us government (nbs)"
+    sha256: 0c40db59b0c35485643db3ca7176b2cee380ea447961f93908e54134bcac1e2d
+    bytes: 2556861
+    fetched: 2026-10-16
+
+  - key: nbsir-82-2473
+    title: "Entrainment and Heat Flux of Buoyant Diffusion Flames"
+    by: "McCaffrey, Cox"
+    year: 1982
+    from: https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nbsir82-2473.pdf
+    licence: "public domain: a work of the us government (nbs)"
+    sha256: fa1fef72891d589715eef3d37f7776d90ff65470b9212f854ef893c0a79f54e8
+    bytes: 1786231
+    fetched: 2026-10-16
+
+  - key: nbsir-80-2054-v1
+    title: "The Burning of Wood and Plastic Cribs in an Enclosure, Volume I"
+    by: "Quintiere, McCaffrey"
+    year: 1980
+    from: https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nbsir80-2054v1.pdf
+    licence: "public domain: a work of the us government (nbs)"
+    sha256: c78aaa9531c0453bd69156f65fd161e79ee36c294fee9e8920cf09be39958d48
+    bytes: 10215168
+    fetched: 2026-10-16
+
+  - key: nistir-88-3835
+    title: "Measurements of Flame Lengths Under Ceilings"
+    by: "Gross"
+    year: 1988
+    from: https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir88-3835.pdf
+    licence: "public domain: a work of the us government (nist)"
+    sha256: a1256c77a276bc996d326a19a2d2488718cbf24ffbc834a85d0cc984ae69e5a9
+    bytes: 1688932
+    fetched: 2026-10-16
+
+  - key: fuss-hamins-2002
+    title: "An estimate of the correction applied to radiant flame measurements due to attenuation by atmospheric CO2 and H2O"
+    by: "Fuss, Hamins"
+    year: 2002
+    from: https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=909662
+    licence: "public domain: a work of the us government (nist authors); published in fire safety journal 37(2)"
+    sha256: 822242557bda064cc411890840617af69c823447b8cd24c58123e173aeb948a6
+    bytes: 210791
+    fetched: 2026-10-16
+
+  # fire spreading through a forest as cellular automata, on the gpu:
+  # a copy given 2026-10-17, as the journal printed it. the doi's page is
+  # not a file a fetch can keep, so the shelf holds the copy's bytes
+  # under this key and the pin holds them.
+  - key: xia-cheng-2025-pytorchfire
+    title: "PyTorchFire: A GPU-Accelerated Wildfire Simulator with Differentiable Cellular Automata"
+    by: "Zeyu Xia and Sibo Cheng"
+    year: 2025
+    from: https://doi.org/10.1016/j.envsoft.2025.106401
+    doi: 10.1016/j.envsoft.2025.106401
+    licence: "cc by 4.0 (arxiv 2502.18738)"
+    sha256: 9ee15a3c554c97c713c827cefad6d3d1c3d62cd19dce8c5e2fb119b2d519d9f6
+    bytes: 7381897
+    fetched: 2026-10-17
+
+  # the air and spread: the forest service and the epa
+
+  - key: usfs-rmrs-gtr-371
+    title: "The Rothermel surface fire spread model and associated developments"
+    by: "Andrews"
+    year: 2018
+    from: https://www.fs.usda.gov/rm/pubs_series/rmrs/gtr/rmrs_gtr371.pdf
+    licence: "public domain: a work of the us government (usda forest service)"
+    sha256: 911ee8ddf42229b31a8b97445bf055c0cefd4879600fbf18c4454603b3eb5754
+    bytes: 17892999
+    fetched: 2026-10-16
+
+  - key: usfs-int-115
+    title: "A mathematical model for predicting fire spread in wildland fuels"
+    by: "Rothermel"
+    year: 1972
+    from: https://www.fs.usda.gov/rm/pubs_int/int_rp115.pdf
+    licence: "public domain: a work of the us government (usda forest service)"
+    sha256: 42a272dd975f3a92de1af31aecfe94e92ef017a89544114b9c66ba161b28c86a
+    bytes: 1429694
+    fetched: 2026-10-16
+
+  - key: epa-ap42-13-1
+    title: "AP-42, section 13.1: wildfires and prescribed burning"
+    by: "us environmental protection agency"
+    year: 1996
+    from: https://gaftp.epa.gov/ap42/ch13/s01/final/c13s01_0ct1996.pdf
+    licence: "public domain: a work of the us government (epa)"
+    sha256: 7ab7bf8f1f7fdd9cee4ab3c79d9952daab8c56b99f47bb54b949eaac2ef96e59
+    bytes: 77850
+    fetched: 2026-10-16
+
+  # kīlauea: the usgs july 2019 lidar dem, after the summit collapse
+  # (mosbrucker, zoeller and ramsey 2020, doi 10.5066/P9F1ZU8O)
+
+  - key: usgs-kilauea-2019-dem-readme
+    title: "Digital elevation model of Kīlauea Volcano, Hawaiʻi, based on July 2019 airborne lidar surveys: ReadMe"
+    by: "Mosbrucker, Zoeller, Ramsey"
+    year: 2020
+    from: "https://www.sciencebase.gov/catalog/file/get/5eb19f3882cefae35a29c363?f=__disk__f1%2Fbd%2Fe7%2Ff1bde7bca9052295f1cb14637ef1c56f4b3a411c"
+    doi: 10.5066/P9F1ZU8O
+    licence: "a us government work (usgs). its readme: a derived product names it as its source, a change to it is described, nothing implies usgs approved a change; acknowledgement appreciated. sciencebase lists it cc0 1.0"
+    sha256: db73b585047510aa632af29c76ee0ad537c46ad5ac5cbe0b3d1fe355ddd2ff22
+    bytes: 5289
+    fetched: 2026-10-16
+
+  - key: usgs-kilauea-2019-dem-metadata
+    title: "Digital elevation model of Kīlauea Volcano, 2019: FGDC metadata"
+    by: "Mosbrucker, Zoeller, Ramsey"
+    year: 2020
+    from: "https://www.sciencebase.gov/catalog/file/get/5eb19f3882cefae35a29c363?f=__disk__5f%2F29%2F18%2F5f291868acc011e01e852a0d2cabd37db0667c5a"
+    doi: 10.5066/P9F1ZU8O
+    licence: "a us government work (usgs). its readme: a derived product names it as its source, a change to it is described, nothing implies usgs approved a change; acknowledgement appreciated. sciencebase lists it cc0 1.0"
+    sha256: 411dc898d1160f4e640d8a362a2a3dac628eb8c49c3ccfb21ca416898c7095fc
+    bytes: 17934
+    fetched: 2026-10-16
+
+  - key: usgs-kilauea-2019-dem-survey
+    title: "Digital elevation model of Kīlauea Volcano, 2019: lidar survey report"
+    by: "Mosbrucker, Zoeller, Ramsey"
+    year: 2020
+    from: "https://www.sciencebase.gov/catalog/file/get/5eb19f3882cefae35a29c363?f=__disk__00%2Ff4%2F55%2F00f4555c2efe2b2619dd765f99662c6dfef3c5c2"
+    doi: 10.5066/P9F1ZU8O
+    licence: "a us government work (usgs). its readme: a derived product names it as its source, a change to it is described, nothing implies usgs approved a change; acknowledgement appreciated. sciencebase lists it cc0 1.0"
+    sha256: 51047881190715579437896da684a8992280b219f6bd59e3e45757d4d9250da4
+    bytes: 8495211
+    fetched: 2026-10-16
+
+  - key: usgs-kilauea-2019-dem
+    title: "Digital elevation model of Kīlauea Volcano, 2019: the 1 m dem, zipped geotiff"
+    by: "Mosbrucker, Zoeller, Ramsey"
+    year: 2020
+    from: "https://www.sciencebase.gov/catalog/file/get/5eb19f3882cefae35a29c363?name=kil_2019dem.zip"
+    doi: 10.5066/P9F1ZU8O
+    licence: "a us government work (usgs). its readme: a derived product names it as its source, a change to it is described, nothing implies usgs approved a change; acknowledgement appreciated. sciencebase lists it cc0 1.0"
+    sha256: afdc2953435f3bf635d1fc9cce288cebe372575c1e06bf276c1ce41b3114b287
+    bytes: 1821440309
+    fetched: 2026-10-16
+    # the one member the sets read, unpacked to unpacked/ and then its path
+    unpack:
+      member: kil_2019dem/kil_2019dem.tif
+      sha256: 696a6ef3084bd871df8e51464c3b03084a47ad8625c5a32c094d613a20a959c4
+      bytes: 1931428216
+
+  # the moon
+
+  - key: nasa-moon-fact-sheet
+    title: "Moon Fact Sheet"
+    by: "nasa nssdca"
+    year: 2026
+    from: https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html
+    licence: "a us government work (nasa); a page that changes, pinned as fetched"
+    sha256: a468979dfb4179e36a3f6579cd2d1d4a475b5c6da29313fd470fa68ca1aa30c1
+    bytes: 8980
+    fetched: 2026-10-16
+
+  - key: svs-moon-kit-color
+    title: "CGI Moon Kit: the lroc wac colour mosaic, 4k, 16-bit srgb"
+    by: "nasa's scientific visualization studio (ernie wright); lroc, nasa/gsfc/arizona state university"
+    year: 2019
+    from: https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/lroc_color_16bit_srgb_4k.tif
+    licence: "nasa content: credit nasa's svs and lroc (nasa/gsfc/asu), no endorsement implied, per nasa's media usage guidelines"
+    sha256: 9731fa8af425b6c2f88f277ecca82bf8c603f3743894f64ed7b25c5bfefa22ff
+    bytes: 61891324
+    fetched: 2026-10-16
+
+  - key: svs-moon-kit-elevation
+    title: "CGI Moon Kit: the lola elevation map, 16 pixels a degree"
+    by: "nasa's scientific visualization studio (ernie wright); lola, nasa/gsfc"
+    year: 2019
+    from: https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_16.tif
+    licence: "nasa content: credit nasa's svs and lola (nasa/gsfc), no endorsement implied, per nasa's media usage guidelines"
+    sha256: 1ea42bf44f7e9d694f79c3afa7145f97fbf06cc67372067d9fe73dce43bad796
+    bytes: 66378634
+    fetched: 2026-10-16
+
+  # planets: the gases' indices, methane's absorption
+
+  - key: rii-ne-bideau-mehu
+    title: "Ne, refractive index, Bideau-Mehu et al. 1981 (refractiveindex.info database)"
+    by: "Polyanskiy, after Bideau-Mehu, Guern, Abjean and Johannin-Gilles"
+    year: 1981
+    from: https://raw.githubusercontent.com/polyanskiy/refractiveindex.info-database/main/database/data/main/Ne/nk/Bideau-Mehu.yml
+    licence: "cc0 1.0: the refractiveindex.info database"
+    sha256: f198ce2e81c9c078230576839fb5f448e554676667753e954a6cdb334cda38ae
+    bytes: 1402
+    fetched: 2026-10-17
+
+  - key: rii-kr-bideau-mehu
+    title: "Kr, refractive index, Bideau-Mehu et al. 1981 (refractiveindex.info database)"
+    by: "Polyanskiy, after Bideau-Mehu, Guern, Abjean and Johannin-Gilles"
+    year: 1981
+    from: https://raw.githubusercontent.com/polyanskiy/refractiveindex.info-database/main/database/data/main/Kr/nk/Bideau-Mehu.yml
+    licence: "cc0 1.0: the refractiveindex.info database"
+    sha256: ce6d1b22922c3b84e920c6461c43a852449dcad6618e0742c2e48151515bfa80
+    bytes: 1154
+    fetched: 2026-10-17
+
+  - key: rii-xe-bideau-mehu
+    title: "Xe, refractive index, Bideau-Mehu et al. 1981 (refractiveindex.info database)"
+    by: "Polyanskiy, after Bideau-Mehu, Guern, Abjean and Johannin-Gilles"
+    year: 1981
+    from: https://raw.githubusercontent.com/polyanskiy/refractiveindex.info-database/main/database/data/main/Xe/nk/Bideau-Mehu.yml
+    licence: "cc0 1.0: the refractiveindex.info database"
+    sha256: 199c22badc21af6f22153362149613c2af6a2c14baa46ec3ff684688e9923dae
+    bytes: 1290
+    fetched: 2026-10-17
+
+  - key: acp-21-14927
+    title: "Scattering and absorption cross sections of atmospheric gases in the ultraviolet-visible wavelength range (307-725 nm)"
+    by: "He, Fang, Shoshanim, Brown and Rudich"
+    year: 2021
+    from: https://acp.copernicus.org/articles/21/14927/2021/acp-21-14927-2021.pdf
+    doi: 10.5194/acp-21-14927-2021
+    licence: "cc by 4.0"
+    sha256: 6756d227e0e03fa7ea85b69d7767089a501bfa52f36b3b2f6e09b193b593c4b3
+    bytes: 8795096
+    fetched: 2026-10-17
+
+  - key: karkoschka-1994-methane
+    title: "Spectrophotometry of the Jovian planets and Titan at 300- to 1000-nm wavelength: the methane spectrum (pds atmospheres node table)"
+    by: "Karkoschka"
+    year: 1994
+    from: https://atmos.nmsu.edu/planetary_datasets/infrareduranus.txt
+    licence: "nasa planetary data system: public"
+    sha256: 4df7bbdb277d1341f98263e29b68987d1e55884480740d159800809ad001c0c3
+    bytes: 96470
+    fetched: 2026-10-17
+
+  # the nist atomic spectra database's lines from 380 to 780 nm in air,
+  # for the aurora: each line's einstein a, its upper level's energy and
+  # its statistical weight. each query asked format 1, the page as nist
+  # draws it; the table is in it, between the page's own furniture.
+  - key: nist-asd-ne-i-visible
+    title: "NIST Atomic Spectra Database, lines of Ne I, 380-780 nm"
+    by: "Kramida, Ralchenko, Reader and NIST ASD Team"
+    year: 2024
+    from: "https://physics.nist.gov/cgi-bin/ASD/lines1.pl?spectra=Ne+I&limits_type=0&low_w=380&upp_w=780&unit=1&de=0&format=1&line_out=0&en_unit=0&output=0&bibrefs=1&page_size=15&show_obs_wl=1&show_calc_wl=1&order_out=0&show_av=2&tsb_value=0&A_out=0&intens_out=on&allowed_out=1&forbid_out=1&conf_out=on&term_out=on&enrg_out=on&J_out=on&g_out=on&submit=Retrieve+Data"
+    licence: "us government work: public domain"
+    sha256: 292592095a037b79d820de08b4f38983eeff2385a1d6a061a8981345aeca20ea
+    bytes: 659114
+    fetched: 2026-10-17
+
+  - key: nist-asd-kr-i-visible
+    title: "NIST Atomic Spectra Database, lines of Kr I, 380-780 nm"
+    by: "Kramida, Ralchenko, Reader and NIST ASD Team"
+    year: 2024
+    from: "https://physics.nist.gov/cgi-bin/ASD/lines1.pl?spectra=Kr+I&limits_type=0&low_w=380&upp_w=780&unit=1&de=0&format=1&line_out=0&en_unit=0&output=0&bibrefs=1&page_size=15&show_obs_wl=1&show_calc_wl=1&order_out=0&show_av=2&tsb_value=0&A_out=0&intens_out=on&allowed_out=1&forbid_out=1&conf_out=on&term_out=on&enrg_out=on&J_out=on&g_out=on&submit=Retrieve+Data"
+    licence: "us government work: public domain"
+    sha256: 61b7e793779a2fd81bdbd3413dc4e36b48d9831286812203e5b11d8fffbd04b7
+    bytes: 470968
+    fetched: 2026-10-17
+
+  - key: nist-asd-xe-i-visible
+    title: "NIST Atomic Spectra Database, lines of Xe I, 380-780 nm"
+    by: "Kramida, Ralchenko, Reader and NIST ASD Team"
+    year: 2024
+    from: "https://physics.nist.gov/cgi-bin/ASD/lines1.pl?spectra=Xe+I&limits_type=0&low_w=380&upp_w=780&unit=1&de=0&format=1&line_out=0&en_unit=0&output=0&bibrefs=1&page_size=15&show_obs_wl=1&show_calc_wl=1&order_out=0&show_av=2&tsb_value=0&A_out=0&intens_out=on&allowed_out=1&forbid_out=1&conf_out=on&term_out=on&enrg_out=on&J_out=on&g_out=on&submit=Retrieve+Data"
+    licence: "us government work: public domain"
+    sha256: 8b4b23ed79ba6249f6deac759ed5005cc97487a65e8021c3fd7a8b61e1988eda
+    bytes: 578591
+    fetched: 2026-10-17
+
+  - key: nist-asd-na-i-visible
+    title: "NIST Atomic Spectra Database, lines of Na I, 380-780 nm"
+    by: "Kramida, Ralchenko, Reader and NIST ASD Team"
+    year: 2024
+    from: "https://physics.nist.gov/cgi-bin/ASD/lines1.pl?spectra=Na+I&limits_type=0&low_w=380&upp_w=780&unit=1&de=0&format=1&line_out=0&en_unit=0&output=0&bibrefs=1&page_size=15&show_obs_wl=1&show_calc_wl=1&order_out=0&show_av=2&tsb_value=0&A_out=0&intens_out=on&allowed_out=1&forbid_out=1&conf_out=on&term_out=on&enrg_out=on&J_out=on&g_out=on&submit=Retrieve+Data"
+    licence: "us government work: public domain"
+    sha256: be59697725d2daa7891bb04f48e88d50dc767643429c7fe75d45e3b400125b37
+    bytes: 212741
+    fetched: 2026-10-17
+
+  - key: nist-asd-h-i-visible
+    title: "NIST Atomic Spectra Database, lines of H I, 380-780 nm"
+    by: "Kramida, Ralchenko, Reader and NIST ASD Team"
+    year: 2024
+    from: "https://physics.nist.gov/cgi-bin/ASD/lines1.pl?spectra=H+I&limits_type=0&low_w=380&upp_w=780&unit=1&de=0&format=1&line_out=0&en_unit=0&output=0&bibrefs=1&page_size=15&show_obs_wl=1&show_calc_wl=1&order_out=0&show_av=2&tsb_value=0&A_out=0&intens_out=on&allowed_out=1&forbid_out=1&conf_out=on&term_out=on&enrg_out=on&J_out=on&g_out=on&submit=Retrieve+Data"
+    licence: "us government work: public domain"
+    sha256: c08be3e2ad29072eac4cef2271beadcdde179b002b0e3de07177da723d56df84
+    bytes: 110283
+    fetched: 2026-10-17
+
+  # saturn's rings: voyager 2's photopolarimeter watching delta scorpii
+  # through them on 1981-08-26, egress, at 0.264 microns. normal optical
+  # depth against radius, 1 km a row from 72,000 to 142,500 km, in the
+  # pds ring-moon systems node's easydata tables. the label beside the
+  # first says every column; its producer is not named in it.
+
+  - key: vg2-pps-delta-sco-km001-label
+    title: "Voyager 2 PPS delta Sco ring profile, 1 km, label for 72,000-79,999 km"
+    by: "NASA PDS Ring-Moon Systems Node, data set VG2-SR/UR/NR-PPS-2/4-OCC-V1.0"
+    year: 2003
+    from: https://pds-rings.seti.org/holdings/volumes/VG_28xx/VG_2801/EASYDATA/KM001/PS1P0107.LBL
+    licence: "nasa planetary data system: public domain"
+    sha256: 2505fe77ea21fe54ed2b4f7c08fcb47d48b131c6b01783a991bd3b63a8f1c641
+    bytes: 6585
+    fetched: 2026-10-17
+
+  - key: vg2-pps-delta-sco-km001-072
+    title: "Voyager 2 PPS delta Sco ring profile, 1 km, 72,000-79,999 km"
+    by: "NASA PDS Ring-Moon Systems Node, data set VG2-SR/UR/NR-PPS-2/4-OCC-V1.0"
+    year: 2003
+    from: https://pds-rings.seti.org/holdings/volumes/VG_28xx/VG_2801/EASYDATA/KM001/PS1P0107.TAB
+    licence: "nasa planetary data system: public domain"
+    sha256: 4a1389f57395c6e11855cc029cb29955fc766e129cc25f1a64f8a36e8d1aa4d0
+    bytes: 400000
+    fetched: 2026-10-17
+
+  - key: vg2-pps-delta-sco-km001-080
+    title: "Voyager 2 PPS delta Sco ring profile, 1 km, 80,000-89,999 km"
+    by: "NASA PDS Ring-Moon Systems Node, data set VG2-SR/UR/NR-PPS-2/4-OCC-V1.0"
+    year: 2003
+    from: https://pds-rings.seti.org/holdings/volumes/VG_28xx/VG_2801/EASYDATA/KM001/PS1P0108.TAB
+    licence: "nasa planetary data system: public domain"
+    sha256: d4c4b8061ee9852b763d1111312a3559acadae785dbe89a6190552c6c4ed73bf
+    bytes: 500000
+    fetched: 2026-10-17
+
+  - key: vg2-pps-delta-sco-km001-090
+    title: "Voyager 2 PPS delta Sco ring profile, 1 km, 90,000-99,999 km"
+    by: "NASA PDS Ring-Moon Systems Node, data set VG2-SR/UR/NR-PPS-2/4-OCC-V1.0"
+    year: 2003
+    from: https://pds-rings.seti.org/holdings/volumes/VG_28xx/VG_2801/EASYDATA/KM001/PS1P0109.TAB
+    licence: "nasa planetary data system: public domain"
+    sha256: 88781ea129b99dd948a8c91be52d7e6fb9e8e7dc2bca517c51760263d22f51a8
+    bytes: 500000
+    fetched: 2026-10-17
+
+  - key: vg2-pps-delta-sco-km001-100
+    title: "Voyager 2 PPS delta Sco ring profile, 1 km, 100,000-109,999 km"
+    by: "NASA PDS Ring-Moon Systems Node, data set VG2-SR/UR/NR-PPS-2/4-OCC-V1.0"
+    year: 2003
+    from: https://pds-rings.seti.org/holdings/volumes/VG_28xx/VG_2801/EASYDATA/KM001/PS1P0110.TAB
+    licence: "nasa planetary data system: public domain"
+    sha256: e134ed228353373b6d4403b6a09426df7708cb1f4533d7f11bac2258e6777a22
+    bytes: 500000
+    fetched: 2026-10-17
+
+  - key: vg2-pps-delta-sco-km001-110
+    title: "Voyager 2 PPS delta Sco ring profile, 1 km, 110,000-119,999 km"
+    by: "NASA PDS Ring-Moon Systems Node, data set VG2-SR/UR/NR-PPS-2/4-OCC-V1.0"
+    year: 2003
+    from: https://pds-rings.seti.org/holdings/volumes/VG_28xx/VG_2801/EASYDATA/KM001/PS1P0111.TAB
+    licence: "nasa planetary data system: public domain"
+    sha256: 0201ffe7ac038dc58992d9fc7afa36ac7a504e240c650de167a88627cf1d9f60
+    bytes: 500000
+    fetched: 2026-10-17
+
+  - key: vg2-pps-delta-sco-km001-120
+    title: "Voyager 2 PPS delta Sco ring profile, 1 km, 120,000-129,999 km"
+    by: "NASA PDS Ring-Moon Systems Node, data set VG2-SR/UR/NR-PPS-2/4-OCC-V1.0"
+    year: 2003
+    from: https://pds-rings.seti.org/holdings/volumes/VG_28xx/VG_2801/EASYDATA/KM001/PS1P0112.TAB
+    licence: "nasa planetary data system: public domain"
+    sha256: 637d3f32c04ac7a39451abafaf57e110a7f2c493e4d704de4043109e8f12a66a
+    bytes: 500000
+    fetched: 2026-10-17
+
+  - key: vg2-pps-delta-sco-km001-130
+    title: "Voyager 2 PPS delta Sco ring profile, 1 km, 130,000-139,999 km"
+    by: "NASA PDS Ring-Moon Systems Node, data set VG2-SR/UR/NR-PPS-2/4-OCC-V1.0"
+    year: 2003
+    from: https://pds-rings.seti.org/holdings/volumes/VG_28xx/VG_2801/EASYDATA/KM001/PS1P0113.TAB
+    licence: "nasa planetary data system: public domain"
+    sha256: f986d69df76716a2c9e6705c205803895955e9e2ab7ae4b09cd7b7643c751224
+    bytes: 500000
+    fetched: 2026-10-17
+
+  - key: vg2-pps-delta-sco-km001-140
+    title: "Voyager 2 PPS delta Sco ring profile, 1 km, 140,000-142,500 km"
+    by: "NASA PDS Ring-Moon Systems Node, data set VG2-SR/UR/NR-PPS-2/4-OCC-V1.0"
+    year: 2003
+    from: https://pds-rings.seti.org/holdings/volumes/VG_28xx/VG_2801/EASYDATA/KM001/PS1P0114.TAB
+    licence: "nasa planetary data system: public domain"
+    sha256: ff64db44dd739dd156217671d53d406b351d7d83b43e86eda6a2115766a6fce7
+    bytes: 125050
+    fetched: 2026-10-17
+
+  - key: nist-handbook-sodium-lines
+    title: NIST Handbook of Basic Atomic Spectroscopic Data, strong lines of sodium
+    by: NIST Physical Measurement Laboratory
+    from: https://physics.nist.gov/PhysRefData/Handbook/Tables/sodiumtable2.htm
+    licence: "us government work: public domain"
+    sha256: b60c4e4159b5a3624801801377a47b1fa6cb15520d2b1700fb66e3844735e414
+    bytes: 35361
+    fetched: 2026-11-04
+
+  # Space observatory references. Local HTML snapshots are not shipped.
+  - key: spitzer-telescope
+    title: "The Telescope"
+    by: "Caltech/IPAC, Spitzer Space Telescope"
+    from: https://www.spitzer.caltech.edu/mission/the-telescope
+    licence: "local reference only; webpage bytes are not redistributed"
+    sha256: d5849d04ea9c63e35443ccf5e87f33cb25917fe3194eefd5449b16d852939c7c
+    bytes: 18682
+    fetched: 2026-11-07
+  - key: spitzer-spacecraft
+    title: "The Spacecraft"
+    by: "Caltech/IPAC, Spitzer Space Telescope"
+    from: https://www.spitzer.caltech.edu/mission/the-spacecraft
+    licence: "local reference only; webpage bytes are not redistributed"
+    sha256: 569fc69e0b3792a3a17940f9f1f2b222f171e6f1c2935cae94167ff2f52fccdc
+    bytes: 18819
+    fetched: 2026-11-07
+  - key: hubble-optics
+    title: "Hubble: Optics"
+    by: "NASA Science"
+    from: https://science.nasa.gov/mission/hubble/observatory/design/optics/
+    licence: "local reference only; webpage bytes are not redistributed"
+    sha256: 53a1bef9b97b149017ba5bf044696dadeb8185f77c8c1d48907cf39500520700
+    bytes: 323863
+    fetched: 2026-11-07
+  - key: webb-telescope-overview
+    title: "Webb: Telescope Overview"
+    by: "NASA Science"
+    from: https://science.nasa.gov/mission/webb/science-overview/science-explainers/telescope-overview/
+    licence: "local reference only; webpage bytes are not redistributed"
+    sha256: d2756e77b04f31d251f2f67188b5e537e15994e82ada26177ae8578d1094e75a
+    bytes: 322623
+    fetched: 2026-11-07
+  - key: webb-sunshield
+    title: "Webb's Sunshield"
+    by: "NASA Science"
+    from: https://science.nasa.gov/mission/webb/webbs-sunshield/
+    licence: "local reference only; webpage bytes are not redistributed"
+    sha256: 3cfbf40695fd23a92eb0db2c05926384782019b794926ab102fafd8fd19093ab
+    bytes: 394717
+    fetched: 2026-11-07
+  - key: mcelwain-2023-webb-telescope
+    title: "The James Webb Space Telescope Mission: Optical Telescope Element Design, Development, and Performance"
+    by: "McElwain and others, PASP 135, 058001"
+    year: 2023
+    from: https://arxiv.org/pdf/2301.01779v1.pdf
+    licence: "local reference only; the paper's bytes are not redistributed"
+    sha256: ab77d1c16b36f41ec91397d9649686ebfd11339a2787d736e7c15b4c9e2ababd
+    bytes: 20668170
+    fetched: 2026-11-11
+  - key: cfht-observatory-manual
+    sha256: 8be0bd2606554d1f5ca36b3321384356b22134f3356a2fc7d3082f76e3e9d593
+    bytes: 45041
+    fetched: 2026-11-08
+    title: CFHT observatory manual, telescope
+    by: Canada-France-Hawaii Telescope
+    from: https://www.cfht.hawaii.edu/Instruments/ObservatoryManual/CFHT_ObservatoryManual_%28Sec_4%29.html
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: gemini-north-handout
+    sha256: 724eafef38fe219d8830940143682722239d471d59e0b4ed9b6c15cc4f557308
+    bytes: 2293692
+    fetched: 2026-11-08
+    title: Gemini North telescope facts
+    by: International Gemini Observatory
+    from: https://www.gemini.edu/images/pio/handouts/gn_telescope_handout.pdf
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: ukirt-telescope
+    sha256: a65defb7ef27baa18b54c2058ff16000b062aec5dfd5553cd4889a3c5f48750c
+    bytes: 69627
+    fetched: 2026-11-08
+    title: About the United Kingdom Infrared Telescope
+    by: University of Hawaii Institute for Astronomy
+    from: https://about.ifa.hawaii.edu/ukirt/about-us/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: uh-maunakea-telescopes
+    sha256: b92ad6be9cc24f432209e9bef507c2472cf2a3b507ca905ab11fe492a687ec81
+    bytes: 197518
+    fetched: 2026-11-08
+    title: University of Hawaii Maunakea telescope families
+    by: University of Hawaii Institute for Astronomy
+    from: https://about.ifa.hawaii.edu/facility/maunakea-telescopes/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: jcmt-telescope
+    sha256: 1e50975342c3266703ea857b503bb92dcb81567e3bc2adfbd89eeb70ec678801
+    bytes: 72056
+    fetched: 2026-11-08
+    title: The James Clerk Maxwell Telescope
+    by: East Asian Observatory
+    from: https://www.eaobservatory.org/jcmt/public/jcmt/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: sma-telescope
+    sha256: 7ef9332c5d7e15813d5c376316e0d5ee03bca73ffcaeaaa1d347f54a131c5044
+    bytes: 80650
+    fetched: 2026-11-08
+    title: The Submillimeter Array on Maunakea
+    by: Center for Astrophysics Harvard and Smithsonian
+    from: https://www.cfa.harvard.edu/facilities-technology/telescopes-instruments/submillimeter-array-maunakea-hi
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: vlba-telescope
+    sha256: d96814a7a2b02e73bca29ca1310d89f1e584188cb7e78411444294e9ce9adaff
+    bytes: 1781
+    fetched: 2026-11-08
+    title: What is the Very Long Baseline Array
+    by: National Radio Astronomy Observatory
+    from: https://www.vlba.nrao.edu/whatis/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: panstarrs-telescopes
+    sha256: a09abbbcaeef2f06bb588055d13af28b071161c732653e79ff998f3c44097646
+    bytes: 3770
+    fetched: 2026-11-08
+    title: Pan-STARRS telescope pair
+    by: University of Hawaii Institute for Astronomy
+    from: https://panstarrs.ifa.hawaii.edu/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: faulkes-telescopes
+    sha256: 423e0c89abe8485e23b5eab512f8106330535557a22e137e091dac0a73ff4b38
+    bytes: 19392
+    fetched: 2026-11-08
+    title: Las Cumbres two-metre telescopes
+    by: Las Cumbres Observatory
+    from: https://lco.global/observatory/telescopes/2m0/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: dkist-telescope
+    sha256: 448e40fde8ea1177335ab41a6d26cb6315c62bb76cf2a0343bc0c476b49b3288
+    bytes: 329154
+    fetched: 2026-11-08
+    title: DKIST at a glance
+    by: National Solar Observatory
+    from: https://nso.edu/dkist-at-a-glance/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: dkist-enclosure
+    sha256: 9f1a651138694514bd975c1e0b1ce249403c4fd2d0b88ddebcf93eec29ac5abd
+    bytes: 322632
+    fetched: 2026-11-08
+    title: DKIST enclosure
+    by: National Solar Observatory
+    from: https://nso.edu/telescopes/dkist/enclosure/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: dkist-support-buildings
+    sha256: 84ba2ab8f2180ea380c3ab2447131c90f36539048c2197f25ad397ebb8b3853c
+    bytes: 319189
+    fetched: 2026-11-08
+    title: DKIST support facilities and buildings
+    by: National Solar Observatory
+    from: https://nso.edu/telescopes/dkist/dkist-telescope/support-facilities-and-buildings/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: atlas-specifications
+    sha256: f49880290b42809050216a40946e645f01de6cd235ebaca06f49f31c8f561b31
+    bytes: 9070
+    fetched: 2026-11-08
+    title: ATLAS technical specifications
+    by: ATLAS project
+    from: https://fallingstar.com/specifications.php
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: tlrs4-station-log
+    sha256: 5075950402aede511b17d6ccc41dc244d9c75fca75994c8d1889a9d3d7641e16
+    bytes: 96796
+    fetched: 2026-11-08
+    title: Haleakala TLRS-4 station information
+    by: NASA International Laser Ranging Service
+    from: https://ilrs.gsfc.nasa.gov/network/stations/active/HA4T_station_info.html
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: aeos-upgrade
+    sha256: 307560db3ebde83d23558d1b6bdd799fd794218edcff24eac12892412b04fe81
+    bytes: 133918
+    fetched: 2026-11-08
+    title: AEOS modernization and aperture
+    by: Boeing
+    from: https://boeing.mediaroom.com/2012-06-20-Boeing-Completes-Upgrade-of-AEOS-Telescope-at-Maui-Space-Surveillance-Complex
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: ifa-maui-history
+    sha256: af1a285293d30c221a4e7a9af1e3876dfc95ac5d07c3ac35b4299baf8bd90bff
+    bytes: 241771
+    fetched: 2026-11-08
+    title: History of the Institute for Astronomy on Maui
+    by: University of Hawaii Institute for Astronomy
+    from: https://about.ifa.hawaii.edu/facility/history-of-ifa-maui/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: ukirt-science-closure
+    sha256: cd0d594f9a5f725713416970fe48c2e257e24d2f412b36f6cf8e67c2b71c3609
+    bytes: 82919
+    fetched: 2026-11-08
+    title: UKIRT science operations to end September 15 2026
+    by: University of Hawaii
+    from: https://www.hawaii.edu/news/2026/07/02/uh-continues-ukirt-decommissioning/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: maunakea-removed-observatories
+    sha256: 70826d66f009c6c3b7b1acff77413e813781bb0f53e2dcc6918f416ee04b839f
+    bytes: 80440
+    fetched: 2026-11-08
+    title: Second observatory removed from Maunakea
+    by: University of Hawaii
+    from: https://www.hawaii.edu/news/2024/07/02/second-observatory-removed-maunakea/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: haleakala-environmental-study-2009
+    sha256: a1804e1c0d8d49ffb9eec50583b8623d931cb7955ffec1a1308cedcd82fb343e
+    bytes: 17800499
+    fetched: 2026-11-08
+    title: ATST supplemental environmental impact statement, volume one
+    by: National Science Foundation and State of Hawaii environmental review
+    from: https://files.hawaii.gov/dbedt/erp/EA_EIS_Library/2009-05-08-MA-SDEIS-Advanced-Tech-Solar-Telescope-V1.pdf
+    licence: "government reference; local use only, no source redistribution"
+  - key: sma-technical
+    sha256: 15873784431981df87d1164c83b68431e1429c20cf5f12d11c2218cebad97cdd
+    bytes: 522483
+    fetched: 2026-11-08
+    title: The Submillimeter Array
+    by: Paul Ho, James Moran and Fred Lo
+    from: https://lweb.cfa.harvard.edu/sma/general/Ho.pdf
+    licence: "research reference; local use only, no source redistribution"
+
+  # magnetars: the real one that stands where zappy stands when the music
+  # stops. the review and the catalogue for the star, the observing papers
+  # for the 2004 giant flare from SGR 1806-20 and what it did to the air,
+  # and plain references for the familiar things it is set against.
+  - key: kaspi-beloborodov-2017-magnetars
+    sha256: f4115d2dc26c21d6807c3bdcc56795403e18b0775b225efafa5268b97f59530c
+    bytes: 3446156
+    fetched: 2026-11-12
+    title: Magnetars
+    by: "Victoria M. Kaspi and Andrei M. Beloborodov, ARA&A 55, 261"
+    year: 2017
+    from: https://arxiv.org/pdf/1703.00068v1.pdf
+    licence: "author-posted preprint; local reference only, no redistribution"
+  - key: olausen-kaspi-2014-catalog
+    sha256: f4c2a5f58ab465103546b27bf8bd00ffae1c9710089f2e8d4070b5fba72ff5ab
+    bytes: 968937
+    fetched: 2026-11-12
+    title: The McGill Magnetar Catalog
+    by: "S. A. Olausen and V. M. Kaspi, ApJS 212, 6"
+    year: 2014
+    from: https://arxiv.org/pdf/1309.4167v3.pdf
+    licence: "author-posted preprint; local reference only, no redistribution"
+  - key: hurley-2005-sgr1806-flare
+    sha256: a3faca3e9783793e4ea5d673180f17e6032cd11b6533463b5a4f746d09f2dab0
+    bytes: 213435
+    fetched: 2026-11-12
+    title: An exceptionally bright flare from SGR 1806-20 and the origins of short-duration gamma-ray bursts
+    by: "K. Hurley and others, Nature 434, 1098"
+    year: 2005
+    from: https://arxiv.org/pdf/astro-ph/0502329v2.pdf
+    licence: "author-posted preprint; local reference only, no redistribution"
+  - key: palmer-2005-sgr1806-flare
+    sha256: 9d3017bf38abdfc47371eb1d80357b17bcb02028ebbe1c15262a32e8eea1e367
+    bytes: 382587
+    fetched: 2026-11-12
+    title: Gamma ray observations of a giant flare from the magnetar SGR 1806-20
+    by: "D. M. Palmer and others, Nature 434, 1107"
+    year: 2005
+    from: https://arxiv.org/pdf/astro-ph/0503030v1.pdf
+    licence: "author-posted preprint; local reference only, no redistribution"
+  # the host answers the fetcher 403; these bytes were fetched by hand
+  # with a browser's user agent on 2026-11-12 and put on the shelf.
+  - key: inan-2007-sgr1806-ionosphere
+    sha256: 0f78dc1784dcfb9f357c2c2ebe985b9fa9b543e8928d9ffae4e8eb240acbf9a4
+    bytes: 768677
+    fetched: 2026-11-12
+    title: Massive disturbance of the daytime lower ionosphere by the giant gamma-ray flare from magnetar SGR 1806-20
+    by: "U. S. Inan and others, Geophysical Research Letters 34, L08103"
+    year: 2007
+    doi: 10.1029/2006GL029145
+    from: https://vlfstanford.ku.edu.tr/wp-content/uploads/2010/07/2007-08.pdf
+    licence: "the authors' group's posted copy of an AGU paper; local reference only, no redistribution"
+  - key: lai-2001-strong-fields
+    sha256: e5265b57cc18048f972216b32696bde6484e7172b1f0f76890e4f9add1698ee7
+    bytes: 605689
+    fetched: 2026-11-12
+    title: Matter in strong magnetic fields
+    by: "Dong Lai, Reviews of Modern Physics 73, 629"
+    year: 2001
+    from: https://arxiv.org/pdf/astro-ph/0009333v1.pdf
+    licence: "author-posted preprint; local reference only, no redistribution"
+  - key: maglab-mini-to-mighty
+    sha256: ae7d7f274a6249aac84239d052a1221f9ba72a643827971db240737ab9cc4c7a
+    bytes: 62506
+    fetched: 2026-11-12
+    title: "Magnets from Mini to Mighty"
+    by: National High Magnetic Field Laboratory
+    from: https://nationalmaglab.org/magnet-academy/read-science-stories/science-simplified/magnets-from-mini-to-mighty/
+    licence: "institutional reference; local use only, no source redistribution"
+  - key: nasa-earth-factsheet
+    sha256: 1b06e3ec31249d063d40d1b38837fac89ddcd2f4b25268b38e8a6d5f413e70ef
+    bytes: 5490
+    fetched: 2026-11-12
+    title: Earth Fact Sheet
+    by: NASA Goddard Space Flight Center, NSSDCA
+    from: https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+    licence: "government reference; local use only, no source redistribution"
+  - key: nasa-sun-factsheet
+    sha256: bcc186a518298636340e7975bf5a32da660cd656b90081f2e7c8aa7ec2b6561a
+    bytes: 7232
+    fetched: 2026-11-12
+    title: Sun Fact Sheet
+    by: NASA Goddard Space Flight Center, NSSDCA
+    from: https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html
+    licence: "government reference; local use only, no source redistribution"
+  # quasars, blazars and the photon ring: the quasar slice, 2026-11-12
+
+  - key: johnson-2020-photon-ring
+    title: "Universal interferometric signatures of a black hole's photon ring"
+    by: "Johnson, Lupsasca, Strominger and others, Science Advances 6, eaaz1310"
+    year: 2020
+    from: https://arxiv.org/pdf/1907.04329v2.pdf
+    doi: 10.1126/sciadv.aaz1310
+    licence: "author-posted preprint; local reference only, no redistribution"
+    sha256: 721438eee1c6f3d176ac5fdc3b196a20a9547cb778faa071a9bb95128479b8c9
+    bytes: 4253263
+    fetched: 2026-11-12
+  - key: eht-2019-m87-paper-one
+    title: "First M87 Event Horizon Telescope Results. I. The Shadow of the Supermassive Black Hole"
+    by: "Event Horizon Telescope Collaboration, ApJL 875, L1"
+    year: 2019
+    from: https://arxiv.org/pdf/1906.11238v1.pdf
+    doi: 10.3847/2041-8213/ab0ec7
+    licence: "author-posted preprint; local reference only, no redistribution"
+    sha256: be6604770bb0d0a6c2a81071518e89d5bc2f9b460f91390518804e0a1f454472
+    bytes: 2578342
+    fetched: 2026-11-12
+  - key: eht-2022-sgra-paper-one
+    title: "First Sagittarius A* Event Horizon Telescope Results. I. The Shadow of the Supermassive Black Hole in the Center of the Milky Way"
+    by: "Event Horizon Telescope Collaboration, ApJL 930, L12"
+    year: 2022
+    from: https://arxiv.org/pdf/2311.08680v2.pdf
+    doi: 10.3847/2041-8213/ac6674
+    licence: "author-posted preprint; local reference only, no redistribution"
+    sha256: df498bcaa7f11a5cf6ad15cec6f8d37cd0fad05f6a251505637206cdc01e3c47
+    bytes: 2786789
+    fetched: 2026-11-12
+  - key: johnson-2024-bhex
+    title: "The Black Hole Explorer: Motivation and Vision"
+    by: "Johnson and others, Proc. SPIE 13092"
+    year: 2024
+    from: https://arxiv.org/pdf/2406.12917v1.pdf
+    doi: 10.1117/12.3019835
+    licence: "author-posted preprint; local reference only, no redistribution"
+    sha256: ac7b920118e5db5b3b269730663220a4010e5867b14b0dc14eefd7135618840e
+    bytes: 10690004
+    fetched: 2026-11-12
+  - key: shemmer-2004-nir-quasars
+    title: "Near-infrared spectroscopy of high-redshift active galactic nuclei. I. A metallicity-accretion rate relationship"
+    by: "Shemmer, Netzer, Maiolino and others, ApJ 614, 547"
+    year: 2004
+    from: https://arxiv.org/pdf/astro-ph/0406559v1.pdf
+    doi: 10.1086/423607
+    licence: "author-posted preprint; local reference only, no redistribution"
+    sha256: b4ea7bac1cb0bdac72c3a6565829f39796b5af48c3f7a9a41608e27595897baa
+    bytes: 610163
+    fetched: 2026-11-12
+  - key: ge-2019-civ-blueshift
+    title: "The blueshift of C IV broad emission line in QSOs"
+    by: "Ge, Zhao, Bian and Green, AJ 157, 148"
+    year: 2019
+    from: https://arxiv.org/pdf/1903.08830v1.pdf
+    doi: 10.3847/1538-3881/ab0956
+    licence: "author-posted preprint; local reference only, no redistribution"
+    sha256: c4203f4faa66e648e3c6ae4ddacdea01f122098d0aec6c1de023331b259584e8
+    bytes: 551620
+    fetched: 2026-11-12
+  - key: oei-2024-porphyrion
+    title: "Black hole jets on the scale of the Cosmic Web"
+    by: "Oei, Hardcastle, Timmerman and others, Nature 633, 537"
+    year: 2024
+    from: https://arxiv.org/pdf/2411.08630v1.pdf
+    doi: 10.1038/s41586-024-07879-y
+    licence: "author-posted preprint; local reference only, no redistribution"
+    sha256: 373fab46f4e847b9dac3654059a59147412c5f68330ee8e3e8ad5b40df554744
+    bytes: 41032301
+    fetched: 2026-11-12
+  - key: nasa-neptune-fact-sheet
+    title: "Neptune Fact Sheet"
+    by: "nasa nssdca"
+    year: 2026
+    from: https://nssdc.gsfc.nasa.gov/planetary/factsheet/neptunefact.html
+    licence: "a us government work (nasa); a page that changes, pinned as fetched"
+    sha256: 4b9166f959be2b507eea77a9eef56f4e5679b693ba75151072a28bb228f44328
+    bytes: 11071
+    fetched: 2026-11-12
+  - key: voyager-faq
+    title: "Voyager Frequently Asked Questions"
+    by: "NASA Science"
+    from: https://science.nasa.gov/mission/voyager/frequently-asked-questions/
+    licence: "NASA institutional reference; local study only, no source redistribution"
+    sha256: 4ecf03b368d5206fa32c23288e9eccd5dd862a0b2546c39855477c9a523edd76
+    bytes: 312245
+    fetched: 2026-11-17
+  - key: voyager-instruments
+    title: "Voyager Instruments and Spacecraft"
+    by: "NASA Science"
+    from: https://science.nasa.gov/mission/voyager/instruments/
+    licence: "NASA institutional reference; local study only, no source redistribution"
+    sha256: 7440f6284d9fdd6e841a7dacab841db906e67781ef36dc621c97db05125146f5
+    bytes: 310641
+    fetched: 2026-11-17
+  - key: voyager-flight-data-report-1976
+    title: "TC-6 Voyager Flight Data Report (1976)"
+    by: "NASA"
+    year: 1976
+    from: https://www.nasa.gov/wp-content/uploads/2025/06/tc-6-voyager-flight-data-report-1976.pdf
+    licence: "NASA technical reference; local study only, no source redistribution"
+    sha256: 32363530e63fa29d2804b9b4b98df11699e0bc8d92cd2c91745f32d4df684ab1
+    bytes: 29487531
+    fetched: 2026-11-17
+  - key: strasburger-2011-peripheral-vision
+    title: "Peripheral vision and pattern recognition: A review"
+    by: "Strasburger, Rentschler and Juttner, Journal of Vision 11(5), 13"
+    year: 2011
+    from: https://pmc.ncbi.nlm.nih.gov/articles/PMC11073400/
+    doi: 10.1167/11.5.13
+    licence: "open access article as pmc serves it; a page that changes, pinned as fetched"
+    sha256: 76bc3b743ee2e7388d0c7838df8e3578f0105ca690a30520ce32ae6c191cec64
+    bytes: 1046144
+    fetched: 2026-11-12
+  - key: iau-2015-b3-nominal
+    title: "Nominal values for selected solar and planetary quantities: IAU 2015 Resolution B3"
+    by: "Prsa, Harmanec, Torres and others, AJ 152, 41"
+    year: 2016
+    from: https://arxiv.org/pdf/1605.09788v1.pdf
+    doi: 10.3847/0004-6256/152/2/41
+    licence: "author-posted preprint; local reference only, no redistribution"
+    sha256: 2b7bcd88a5169f3a18caae9326f3c51905721cd3b7c034d1de45f7b85d6f4a99
+    bytes: 122423
+    fetched: 2026-11-12
+  - key: schroeder-2016-venera-landers
+    title: "Impact and Crashworthiness Characteristics of Venera Type Landers for Future Venus Missions"
+    by: "Kevin Schroeder and Javid Bayandor (Virginia Tech), Jamshid Samareh (NASA Langley)"
+    year: 2016
+    from: https://ntrs.nasa.gov/api/citations/20170002533/downloads/20170002533.pdf
+    licence: "NASA Technical Reports Server, public document; an AIAA conference paper with a NASA author; local reference only, no redistribution"
+    sha256: 82e61bcd2887e045f91265ce6cf16097b2ce328e790ea698a03219e3eca36d61
+    bytes: 1531383
+    fetched: 2026-11-15
+  - key: usgs-magellan-venus-topography
+    title: "Venus Magellan Global Topography 4641m, version 2: a geotiff of the whole planet's heights"
+    by: "USGS Astrogeology Science Center, from NASA's Magellan radar altimeter"
+    from: https://planetarymaps.usgs.gov/mosaic/Venus_Magellan_Topography_Global_4641m_v02.tif
+    licence: "a us government work (usgs, nasa, jpl); not under copyright in the us"
+    sha256: 92dd2c8850b128f9dcceb400f1367e3df96229f5309840fee4275b74f192ea11
+    bytes: 67142279
+    fetched: 2026-11-15
+  - key: tsis1-hsrs-p1nm
+    title: "TSIS-1 Hybrid Solar Reference Spectrum, 0.1 nm bandwidth on a 0.025 nm grid: the sun above any air at one astronomical unit"
+    by: "Coddington and others 2021, LASP LISIRD"
+    year: 2021
+    from: https://lasp.colorado.edu/lisird/latis/dap/tsis1_hsrs_p1nm.csv
+    licence: "TSIS-1 HSRS, LASP; licence not stated in the file"
+    sha256: 3dea8b6cf3969b2f1021e23555d0c9a35772df2a0e9795c44d4c85877a41b2a7
+    bytes: 5397633
+    fetched: 2026-11-15
+  - key: pirtz-1979-san-onofre-concrete
+    title: "Studies of Concrete for San Onofre Nuclear Power Plant Containment Structures, Units 2 & 3: Final Report"
+    by: "David Pirtz; report UC SI 79-5, Structural Engineering Laboratory, University of California, Berkeley, for Bechtel Power Corporation"
+    year: 1979
+    from: https://escholarship.org/uc/item/1dp3d13n
+    licence: "University of California report posted on eScholarship by the university; local reference only, reuse terms not reviewed"
+    sha256: a98662366c445455022708b663c760c80296703727c1875145bc7e95ac922721
+    bytes: 3136494
+    fetched: 2026-11-13
+  # page 27 reports Ichikawa and Komukai, "Effect of burning conditions and
+  # minor components on the color of Portland cement clinker", Cement and
+  # Concrete Research 23, 933-938, 1993. That paper is not on the shelf and
+  # is not reachable from here; the thesis is cited for its account of it.
+  - key: moudilou-2000-cement-metals
+    title: "Cinétiques et mécanismes de relargage des métaux lourds présents en traces dans les matrices cimentaires"
+    by: "Emmanuel Moudilou; doctoral thesis, Université d'Orléans"
+    year: 2000
+    from: https://hal.science/tel-00002509/
+    licence: "deposited on HAL, the French open archive, under HAL's authorisation; local reference only, reuse terms not reviewed"
+    sha256: a5dd963862d26165805db95be1fcc1baaa8049f6657dd3bd90099fb36c8c551e
+    bytes: 3536978
+    fetched: 2026-11-13
+  - key: cia-oxcart-story-mcininch
+    title: "The Oxcart Story"
+    by: "Thomas P. McIninch, CIA Studies in Intelligence; released 1994 by the CIA Historical Review Program"
+    from: https://www.cia.gov/resources/csi/static/The-Oxcart-Story.pdf
+    licence: "CIA public release, a work of the US government; local reference only, no redistribution"
+    sha256: 98c6e33b6c6b44c5e1ae40bdcf35550c57783ed991092a770e16b7ce6fd9d6ab
+    bytes: 587171
+    fetched: 2026-11-16
+  - key: cia-alfa-ssn-thamm-2008
+    title: "The ALFA SSN: Challenging Paradigms, Finding New Truths, 1969-79"
+    by: "Gerhardt Thamm, CIA Studies in Intelligence 52(3)"
+    year: 2008
+    from: https://www.cia.gov/resources/csi/static/the-ALFA-SSN.pdf
+    licence: "CIA public release, a work of the US government; local reference only, no redistribution"
+    sha256: 5cb5b160af28f504a3c06d5c0755e4fcbbb5bead02e31856bc198554d45b8eeb
+    bytes: 254334
+    fetched: 2026-11-16
+  - key: nasa-tmx71779-yf12-throat-bypass
+    title: "A Throat-Bypass Stability System for a YF-12 Aircraft Research Inlet Using Self-Acting Mechanical Valves"
+    by: "Gary L. Cole, Miles O. Dustin and George H. Neiner, NASA Lewis Research Center"
+    year: 1975
+    from: https://ntrs.nasa.gov/api/citations/19750021055/downloads/19750021055.pdf
+    licence: "NASA Technical Reports Server, unclassified and unlimited; local reference only, no redistribution"
+    sha256: a00eb137b9e8a9590efd5d1dbe5b70e44e4fb27164645a85767244ef10653948
+    bytes: 882373
+    fetched: 2026-11-16
+  - key: nasa-yf12-inlet-tunnel-1978
+    title: "full-scale YF-12 flight inlet in the Lewis 10- by 10-Foot Supersonic Wind Tunnel"
+    by: "NASA Lewis Research Center, NTRS 19780024119"
+    year: 1978
+    from: https://ntrs.nasa.gov/api/citations/19780024119/downloads/19780024119.pdf
+    licence: "NASA Technical Reports Server, unclassified and unlimited; local reference only, no redistribution"
+    sha256: 0e0b52bd8ed16972c52ccca3f30e98236b30048d6e7e60b63df045afd9945803
+    bytes: 1543758
+    fetched: 2026-11-16
+  - key: nasa-tm104330-sr71-thrust-enhanced
+    title: "Predicted Performance of a Thrust-Enhanced SR-71 Aircraft with an External Payload"
+    by: "Timothy R. Conners, NASA Dryden Flight Research Center, TM-104330"
+    year: 1997
+    from: https://ntrs.nasa.gov/api/citations/19970019923/downloads/19970019923.pdf
+    licence: "NASA Technical Reports Server, unclassified and unlimited; local reference only, no redistribution"
+    sha256: 5d4b95f8e2c471ff3802747a9d3eca731c70aec948a3cd3f9b6cafb639cebd08
+    bytes: 934515
+    fetched: 2026-11-16
+  - key: flight-test-museum-a12
+    title: "A-12 CIA reconnaissance aircraft"
+    by: "Flight Test Historical Foundation, Blackbird Airpark"
+    from: https://flighttestmuseum.org/?p=9726
+    licence: "museum web page, no licence stated; local reading reference, no source redistribution"
+    sha256: a0722bcbc6201afa43862938acc39aa1cc1aca2ad2aa233fc9975bded3753a17
+    bytes: 143670
+    fetched: 2026-11-16
+  - key: russianships-project-705
+    title: "Project 705 Lira"
+    by: "RussianShips.info"
+    from: https://russianships.info/eng/submarines/project_705.htm
+    licence: "copyright RussianShips.info; local reading reference, no source redistribution"
+    sha256: 5e424bde99429619cc0d28cb4c61ab7c373d47cafb52d8ca1b902a8bbfdd3cc4
+    bytes: 20729
+    fetched: 2026-11-16
+  - key: fas-run-silent-run-deep
+    title: "Run Silent, Run Deep"
+    by: "Federation of American Scientists, Military Analysis Network"
+    year: 1998
+    from: https://fas.org/man/dod-101/sys/ship/deep.htm
+    licence: "FAS public web page; local reading reference, no source redistribution"
+    sha256: b19e49a3d2daa747e4e587449966cb62bb2357587a076a390f74413624e50443
+    bytes: 18789
+    fetched: 2026-11-16
+  - key: roman-observatory-technical
+    title: "Nancy Grace Roman Space Telescope: Observatory Technical"
+    by: "NASA Science"
+    from: https://science.nasa.gov/mission/roman-space-telescope/observatory-technical/
+    licence: "NASA institutional reference; local study, no source redistribution."
+    sha256: 50b09f082669da82645e7553d061087306ea3869c7fa2800e4dd4a206bd7a71a
+    bytes: 294547
+    fetched: 2026-11-17
+  - key: roman-observatory-faq
+    title: "Nancy Grace Roman Space Telescope: Frequently Asked Questions"
+    by: "NASA Science"
+    from: https://science.nasa.gov/mission/roman-space-telescope/frequently-asked-questions/
+    licence: "NASA institutional reference; local study, no source redistribution."
+    sha256: 2c3558924c01349de3fd529043792fa8f4c6d377e1748934ca2e114b201c67c1
+    bytes: 305799
+    fetched: 2026-11-17
+  - key: roman-observatory-building
+    title: "Building Roman"
+    by: "NASA Science"
+    from: https://science.nasa.gov/missions/roman-space-telescope/building-roman/
+    licence: "NASA institutional reference; local study, no source redistribution."
+    sha256: 4025b0c60bb6efbc1af09caa6813dc94b471b837314f81df6fa1ec27cedf7933
+    bytes: 402048
+    fetched: 2026-11-17
+  - key: roman-deployed-reference-glb
+    title: "Roman Observatory deployed 3D model, RST Model V004"
+    by: "NASA Goddard Space Flight Center, Conceptual Image Lab"
+    from: https://assets.science.nasa.gov/content/dam/science/missions/rst/spacecraft-illustrations/Large%20new%20RST_Model_V004.glb
+    licence: "NASA institutional reference; retained on the local source shelf."
+    sha256: a873fc95945ed0992c552c2a97fc6c5cd0bf7f5519df0040d5a299b03bae67ce
+    bytes: 29655668
+    fetched: 2026-11-17
+  - key: roman-optical-system-spie-2024
+    title: "Roman Optical System: Status and Test"
+    by: "Matthew R. Bolcar, NASA Goddard Space Flight Center"
+    from: https://ntrs.nasa.gov/api/citations/20240014334/downloads/Bolcar_SPIEMTD_RomanOpticalSystem_20241119_v1.pdf
+    licence: "NASA institutional reference; retained on the local source shelf."
+    sha256: b75dee8e233a706ded0523ef58d95cb5d23d0acdac0001b587f6f3662c0bcd71
+    bytes: 2920884
+    fetched: 2026-11-17
+  - key: roman-support-systems
+    title: "Roman Observatory Support Systems"
+    by: "NASA Science"
+    from: https://science.nasa.gov/mission/roman-space-telescope/oss/
+    licence: "NASA institutional reference; retained on the local source shelf."
+    sha256: 6ce9b46fa72456669bace901dc7762f5ada8f869ca1707a76909dbdaeab242f7
+    bytes: 306901
+    fetched: 2026-11-17
+
+  # the ground of the San Francisco waterfront, fetched 2026-11-19 with
+  # celestial-data's cudem-fetch and earth-fetch
+  - key: noaa-cudem-sf-ncei19-n38x00-w122x50-2022
+    title: "NOAA CUDEM 1/9 arc-second topobathy, San Francisco Bay, tile ncei19_n38x00_w122x50_2022v1"
+    by: "NOAA National Centers for Environmental Information"
+    year: 2022
+    from: https://noaa-nos-coastal-lidar-pds.s3.amazonaws.com/dem/NCEI_ninth_Topobathy_2014_8483/CA/ncei19_n38x00_w122x50_2022v1.tif
+    licence: "a us government work (noaa). the cudem tile indexes list cc0 1.0"
+    sha256: fb1cdf1ac43801fc4d4eb0e380f0e67a20e281c0520dff4a81d87567ab4c35b8
+    bytes: 213052439
+    fetched: 2026-11-19
+  - key: copernicus-glo30-n22-e114
+    title: "Copernicus DEM GLO-30, 1 arc-second surface heights, tile N22 E114 (Shenzhen, Hong Kong)"
+    by: "European Space Agency and Airbus Defence and Space, under the Copernicus programme"
+    year: 2021
+    from: https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N22_00_E114_00_DEM/Copernicus_DSM_COG_10_N22_00_E114_00_DEM.tif
+    licence: "open access under the Copernicus DEM licence, with attribution: (c) DLR e.V. 2010-2014 and (c) Airbus Defence and Space GmbH 2014-2018, provided under COPERNICUS by the European Union and ESA; all rights reserved. the wording is recalled, not read from the licence page"
+    sha256: b950ab75642d6684fe08c82b6aa3bb087c1d35acd229ef0e6e6586e1b0868fa3
+    bytes: 25030462
+    fetched: 2026-11-20
+  - key: copernicus-glo30-n22-e113
+    title: "Copernicus DEM GLO-30, 1 arc-second surface heights, tile N22 E113 (Shekou, the Pearl River estuary, Macau)"
+    by: "European Space Agency and Airbus Defence and Space, under the Copernicus programme"
+    year: 2021
+    from: https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N22_00_E113_00_DEM/Copernicus_DSM_COG_10_N22_00_E113_00_DEM.tif
+    licence: "open access under the Copernicus DEM licence, with attribution: (c) DLR e.V. 2010-2014 and (c) Airbus Defence and Space GmbH 2014-2018, provided under COPERNICUS by the European Union and ESA; all rights reserved. the wording is recalled, not read from the licence page"
+    sha256: 074e13244e6da6745bcf76150fdc6e06f774140a7aac796785922fce962eacbb
+    bytes: 36641041
+    fetched: 2026-11-20
+  - key: copernicus-glo30-n44-e009
+    title: "Copernicus DEM GLO-30, 1 arc-second surface heights, tile N44 E009 (Liguria, the Gulf of Tigullio)"
+    by: "European Space Agency and Airbus Defence and Space, under the Copernicus programme"
+    year: 2021
+    from: https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N44_00_E009_00_DEM/Copernicus_DSM_COG_10_N44_00_E009_00_DEM.tif
+    licence: "open access under the Copernicus DEM licence, with attribution: (c) DLR e.V. 2010-2014 and (c) Airbus Defence and Space GmbH 2014-2018, provided under COPERNICUS by the European Union and ESA; all rights reserved. the wording is recalled, not read from the licence page"
+    sha256: 8fdd9ba5a8531a18ead33093ab6dadb361f1c017621cb0a7a7742d771fd357f7
+    bytes: 35799772
+    fetched: 2026-11-20
+  - key: usgs-3dep-13-n38w123-20240826
+    title: "USGS 3DEP 1/3 arc-second elevation, n38w123, 2024-08-26"
+    by: "US Geological Survey, The National Map"
+    year: 2024
+    from: https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/13/TIFF/historical/n38w123/USGS_13_n38w123_20240826.tif
+    licence: "a us government work (usgs), public domain"
+    sha256: 475cbf712aeb9543f6be9051d2a8b650c6aeee6b1ee8f8824eb9ff692e978f3f
+    bytes: 222281615
+    fetched: 2026-11-19
+
+  # the faces the simplified Chinese signs are set in (a sign set asks for
+  # them by key, in manufacture/cities/cultures/sign.yaml), fetched
+  # 2026-11-20. open fonts: the files are kept on the shelf and not shipped.
+  - key: noto-sans-sc-bold
+    title: "Noto Sans CJK SC Bold, the simplified Chinese subset, OpenType with PostScript outlines"
+    by: "Google and Adobe, the Noto CJK project"
+    from: https://github.com/notofonts/noto-cjk/raw/main/Sans/SubsetOTF/SC/NotoSansSC-Bold.otf
+    licence: "SIL Open Font License 1.1; the font is kept on the local source shelf and not shipped."
+    sha256: c6cb5a93abaa9edc8ee7463b7ebb7f42d618d40e6ed2f7a5371c97b0b64767c0
+    bytes: 8543168
+    fetched: 2026-11-20
+  - key: noto-serif-sc-bold
+    title: "Noto Serif CJK SC Bold, the simplified Chinese subset, OpenType with PostScript outlines"
+    by: "Google and Adobe, the Noto CJK project"
+    from: https://github.com/notofonts/noto-cjk/raw/main/Serif/SubsetOTF/SC/NotoSerifSC-Bold.otf
+    licence: "SIL Open Font License 1.1; the font is kept on the local source shelf and not shipped."
+    sha256: 24693d48bdb9152f0a06b02af625638a1097abd6de4010ebba027f6e82710527
+    bytes: 12094336
+    fetched: 2026-11-20
+
+  # two surveyed windows, written to the shelf as one-strip float32 TIFFs the
+  # terrain reader takes: a scale, a tiepoint at the first sample, no
+  # GeoKeys, so the reader takes their coordinates as metres. neither is a
+  # download. `from` names the upstream each was cut from, a fetch of it
+  # would not match the pin, and nothing here is fetched, so neither entry
+  # has a `fetched` date: the pin is of the converted file. each title says
+  # what was checked and what was not.
+  - key: noaa-cudem-honopu-window-4m
+    title: "NOAA CUDEM 1/9 arc-second topobathy, tile ncei19_n22x25_w159x75_2021v1, cut to 817 x 721 samples 4 m apart on the UTM zone 4 north grid (first sample 429368 e, 2452940 n, the source cell holding each grid point, metres above local mean sea level as the cutter says, -49.821 to 1127.729 m, no gaps). the cutter is jobs/honopu/prepare.c, kept outside this tree. the gzipped array of the cut, sha256 81923d108b6cdeff59c587fab6e92efc5d50c78c48f151e9920433e94d135800, was hashed and read here. the source tile, sha256 1c73d38004fa26eeba80b0a9e1bdd317b097eb007cebe53bcf76f39149e0bcec by that branch's scene/honopu/README.md, is not on this machine and was not checked. this file is that array written as float32, every one of its 589057 heights exact in it."
+    by: "NOAA National Centers for Environmental Information, Continuously Updated Digital Elevation Model"
+    year: 2021
+    from: https://coast.noaa.gov/dataviewer/#/lidar/search/where:ID=9428
+    licence: "NOAA CUDEM, a us government work: the same product family as noaa-cudem-sf-ncei19-n38x00-w122x50-2022, whose entry says cc0 1.0. this tile's own terms were not read."
+    sha256: c5ef679c6bcd606ebe1c9dbf4890db1cad69683e67203e9e730ce7b5bb2d3123
+    bytes: 2356458
+  - key: rarotonga-terrain-tiles-99m
+    title: "Rarotonga, Cook Islands: 161 x 161 heights 98.75 m apart over a square 15800 m a side centred at 21.233 south, 159.784 west, in metres east and north of the square's south-west corner (first sample 0 e, 15800 n, so the centre is at 7900 e, 7900 n; the cutter laid it in metres from the centre and this file moves its origin to the corner; a degree is taken as 111195 m north and 111195 times the cosine of the latitude east). land is Mapzen Terrain Tiles at zoom 13, whose own sources vary by place and were not read. the sea bed is the same tiles' offshore basemap, whose resolution varies. where the tiles give 0.45 m or less, the cutter (jobs/beach-batch/prepare.mjs, kept outside this tree) sets the height to minus the least of the offshore depth (0.35 m at the least) and 0.35 m plus 0.28 m for each metre from the shore, so a sea bed deeper than that slope is not the tiles'. the gzipped array of the cut was read here, 86a2224bf1a891d0f47a214890b912960f2664225521c82a8e742ef514ff74cf once unzipped. the tiles it was cut from are not on this machine and were not checked. this file is that array written as float32: 25114 of its 25921 heights are rounded, by at most 0.00015 m."
+    by: "Mapzen Terrain Tiles, on the AWS Open Data registry"
+    from: https://registry.opendata.aws/terrain-tiles/
+    licence: "the tiles' sources carry different terms, set out on the Tilezen attribution page (github.com/tilezen/joerd, docs/attribution.md), which was not read here"
+    sha256: c1f6de44d93b27e720867394370acc05bfbb13d6a92bd269ad69996272372ea0
+    bytes: 103914
